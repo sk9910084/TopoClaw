@@ -20,7 +20,7 @@ object LanguageManager {
      */
     fun getSavedLanguage(context: Context): String {
         return context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-            .getString(PREF_LANGUAGE, LANG_ZH) ?: LANG_ZH
+            .getString(PREF_LANGUAGE, LANG_EN) ?: LANG_EN
     }
 
     /**

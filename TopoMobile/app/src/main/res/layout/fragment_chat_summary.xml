@@ -20,7 +20,7 @@
             android:layout_height="48dp"
             android:src="@drawable/ic_arrow_back"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="返回"
+            android:contentDescription="Back"
             android:tint="@android:color/black"
             android:padding="12dp"
             android:layout_marginStart="-8dp" />
@@ -29,7 +29,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="历史总结"
+            android:text="History summary"
             android:textSize="18sp"
             android:textColor="@android:color/black"
             android:textStyle="bold"
@@ -57,7 +57,7 @@
                 android:textSize="16sp"
                 android:textColor="#FF333333"
                 android:lineSpacingExtra="8dp"
-                android:text="加载中..." />
+                android:text="Loading..." />
             
         </LinearLayout>
     </ScrollView>

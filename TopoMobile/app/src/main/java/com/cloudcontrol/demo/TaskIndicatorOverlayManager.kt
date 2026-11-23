@@ -38,7 +38,7 @@ object TaskIndicatorOverlayManager {
     private const val COMPANION_TARGET_CONVERSATION_ID = "custom_topoclaw"
     private const val NOTIFICATION_ID = 2001
     private const val CHANNEL_ID = "companion_mode_notification_channel"
-    private const val CHANNEL_NAME = "伴随模式通知"
+    private const val CHANNEL_NAME = "Companion mode notifications"
     
     // Action IDs（需要public，供BroadcastReceiver使用）
     const val ACTION_BACK_TO_APP = "com.cloudcontrol.demo.ACTION_BACK_TO_APP"
@@ -97,7 +97,7 @@ object TaskIndicatorOverlayManager {
                     CHANNEL_NAME,
                     NotificationManager.IMPORTANCE_HIGH // 使用HIGH重要性，防止被ColorOS清理
                 ).apply {
-                    description = "伴随模式通知栏"
+                    description = "Companion mode notification"
                     setShowBadge(false)
                     // 设置为公开可见
                     lockscreenVisibility = Notification.VISIBILITY_PUBLIC
@@ -174,7 +174,7 @@ object TaskIndicatorOverlayManager {
             Log.d(TAG, "createNotification: 开始构建Notification")
             val notification = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle("TopoClaw")
-                .setContentText("伴随模式已启用")
+                .setContentText("Companion mode enabled")
                 .setSmallIcon(android.R.drawable.ic_dialog_info)
                 .setOngoing(true) // 常驻通知，无法滑动删除
                 .setPriority(NotificationCompat.PRIORITY_HIGH) // 使用HIGH优先级，防止被ColorOS清理
@@ -183,10 +183,10 @@ object TaskIndicatorOverlayManager {
                 .setCategory(NotificationCompat.CATEGORY_SERVICE) // 设置为服务类别
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC) // 公开可见
                 .setSilent(true) // 静音，避免打扰
-                .addAction(android.R.drawable.ic_menu_revert, "返回应用", backToAppPendingIntent)
-                .addAction(android.R.drawable.ic_menu_add, "发起任务", startTaskPendingIntent)
-                .addAction(android.R.drawable.ic_menu_view, "打开悬浮球", showOverlayPendingIntent)
-                .addAction(android.R.drawable.ic_menu_close_clear_cancel, "关闭应用", closeAppPendingIntent)
+                .addAction(android.R.drawable.ic_menu_revert, "Back to app", backToAppPendingIntent)
+                .addAction(android.R.drawable.ic_menu_add, "Start task", startTaskPendingIntent)
+                .addAction(android.R.drawable.ic_menu_view, "Show floating ball", showOverlayPendingIntent)
+                .addAction(android.R.drawable.ic_menu_close_clear_cancel, "Close app", closeAppPendingIntent)
                 .build()
             
             Log.d(TAG, "createNotification: 通知对象创建成功")
@@ -197,7 +197,7 @@ object TaskIndicatorOverlayManager {
             // 返回一个简单的通知，避免崩溃
             return NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle("TopoClaw")
-                .setContentText("伴随模式已启用")
+                .setContentText("Companion mode enabled")
                 .setSmallIcon(android.R.drawable.ic_dialog_info)
                 .setOngoing(true)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -1175,15 +1175,15 @@ object TaskIndicatorOverlayManager {
      */
     // 预设查询列表（与ChatFragment保持一致）
     private val PRESET_QUERIES = listOf(
-        "小红书搜索gui智能体，浏览2个内容并总结给我",
-        "打开TeamTalk，到班车模块看一下从我的位置到滨海湾的最近的班车是几点",
-        "这是哪里，导航过去",
-        "图中商品是啥，帮我去淘宝拼多多搜同款",
-        "问微信好友Hh源晚上想吃啥，然后执行他的命令",
-        "到12306分别搜索明天深圳到成都的高铁票和机票，然后对比一下价格和耗时谁有优势",
-        "抖音搜索OPPO周易保，关注并评论他的置顶视频\"太帅了吧\"，最后统计一下他的粉丝数",
-        "打开小红书，搜索上海旅行攻略",
-        "在12306找到临时身份证"
+        "Search Xiaohongshu for GUI agents, browse 2 posts and summarize them for me",
+        "Open TeamTalk and check the shuttle module for the next shuttle from my location to Binhai Bay",
+        "Where is this? Navigate there",
+        "What is the product in this picture? Find the same one on Taobao and Pinduoduo",
+        "Ask my WeChat friend Hh源 what he wants for dinner, then follow his instructions",
+        "On 12306, search for tomorrow's high-speed rail tickets and flights from Shenzhen to Chengdu, then compare prices and travel times",
+        "Search Douyin for OPPO周易保, follow him and comment \"So cool!\" on his pinned video, then count his followers",
+        "Open Xiaohongshu and search for Shanghai travel guides",
+        "Find my temporary ID on 12306"
     )
     
     // 保存PopupWindow引用
@@ -1218,7 +1218,7 @@ object TaskIndicatorOverlayManager {
         allQueries.addAll(getUserQueryHistory(context))
         
         if (allQueries.isEmpty()) {
-            android.widget.Toast.makeText(context, "暂无查询记录", android.widget.Toast.LENGTH_SHORT).show()
+            android.widget.Toast.makeText(context, "No query history", android.widget.Toast.LENGTH_SHORT).show()
             return
         }
         
@@ -1594,7 +1594,7 @@ object TaskIndicatorOverlayManager {
             val targetAssistant = CustomAssistantManager.getById(context, targetConversationId)
             if (targetAssistant == null) {
                 Log.e(TAG, "未找到目标会话: $targetConversationId，终止发送")
-                android.widget.Toast.makeText(context, "未找到内置小助手 topoclaw", android.widget.Toast.LENGTH_SHORT).show()
+                android.widget.Toast.makeText(context, "Built-in assistant topoclaw not found", android.widget.Toast.LENGTH_SHORT).show()
                 return
             }
 
@@ -1645,7 +1645,7 @@ object TaskIndicatorOverlayManager {
                                 handler.postDelayed({ checkAndSendTask() }, 100)
                             } else {
                                 Log.e(TAG, "ChatFragment的Adapter初始化超时")
-                                android.widget.Toast.makeText(context, "聊天页面初始化超时", android.widget.Toast.LENGTH_SHORT).show()
+                                android.widget.Toast.makeText(context, "Chat page timed out while initializing", android.widget.Toast.LENGTH_SHORT).show()
                             }
                         } else {
                             // Fragment刚创建，记录状态并继续等待
@@ -1658,7 +1658,7 @@ object TaskIndicatorOverlayManager {
                         handler.postDelayed({ checkAndSendTask() }, 100) // 等待100ms后重试
                     } else {
                         Log.e(TAG, "切换后ChatFragment仍然不存在或不是topoclaw")
-                        android.widget.Toast.makeText(context, "聊天页面初始化失败", android.widget.Toast.LENGTH_SHORT).show()
+                        android.widget.Toast.makeText(context, "Failed to initialize the chat page", android.widget.Toast.LENGTH_SHORT).show()
                     }
                 }
                 
@@ -1671,7 +1671,7 @@ object TaskIndicatorOverlayManager {
             mainActivity.getScreenshotAndSendTask(userInput, chatFragment)
         } catch (e: Exception) {
             Log.e(TAG, "从伴随模式触发任务失败: ${e.message}", e)
-            android.widget.Toast.makeText(context, "触发任务失败: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
+            android.widget.Toast.makeText(context, "Failed to start task: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -1825,7 +1825,7 @@ object TaskIndicatorOverlayManager {
                     context.startActivity(intent)
                     android.widget.Toast.makeText(
                         context,
-                        "请开启'显示在其他应用的上层'权限",
+                        "Please enable the 'Display over other apps' permission",
                         android.widget.Toast.LENGTH_SHORT
                     ).show()
                     return false
@@ -1833,7 +1833,7 @@ object TaskIndicatorOverlayManager {
                     Log.e(TAG, "跳转到权限设置页面失败: ${e.message}", e)
                     android.widget.Toast.makeText(
                         context,
-                        "无法打开权限设置页面，请手动在设置中开启悬浮窗权限",
+                        "Can't open the permission settings. Please enable the overlay permission manually in Settings",
                         android.widget.Toast.LENGTH_LONG
                     ).show()
                     return false
@@ -2086,14 +2086,14 @@ object TaskIndicatorOverlayManager {
     private fun startScreenRecordingFromOverlay(context: Context) {
         if (isRecording) {
             Log.w(TAG, "录制已在进行中，忽略重复请求")
-            android.widget.Toast.makeText(context, "录制已在进行中", android.widget.Toast.LENGTH_SHORT).show()
+            android.widget.Toast.makeText(context, "Recording is already in progress", android.widget.Toast.LENGTH_SHORT).show()
             return
         }
         
         val mainActivity = context as? MainActivity
         if (mainActivity == null) {
             Log.e(TAG, "无法获取MainActivity，无法启动录制")
-            android.widget.Toast.makeText(context, "无法启动录制", android.widget.Toast.LENGTH_SHORT).show()
+            android.widget.Toast.makeText(context, "Can't start recording", android.widget.Toast.LENGTH_SHORT).show()
             return
         }
         
@@ -2109,7 +2109,7 @@ object TaskIndicatorOverlayManager {
             Log.d(TAG, "已请求录制权限")
         } catch (e: Exception) {
             Log.e(TAG, "请求录制权限失败: ${e.message}", e)
-            android.widget.Toast.makeText(context, "请求录制权限失败: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
+            android.widget.Toast.makeText(context, "Failed to request recording permission: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
             // 如果请求权限失败，清除标记
             mainActivity.isSwitchingFromOverlayRecording = false
             Log.d(TAG, "请求权限失败，清除 isSwitchingFromOverlayRecording = false")
@@ -2125,7 +2125,7 @@ object TaskIndicatorOverlayManager {
         
         if (resultCode != Activity.RESULT_OK || data == null) {
             Log.e(TAG, "录制权限被拒绝或数据无效")
-            android.widget.Toast.makeText(ctx, "录制权限被拒绝", android.widget.Toast.LENGTH_SHORT).show()
+            android.widget.Toast.makeText(ctx, "Recording permission denied", android.widget.Toast.LENGTH_SHORT).show()
             // 权限被拒绝，清除标记
             mainActivity.isSwitchingFromOverlayRecording = false
             Log.d(TAG, "权限被拒绝，清除 isSwitchingFromOverlayRecording = false")
@@ -2170,7 +2170,7 @@ object TaskIndicatorOverlayManager {
             Log.d(TAG, "录制服务已启动")
         } catch (e: Exception) {
             Log.e(TAG, "启动录制服务失败: ${e.message}", e)
-            android.widget.Toast.makeText(ctx, "启动录制失败: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
+            android.widget.Toast.makeText(ctx, "Failed to start recording: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
             isRecording = false
         }
     }
@@ -2209,7 +2209,7 @@ object TaskIndicatorOverlayManager {
                     stopRecordingFromOverlay()
                 }
                 
-                android.widget.Toast.makeText(ctx, "录屏已开始", android.widget.Toast.LENGTH_SHORT).show()
+                android.widget.Toast.makeText(ctx, "Screen recording started", android.widget.Toast.LENGTH_SHORT).show()
             }
             
             override fun onRecordingStopped(videoPath: String, screenWidth: Int, screenHeight: Int) {
@@ -2258,7 +2258,7 @@ object TaskIndicatorOverlayManager {
                 }
                 wasOverlayShowingBeforeRecording = false
                 
-                android.widget.Toast.makeText(ctx, "录制错误: $error", android.widget.Toast.LENGTH_SHORT).show()
+                android.widget.Toast.makeText(ctx, "Recording error: $error", android.widget.Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -2367,7 +2367,7 @@ object TaskIndicatorOverlayManager {
                             // 触发上传流程
                             currentChatFragment.uploadVideoToCloudFromOverlay(videoPath, screenWidth, screenHeight)
                             
-                            android.widget.Toast.makeText(ctx, "视频已发送到技能学习小助手", android.widget.Toast.LENGTH_SHORT).show()
+                            android.widget.Toast.makeText(ctx, "Video sent to the skill-learning assistant", android.widget.Toast.LENGTH_SHORT).show()
                             
                             // 清除标记（在恢复悬浮球之前清除，避免恢复时触发TopoClaw）
                             mainActivity.isSwitchingFromOverlayRecording = false
@@ -2410,7 +2410,7 @@ object TaskIndicatorOverlayManager {
                     }
                     
                     Log.e(TAG, "切换对话失败，无法发送视频")
-                    android.widget.Toast.makeText(ctx, "切换对话失败", android.widget.Toast.LENGTH_SHORT).show()
+                    android.widget.Toast.makeText(ctx, "Failed to switch conversation", android.widget.Toast.LENGTH_SHORT).show()
                     
                     // 清除标记
                     mainActivity.isSwitchingFromOverlayRecording = false
@@ -2447,7 +2447,7 @@ object TaskIndicatorOverlayManager {
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "处理录制完成失败: ${e.message}", e)
-                android.widget.Toast.makeText(ctx, "处理录制失败: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
+                android.widget.Toast.makeText(ctx, "Failed to process recording: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
                 
                 // 清除标记
                 val mainActivity = ctx as? MainActivity
@@ -2557,7 +2557,7 @@ object TaskIndicatorOverlayManager {
             Log.d(TAG, "navigateToAssistantChat: 已启动MainActivity，将在onCreate中处理导航")
         } catch (e: Exception) {
             Log.e(TAG, "navigateToAssistantChat: 导航失败: ${e.message}", e)
-            android.widget.Toast.makeText(context, "导航失败: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
+            android.widget.Toast.makeText(context, "Navigation failed: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
         }
     }
 }

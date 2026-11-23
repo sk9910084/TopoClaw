@@ -20,7 +20,7 @@
             android:layout_height="48dp"
             android:src="@drawable/ic_arrow_back"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="返回"
+            android:contentDescription="Back"
             android:tint="@android:color/black"
             android:padding="12dp"
             android:layout_marginStart="-8dp" />
@@ -28,7 +28,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="服务器设置"
+            android:text="Server settings"
             android:textSize="18sp"
             android:textColor="@android:color/black"
             android:gravity="center" />
@@ -62,7 +62,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="云侧服务地址"
+                android:hint="Cloud service address"
                 android:layout_marginBottom="16dp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
                 <com.google.android.material.textfield.TextInputEditText
@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:textColor="#999999"
-                android:text="设置后，该小助手将使用专用服务器地址。如未设置，将使用全局默认地址。"
+                android:text="Once set, this assistant will use a dedicated server address. If not set, the global default address will be used."
                 android:layout_marginBottom="24dp"
                 android:lineSpacingExtra="4dp" />
             
@@ -102,7 +102,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="记录聊天上下文"
+                    android:text="Save chat context"
                     android:textSize="16sp"
                     android:textColor="@android:color/black" />
                 <Switch
@@ -117,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:textColor="#999999"
-                android:text="开启后，将保存您与该小助手的对话记录（用户消息和助手回复），方便后续查看。可在聊天对象主页查看历史记录。"
+                android:text="Once enabled, your conversation history with this assistant (your messages and assistant replies) will be saved for later review. You can view it on the chat partner's home page."
                 android:layout_marginBottom="24dp"
                 android:lineSpacingExtra="4dp" />
             
@@ -126,7 +126,7 @@
                 android:id="@+id/btnSave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="保存"
+                android:text="Save"
                 android:textSize="16sp"
                 android:layout_marginBottom="16dp" />
             
@@ -135,7 +135,7 @@
                 android:id="@+id/btnClear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="清除专用设置（使用全局默认）"
+                android:text="Clear custom settings (use global defaults)"
                 android:textSize="14sp"
                 android:textColor="#666666"
                 android:backgroundTint="#E0E0E0" />

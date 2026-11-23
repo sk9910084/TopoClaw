@@ -62,7 +62,7 @@ class ChatSummaryFragment : Fragment() {
         
         // 设置标题
         conversation?.let { conv ->
-            binding.tvTitle.text = "${conv.name} - 历史总结"
+            binding.tvTitle.text = "${conv.name} - History Summary"
         }
     }
     
@@ -70,7 +70,7 @@ class ChatSummaryFragment : Fragment() {
         if (summary != null && summary!!.isNotBlank()) {
             binding.tvSummary.text = summary
         } else {
-            binding.tvSummary.text = "暂无总结内容"
+            binding.tvSummary.text = "No summary yet"
         }
     }
     

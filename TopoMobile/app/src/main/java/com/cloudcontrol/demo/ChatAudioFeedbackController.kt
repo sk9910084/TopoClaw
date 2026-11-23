@@ -84,7 +84,7 @@ class ChatAudioFeedbackController {
             }
         } catch (e: Exception) {
             Log.e(ChatConstants.TAG, "播报文本失败: ${e.message}", e)
-            Toast.makeText(app, "播报失败", Toast.LENGTH_SHORT).show()
+            Toast.makeText(app, "Read-aloud failed", Toast.LENGTH_SHORT).show()
         }
     }
 

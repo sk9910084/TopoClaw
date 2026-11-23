@@ -192,12 +192,12 @@ class MyQRCodeFragment : Fragment() {
                     this@MyQRCodeFragment.qrCodeBitmap = qrCodeBitmap
                     binding.ivQRCode.setImageBitmap(qrCodeBitmap)
                 } else {
-                    Toast.makeText(requireContext(), "生成二维码失败", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Failed to generate QR code", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "加载资料或生成二维码失败: ${e.message}", e)
                 if (_binding != null && isAdded) {
-                    Toast.makeText(requireContext(), "加载失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Load failed: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -253,7 +253,7 @@ class MyQRCodeFragment : Fragment() {
      */
     private fun downloadQRCode() {
         val cardBitmap = generateCardBitmap() ?: run {
-            Toast.makeText(requireContext(), "生成卡片失败", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to generate card", Toast.LENGTH_SHORT).show()
             return
         }
         
@@ -311,7 +311,7 @@ class MyQRCodeFragment : Fragment() {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 generateCardBitmap()?.let { saveQRCodeToFile(it) }
             } else {
-                Toast.makeText(requireContext(), "需要存储权限才能保存二维码", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Storage permission is required to save the QR code", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -344,14 +344,14 @@ class MyQRCodeFragment : Fragment() {
                         }
                     }
                     
-                    Toast.makeText(requireContext(), "二维码已保存到相册", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "QR code saved to your gallery", Toast.LENGTH_SHORT).show()
                     Log.d(TAG, "二维码已保存: $uri")
                 } else {
-                    Toast.makeText(requireContext(), "保存失败", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Save failed", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "保存二维码失败: ${e.message}", e)
-                Toast.makeText(requireContext(), "保存失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Save failed: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -382,11 +382,11 @@ class MyQRCodeFragment : Fragment() {
                     requireContext().sendBroadcast(intent)
                 }
                 
-                Toast.makeText(requireContext(), "二维码已保存到相册", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "QR code saved to your gallery", Toast.LENGTH_SHORT).show()
                 Log.d(TAG, "二维码已保存: ${file.absolutePath}")
             } catch (e: Exception) {
                 Log.e(TAG, "保存二维码失败: ${e.message}", e)
-                Toast.makeText(requireContext(), "保存失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Save failed: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -396,7 +396,7 @@ class MyQRCodeFragment : Fragment() {
      */
     private fun shareQRCode() {
         val cardBitmap = generateCardBitmap() ?: run {
-            Toast.makeText(requireContext(), "生成卡片失败", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to generate card", Toast.LENGTH_SHORT).show()
             return
         }
         
@@ -447,7 +447,7 @@ class MyQRCodeFragment : Fragment() {
             .filter { it.status == "accepted" }
         
         if (friends.isEmpty()) {
-            Toast.makeText(requireContext(), "暂无好友可分享", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "No friends to share with", Toast.LENGTH_SHORT).show()
             return
         }
         
@@ -458,12 +458,12 @@ class MyQRCodeFragment : Fragment() {
         
         // 显示选择对话框
         android.app.AlertDialog.Builder(requireContext())
-            .setTitle("选择分享对象")
+            .setTitle("Choose who to share with")
             .setItems(options.toTypedArray()) { _, which ->
                 val selectedFriend = friends[which]
                 sendQRCodeToFriend(selectedFriend.imei, cardBitmap)
             }
-            .setNegativeButton("取消", null)
+            .setNegativeButton("Cancel", null)
             .show()
     }
     
@@ -477,7 +477,7 @@ class MyQRCodeFragment : Fragment() {
                 val webSocket = mainActivity?.getCustomerServiceWebSocket()
                 
                 if (webSocket == null || !webSocket.isConnected()) {
-                    Toast.makeText(requireContext(), "无法连接到服务器，请稍后重试", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Unable to connect to the server. Please try again later", Toast.LENGTH_SHORT).show()
                     return@launch
                 }
                 
@@ -487,13 +487,13 @@ class MyQRCodeFragment : Fragment() {
                 }
                 
                 // 发送消息
-                webSocket.sendFriendMessage(targetImei, "我的二维码", imageBase64)
+                webSocket.sendFriendMessage(targetImei, "My QR code", imageBase64)
                 
                 // 切换到好友对话页面
                 val friendConversationId = "friend_$targetImei"
                 val friend = FriendManager.getFriends(requireContext())
                     .firstOrNull { it.imei == targetImei }
-                val friendName = friend?.nickname ?: "好友"
+                val friendName = friend?.nickname ?: "Friend"
                 
                 val friendConversation = Conversation(
                     id = friendConversationId,
@@ -505,11 +505,11 @@ class MyQRCodeFragment : Fragment() {
                 
                 mainActivity?.switchToChatFragment(friendConversation)
                 
-                Toast.makeText(requireContext(), "二维码已分享给好友", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "QR code shared with a friend", Toast.LENGTH_SHORT).show()
                 Log.d(TAG, "二维码已分享给好友: $targetImei")
             } catch (e: Exception) {
                 Log.e(TAG, "分享二维码给好友失败: ${e.message}", e)
-                Toast.makeText(requireContext(), "分享失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Share failed: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -542,19 +542,19 @@ class MyQRCodeFragment : Fragment() {
                     action = Intent.ACTION_SEND
                     type = "image/jpeg"
                     putExtra(Intent.EXTRA_STREAM, uri)
-                    putExtra(Intent.EXTRA_TEXT, "我的二维码")
+                    putExtra(Intent.EXTRA_TEXT, "My QR code")
                     addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 }
                 
                 // 启动分享选择器
-                val chooserIntent = Intent.createChooser(shareIntent, "分享二维码")
+                val chooserIntent = Intent.createChooser(shareIntent, "Share QR code")
                 chooserIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 
                 startActivity(chooserIntent)
                 Log.d(TAG, "分享二维码")
             } catch (e: Exception) {
                 Log.e(TAG, "分享二维码失败: ${e.message}", e)
-                Toast.makeText(requireContext(), "分享失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Share failed: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -222,12 +222,12 @@ class ChatContextHistoryFragment : Fragment() {
      */
     private fun showClearHistoryConfirmDialog() {
         android.app.AlertDialog.Builder(requireContext())
-            .setTitle("清空历史记录")
-            .setMessage("确定要清空历史记录和对话总结吗？此操作不可恢复。")
-            .setPositiveButton("确定") { _, _ ->
+            .setTitle("Clear history")
+            .setMessage("Clear history and conversation summaries? This can't be undone.")
+            .setPositiveButton("OK") { _, _ ->
                 clearHistory()
             }
-            .setNegativeButton("取消", null)
+            .setNegativeButton("Cancel", null)
             .show()
     }
     
@@ -261,14 +261,14 @@ class ChatContextHistoryFragment : Fragment() {
             // 显示成功提示
             android.widget.Toast.makeText(
                 requireContext(),
-                "历史记录和对话总结已清空",
+                "History and conversation summaries cleared",
                 android.widget.Toast.LENGTH_SHORT
             ).show()
         } catch (e: Exception) {
             Log.e(TAG, "清空历史记录失败: ${e.message}", e)
             android.widget.Toast.makeText(
                 requireContext(),
-                "清空失败: ${e.message}",
+                "Clear failed: ${e.message}",
                 android.widget.Toast.LENGTH_SHORT
             ).show()
         }

@@ -41,7 +41,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="好友名字"
+                android:text="Friend's name"
                 android:textSize="16sp"
                 android:textColor="@android:color/black"
                 android:textStyle="bold" />
@@ -53,7 +53,7 @@
                 android:layout_height="16dp"
                 android:layout_marginStart="2dp"
                 android:src="@drawable/ic_lightbulb"
-                android:contentDescription="在线状态"
+                android:contentDescription="Online status"
                 android:visibility="gone" />
         </LinearLayout>
         

@@ -499,7 +499,7 @@ class ServiceFragment : Fragment() {
     private fun applyServerUrl() {
         val serverUrl = binding.etServerUrl.text.toString().trim()
         if (serverUrl.isEmpty()) {
-            Toast.makeText(requireContext(), "请输入云侧服务地址", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Enter the cloud service address", Toast.LENGTH_SHORT).show()
             return
         }
         
@@ -516,7 +516,7 @@ class ServiceFragment : Fragment() {
         NetworkService.initialize(serverUrl, requireContext())
         
         (activity as? MainActivity)?.addLog("已更新云侧服务地址: $serverUrl")
-        Toast.makeText(requireContext(), "云侧服务地址已更新", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Cloud service address updated", Toast.LENGTH_SHORT).show()
     }
     
     /**
@@ -532,7 +532,7 @@ class ServiceFragment : Fragment() {
         allUrls.addAll(serverUrlHistory)
         
         if (allUrls.isEmpty()) {
-            Toast.makeText(requireContext(), "暂无地址记录", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "No saved addresses", Toast.LENGTH_SHORT).show()
             return
         }
         
@@ -658,17 +658,17 @@ class ServiceFragment : Fragment() {
                 when {
                     // 权限已授予且服务已连接
                     hasPermission && serviceConnected -> {
-                        updateAccessibilityButton(enabled = false, text = "无障碍服务已开启")
+                        updateAccessibilityButton(enabled = false, text = "Accessibility service is on")
                     }
                     // 权限已授予但服务未连接（可能正在连接中）
                     hasPermission && !serviceConnected && retryCount < maxRetries -> {
-                        updateAccessibilityButton(enabled = false, text = "正在连接...")
+                        updateAccessibilityButton(enabled = false, text = "Connecting...")
                         retryCount++
                         accessibilityCheckHandler.postDelayed(this, delayMs)
                     }
                     // 权限未授予
                     else -> {
-                        updateAccessibilityButton(enabled = true, text = "开启无障碍服务")
+                        updateAccessibilityButton(enabled = true, text = "Turn on accessibility service")
                     }
                 }
             }
@@ -709,10 +709,10 @@ class ServiceFragment : Fragment() {
             val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
             startActivity(intent)
             (activity as? MainActivity)?.addLog("已打开无障碍设置，请找到\"TopoClaw\"并开启")
-            Toast.makeText(requireContext(), "请找到\"TopoClaw\"并开启", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Find \"TopoClaw\" and turn it on", Toast.LENGTH_LONG).show()
         } catch (e: Exception) {
             Log.e(TAG, "打开无障碍设置失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "打开设置失败", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to open Settings", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -735,7 +735,7 @@ class ServiceFragment : Fragment() {
                 }
                 
                 (activity as? MainActivity)?.addLog("聊天截图权限已授权，正在启动服务...")
-                Toast.makeText(requireContext(), "聊天截图权限已授权", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Chat screenshot permission granted", Toast.LENGTH_SHORT).show()
                 
                 // 延迟检查服务是否就绪（给服务一些时间初始化）
                 view?.postDelayed({
@@ -752,20 +752,20 @@ class ServiceFragment : Fragment() {
                 }, 1000)
             } else {
                 (activity as? MainActivity)?.addLog("聊天截图权限授权失败")
-                Toast.makeText(requireContext(), "聊天截图权限授权失败", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Failed to grant chat screenshot permission", Toast.LENGTH_SHORT).show()
             }
         } else if (requestCode == REQUEST_OVERLAY_PERMISSION) {
             // 处理悬浮窗权限
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (Settings.canDrawOverlays(requireContext())) {
                     (activity as? MainActivity)?.addLog("悬浮窗权限已授权")
-                    Toast.makeText(requireContext(), "悬浮窗权限已授权，正在初始化交互覆盖层...", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Overlay permission granted. Initializing interaction layer...", Toast.LENGTH_SHORT).show()
                     // 重新初始化覆盖层
                     InteractionOverlayManager.initialize(requireContext())
                     updateOverlayPermissionButton()
                 } else {
                     (activity as? MainActivity)?.addLog("悬浮窗权限授权失败")
-                    Toast.makeText(requireContext(), "悬浮窗权限授权失败，请手动在设置中开启", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), "Failed to grant overlay permission. Please enable it manually in Settings", Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -792,16 +792,16 @@ class ServiceFragment : Fragment() {
                 }
                 startActivityForResult(intent, REQUEST_OVERLAY_PERMISSION)
                 (activity as? MainActivity)?.addLog("正在请求悬浮窗权限...")
-                Toast.makeText(requireContext(), "请在设置中开启'显示在其他应用的上层'权限", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Please enable the 'Display over other apps' permission in Settings", Toast.LENGTH_LONG).show()
             } else {
                 (activity as? MainActivity)?.addLog("悬浮窗权限已授权")
-                Toast.makeText(requireContext(), "悬浮窗权限已授权", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Overlay permission granted", Toast.LENGTH_SHORT).show()
                 // 重新初始化覆盖层
                 InteractionOverlayManager.initialize(requireContext())
             }
         } else {
             (activity as? MainActivity)?.addLog("Android版本过低，不需要悬浮窗权限")
-            Toast.makeText(requireContext(), "Android版本过低，不需要悬浮窗权限", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Android version is too low; no overlay permission needed", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -812,17 +812,17 @@ class ServiceFragment : Fragment() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val hasPermission = Settings.canDrawOverlays(requireContext())
             if (hasPermission) {
-                binding.btnRequestOverlayPermission.text = "授权悬浮窗权限"
+                binding.btnRequestOverlayPermission.text = "Grant overlay permission"
                 binding.btnRequestOverlayPermission.isEnabled = false
                 // 设置为灰色表示已开启
                 binding.btnRequestOverlayPermission.alpha = 0.5f
             } else {
-                binding.btnRequestOverlayPermission.text = "授权悬浮窗权限"
+                binding.btnRequestOverlayPermission.text = "Grant overlay permission"
                 binding.btnRequestOverlayPermission.isEnabled = true
                 binding.btnRequestOverlayPermission.alpha = 1.0f
             }
         } else {
-            binding.btnRequestOverlayPermission.text = "授权悬浮窗权限"
+            binding.btnRequestOverlayPermission.text = "Grant overlay permission"
             binding.btnRequestOverlayPermission.isEnabled = false
             binding.btnRequestOverlayPermission.alpha = 0.5f
         }
@@ -835,12 +835,12 @@ class ServiceFragment : Fragment() {
         val chatService = ChatScreenshotService.getInstance()
         val isReady = chatService != null && chatService.isReady()
         if (isReady) {
-            binding.btnRequestChatPermission.text = "授权截图权限"
+            binding.btnRequestChatPermission.text = "Grant screenshot permission"
             binding.btnRequestChatPermission.isEnabled = false
             // 设置为灰色表示已开启
             binding.btnRequestChatPermission.alpha = 0.5f
         } else {
-            binding.btnRequestChatPermission.text = "授权截图权限"
+            binding.btnRequestChatPermission.text = "Grant screenshot permission"
             binding.btnRequestChatPermission.isEnabled = true
             binding.btnRequestChatPermission.alpha = 1.0f
         }

@@ -89,11 +89,11 @@ class VersionInfoFragment : Fragment() {
             binding.tvVersion.text = versionName
         } catch (e: Exception) {
             Log.e(TAG, "获取版本号失败: ${e.message}", e)
-            binding.tvVersion.text = "未知"
+            binding.tvVersion.text = "Unknown"
         }
         
         // 初始显示默认消息
-        binding.tvUpdateMessage.text = "当前为最新版本"
+        binding.tvUpdateMessage.text = "You're on the latest version"
         
         // 不再自动检查版本更新，用户需要手动点击"检查更新"按钮
     }
@@ -107,7 +107,7 @@ class VersionInfoFragment : Fragment() {
             try {
                 // 显示加载状态
                 binding.btnCheckUpdate.isEnabled = false
-                binding.btnCheckUpdate.text = "检查中..."
+                binding.btnCheckUpdate.text = "Checking..."
                 
                 val currentVersion = BuildConfig.VERSION_NAME
                 Log.d(TAG, "开始检查版本更新，当前版本: $currentVersion")
@@ -122,10 +122,10 @@ class VersionInfoFragment : Fragment() {
                 if (apiService == null) {
                     Log.w(TAG, "CustomerServiceNetwork未初始化，跳过版本检查")
                     if (showToast) {
-                        Toast.makeText(requireContext(), "无法连接到服务器", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Unable to connect to the server", Toast.LENGTH_SHORT).show()
                     }
                     binding.btnCheckUpdate.isEnabled = true
-                    binding.btnCheckUpdate.text = "检查更新"
+                    binding.btnCheckUpdate.text = "Check for updates"
                     return@launch
                 }
                 
@@ -165,28 +165,28 @@ class VersionInfoFragment : Fragment() {
                         )
                         
                         if (showToast) {
-                            Toast.makeText(requireContext(), "发现新版本 $latestVersion", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "New version available: $latestVersion", Toast.LENGTH_SHORT).show()
                         }
                     } else {
                         if (showToast) {
-                            Toast.makeText(requireContext(), "当前已是最新版本", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "You're already on the latest version", Toast.LENGTH_SHORT).show()
                         }
                     }
                 } else {
                     Log.w(TAG, "版本检查API调用失败: ${response.code()} - ${response.message()}")
                     if (showToast) {
-                        Toast.makeText(requireContext(), "检查更新失败，请稍后重试", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Failed to check for updates. Please try again later", Toast.LENGTH_SHORT).show()
                     }
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "检查版本更新失败: ${e.message}", e)
                 if (showToast) {
-                    Toast.makeText(requireContext(), "检查更新失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Failed to check for updates: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             } finally {
                 // 恢复按钮状态
                 binding.btnCheckUpdate.isEnabled = true
-                binding.btnCheckUpdate.text = "检查更新"
+                binding.btnCheckUpdate.text = "Check for updates"
             }
         }
     }

@@ -79,7 +79,7 @@ class ServerSettingsFragment : Fragment() {
     
     private fun setupUI() {
         // 显示小助手名称
-        binding.tvAssistantName.text = "$assistantName 服务器设置"
+        binding.tvAssistantName.text = "$assistantName server settings"
         
         // 返回按钮
         binding.btnBack.setOnClickListener {
@@ -164,7 +164,7 @@ class ServerSettingsFragment : Fragment() {
     private fun saveServerUrl() {
         val serverUrl = binding.etServerUrl.text.toString().trim()
         if (serverUrl.isEmpty()) {
-            Toast.makeText(requireContext(), "请输入服务器地址", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Enter the server address", Toast.LENGTH_SHORT).show()
             return
         }
         
@@ -175,7 +175,7 @@ class ServerSettingsFragment : Fragment() {
         // 保存小助手专用地址
         prefs.edit().putString(specificKey, serverUrl).apply()
         
-        Toast.makeText(requireContext(), "服务器地址已保存", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Server address saved", Toast.LENGTH_SHORT).show()
         Log.d(TAG, "已保存 $assistantName 的服务器地址: $serverUrl")
     }
     
@@ -194,11 +194,11 @@ class ServerSettingsFragment : Fragment() {
         loadServerUrl()
         
         val defaultType = when (conversationId) {
-            ConversationListFragment.CONVERSATION_ID_SKILL_LEARNING -> "技能学习小助手默认地址"
-            ConversationListFragment.CONVERSATION_ID_CUSTOMER_SERVICE -> "人工客服默认地址"
-            else -> "全局默认地址"
+            ConversationListFragment.CONVERSATION_ID_SKILL_LEARNING -> "Skill-learning assistant's default address"
+            ConversationListFragment.CONVERSATION_ID_CUSTOMER_SERVICE -> "Customer service default address"
+            else -> "Global default address"
         }
-        Toast.makeText(requireContext(), "已清除专用设置，将使用$defaultType", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Custom settings cleared. Using $defaultType", Toast.LENGTH_SHORT).show()
         Log.d(TAG, "已清除 $assistantName 的专用服务器地址")
     }
     
@@ -227,8 +227,8 @@ class ServerSettingsFragment : Fragment() {
         val prefs = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
         val key = "enable_context_recording_$conversationId"
         prefs.edit().putBoolean(key, isEnabled).apply()
-        val status = if (isEnabled) "已开启" else "已关闭"
-        Toast.makeText(requireContext(), "上下文记录$status", Toast.LENGTH_SHORT).show()
+        val status = if (isEnabled) "enabled" else "disabled"
+        Toast.makeText(requireContext(), "Context history $status", Toast.LENGTH_SHORT).show()
         Log.d(TAG, "已${status} $assistantName 的上下文记录")
     }
 }

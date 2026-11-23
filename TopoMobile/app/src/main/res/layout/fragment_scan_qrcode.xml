@@ -22,7 +22,7 @@
             android:layout_height="48dp"
             android:src="@drawable/ic_arrow_back"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="返回"
+            android:contentDescription="Back"
             android:tint="#FFFFFF"
             android:padding="12dp"
             android:layout_marginStart="-8dp" />

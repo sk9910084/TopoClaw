@@ -450,15 +450,15 @@ class MainActivity : AppCompatActivity() {
                         testScope.launch {
                             TrajectoryCloudService.renameSessionOnCloud(this@MainActivity, oldSessionId, newSessionId)
                         }
-                        Toast.makeText(this, "已更新轨迹名称", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Trajectory name updated", Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(this, "暂不支持", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Not supported yet", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(this, "暂不支持", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Not supported yet", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(this, "暂不支持", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Not supported yet", Toast.LENGTH_SHORT).show()
             }
             dialog.dismiss()
         }
@@ -478,7 +478,7 @@ class MainActivity : AppCompatActivity() {
                 if (firstBackPressTime == 0L || currentTime - firstBackPressTime > BACK_PRESS_INTERVAL) {
                     // 第一次按返回键或超过时间间隔，显示提示
                     firstBackPressTime = currentTime
-                    Toast.makeText(this@MainActivity, "再退一次退出应用", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MainActivity, "Press back again to exit", Toast.LENGTH_SHORT).show()
                 } else {
                     // 在时间间隔内再次按返回键，退出应用
                     finish()
@@ -2697,7 +2697,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     
                     Log.d(TAG, "伴随模式：截图权限已授权")
-                    android.widget.Toast.makeText(this, "截图权限已授权", android.widget.Toast.LENGTH_SHORT).show()
+                    android.widget.Toast.makeText(this, "Screenshot permission granted", android.widget.Toast.LENGTH_SHORT).show()
                     
                     // 如果有待发送的消息，延迟一下等待服务就绪后检查权限并自动发送
                     val pendingQuery = pendingQueryFromCompanion
@@ -2758,7 +2758,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 } else {
                     Log.w(TAG, "伴随模式：截图权限被拒绝")
-                    android.widget.Toast.makeText(this, "截图权限被拒绝", android.widget.Toast.LENGTH_SHORT).show()
+                    android.widget.Toast.makeText(this, "Screenshot permission denied", android.widget.Toast.LENGTH_SHORT).show()
                     // 清除待发送的消息
                     pendingQueryFromCompanion = null
                     pendingChatFragmentFromCompanion = null
@@ -2904,7 +2904,7 @@ class MainActivity : AppCompatActivity() {
         
         // 显示Toast
         try {
-            Toast.makeText(this, "批测已停止", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Batch test stopped", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             Log.e(TAG, "MainActivity.stopBatchTest: 显示Toast异常: ${e.message}", e)
         }
@@ -3285,7 +3285,7 @@ class MainActivity : AppCompatActivity() {
                     Log.d(TAG, "getScreenshotAndSendTask: 纯文本任务已发送")
                 } catch (e: Exception) {
                     Log.e(TAG, "getScreenshotAndSendTask: 纯文本发送失败: ${e.message}", e)
-                    android.widget.Toast.makeText(this@MainActivity, "发送任务失败: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
+                    android.widget.Toast.makeText(this@MainActivity, "Failed to send task: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
                 }
             }
             return
@@ -3313,7 +3313,7 @@ class MainActivity : AppCompatActivity() {
         // 确保chatService非空（已经检查过）
         val service = chatService ?: run {
             Log.e(TAG, "getScreenshotAndSendTask: chatService为null，无法执行任务")
-            android.widget.Toast.makeText(this, "截图服务未就绪", android.widget.Toast.LENGTH_SHORT).show()
+            android.widget.Toast.makeText(this, "Screenshot service not ready", android.widget.Toast.LENGTH_SHORT).show()
             return
         }
         
@@ -3338,7 +3338,7 @@ class MainActivity : AppCompatActivity() {
                 
                 if (bitmap == null) {
                     Log.w(TAG, "获取截图失败")
-                    android.widget.Toast.makeText(this@MainActivity, "获取截图失败", android.widget.Toast.LENGTH_SHORT).show()
+                    android.widget.Toast.makeText(this@MainActivity, "Failed to capture screenshot", android.widget.Toast.LENGTH_SHORT).show()
                     return@launch
                 }
                 
@@ -3368,7 +3368,7 @@ class MainActivity : AppCompatActivity() {
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "getScreenshotAndSendTask失败: ${e.message}", e)
-                android.widget.Toast.makeText(this@MainActivity, "发送任务失败: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
+                android.widget.Toast.makeText(this@MainActivity, "Failed to send task: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
                 // 如果是从外部应用发起的，即使失败也切回原应用
                 if (isTaskFromExternalApp && originalPackageName != null) {
                     delay(500)
@@ -3384,12 +3384,12 @@ class MainActivity : AppCompatActivity() {
     private fun showScreenshotPermissionDialogForCompanion(onConfirm: () -> Unit) {
         try {
             val dialog = android.app.AlertDialog.Builder(this)
-                .setTitle("需要截图权限")
-                .setMessage("发送消息需要截图权限，是否立即授权？")
-                .setPositiveButton("立即授权") { _, _ ->
+                .setTitle("Screenshot permission needed")
+                .setMessage("Sending a message needs screenshot permission. Grant it now?")
+                .setPositiveButton("Grant now") { _, _ ->
                     onConfirm()
                 }
-                .setNegativeButton("取消") { _, _ ->
+                .setNegativeButton("Cancel") { _, _ ->
                     // 取消时清除待发送的消息
                     pendingQueryFromCompanion = null
                     pendingChatFragmentFromCompanion = null
@@ -3475,7 +3475,7 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Log.e(TAG, "显示截图权限弹窗失败: ${e.message}", e)
             // 如果显示失败，使用Toast提示
-            android.widget.Toast.makeText(this, "需要截图权限，请进入应用授权", android.widget.Toast.LENGTH_LONG).show()
+            android.widget.Toast.makeText(this, "Screenshot permission required — please grant it in the app", android.widget.Toast.LENGTH_LONG).show()
         }
     }
     
@@ -3485,12 +3485,12 @@ class MainActivity : AppCompatActivity() {
     private fun showAccessibilityServiceDialogForCompanion(onConfirm: () -> Unit) {
         try {
             val dialog = android.app.AlertDialog.Builder(this)
-                .setTitle("需要无障碍服务")
-                .setMessage("执行操作需要无障碍服务，是否前往设置开启？")
-                .setPositiveButton("去设置") { _, _ ->
+                .setTitle("Accessibility service needed")
+                .setMessage("This action needs the accessibility service. Open Settings to turn it on?")
+                .setPositiveButton("Open Settings") { _, _ ->
                     onConfirm()
                 }
-                .setNegativeButton("取消") { _, _ ->
+                .setNegativeButton("Cancel") { _, _ ->
                     // 取消时清除待发送的消息
                     pendingQueryFromCompanion = null
                     pendingChatFragmentFromCompanion = null
@@ -3576,7 +3576,7 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Log.e(TAG, "显示无障碍服务弹窗失败: ${e.message}", e)
             // 如果显示失败，使用Toast提示
-            android.widget.Toast.makeText(this, "需要无障碍服务，请进入应用开启", android.widget.Toast.LENGTH_LONG).show()
+            android.widget.Toast.makeText(this, "Accessibility service needed. Please enable it in the app.", android.widget.Toast.LENGTH_LONG).show()
         }
     }
     
@@ -3641,7 +3641,7 @@ class MainActivity : AppCompatActivity() {
             }
             
             val titleText = android.widget.TextView(this).apply {
-                text = "切换应用提醒"
+                text = "Switch App Reminder"
                 textSize = 16f
                 setTextColor(0xFF000000.toInt())
                 setTypeface(null, android.graphics.Typeface.BOLD)
@@ -3686,9 +3686,9 @@ class MainActivity : AppCompatActivity() {
             }
             
             val messageText = android.widget.TextView(this).apply {
-                text = "由于权限限制，无法获取您刚刚发起任务时的截图。\n" +
-                        "• 如果您的任务需要识别屏幕：请手动切换到原位置，然后点击\"已切换\"开始执行\n" +
-                        "• 否则请点击\"直接执行\"从当前页开始执行"
+                text = "Due to permission limits, we couldn't get the screenshot from when you started this task.\n" +
+                        "• If your task needs to see the screen: switch back to where you were, then tap \"Switched\" to start.\n" +
+                        "• Otherwise, tap \"Run directly\" to start from the current page."
                 textSize = 13.5f
                 setTextColor(0xFF000000.toInt())
                 setLineSpacing(0f, 1.1f)  // 设置行间距倍数，让文字更紧凑
@@ -3706,7 +3706,7 @@ class MainActivity : AppCompatActivity() {
             }
             
             val btnCancel = android.widget.Button(this).apply {
-                text = "取消"
+                text = "Cancel"
                 textSize = 16f
                 setTextColor(0xFF757575.toInt())
                 layoutParams = android.widget.LinearLayout.LayoutParams(
@@ -3719,7 +3719,7 @@ class MainActivity : AppCompatActivity() {
             }
             
             val btnDirect = android.widget.Button(this).apply {
-                text = "直接执行"
+                text = "Run directly"
                 textSize = 16f
                 setTextColor(resources.getColor(R.color.wechat_green, null))
                 layoutParams = android.widget.LinearLayout.LayoutParams(
@@ -3732,7 +3732,7 @@ class MainActivity : AppCompatActivity() {
             }
             
             val btnSwitched = android.widget.Button(this).apply {
-                text = "已切换"
+                text = "Switched"
                 textSize = 16f
                 setTextColor(resources.getColor(R.color.wechat_green, null))
                 layoutParams = android.widget.LinearLayout.LayoutParams(
@@ -3897,7 +3897,7 @@ class MainActivity : AppCompatActivity() {
             Log.d(TAG, "切换回原应用提示弹窗已显示")
         } catch (e: Exception) {
             Log.e(TAG, "显示切换回原应用提示弹窗失败: ${e.message}", e)
-            android.widget.Toast.makeText(this, "请手动切换回原应用", android.widget.Toast.LENGTH_LONG).show()
+            android.widget.Toast.makeText(this, "Please switch back to the original app manually", android.widget.Toast.LENGTH_LONG).show()
         }
     }
     
@@ -3944,11 +3944,11 @@ class MainActivity : AppCompatActivity() {
                     Log.d(TAG, "伴随模式：正在请求聊天截图权限...")
                 } else {
                     Log.w(TAG, "无法将应用带到前台，无法请求权限")
-                    android.widget.Toast.makeText(this@MainActivity, "无法请求截图权限，请手动进入应用授权", android.widget.Toast.LENGTH_LONG).show()
+                    android.widget.Toast.makeText(this@MainActivity, "Can't request screenshot permission. Please grant it manually in the app.", android.widget.Toast.LENGTH_LONG).show()
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "请求截图权限失败: ${e.message}", e)
-                android.widget.Toast.makeText(this@MainActivity, "请求截图权限失败: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
+                android.widget.Toast.makeText(this@MainActivity, "Failed to request screenshot permission: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -3982,10 +3982,10 @@ class MainActivity : AppCompatActivity() {
             // 添加标志，避免强制应用回到前台
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
-            android.widget.Toast.makeText(this, "已打开无障碍设置，请找到\"TopoClaw\"并开启", android.widget.Toast.LENGTH_LONG).show()
+            android.widget.Toast.makeText(this, "Accessibility settings opened. Find \"TopoClaw\" and turn it on.", android.widget.Toast.LENGTH_LONG).show()
         } catch (e: Exception) {
             Log.e(TAG, "打开无障碍设置失败: ${e.message}", e)
-            android.widget.Toast.makeText(this, "打开设置失败: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
+            android.widget.Toast.makeText(this, "Failed to open Settings: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -5018,7 +5018,7 @@ class MainActivity : AppCompatActivity() {
         if (accessibilityService == null) {
             addLog("错误：无障碍服务未连接")
             runOnUiThread {
-                Toast.makeText(this@MainActivity, "无障碍服务未连接，请重启应用", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "Accessibility service not connected. Please restart the app.", Toast.LENGTH_SHORT).show()
             }
             return
         }
@@ -5424,7 +5424,7 @@ class MainActivity : AppCompatActivity() {
         
         addLog("测试执行完成")
         runOnUiThread {
-            Toast.makeText(this@MainActivity, "测试执行完成", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@MainActivity, "Test run finished", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -5473,7 +5473,7 @@ class MainActivity : AppCompatActivity() {
             
             if (query.isEmpty()) {
                 Log.d(TAG, "sendChatMessage: 输入为空")
-                Toast.makeText(this, "请输入消息", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please enter a message", Toast.LENGTH_SHORT).show()
                 return
             }
             
@@ -5531,7 +5531,7 @@ class MainActivity : AppCompatActivity() {
         // 禁用发送按钮，启用结束任务按钮，显示加载状态
         try {
             binding.btnSendChat.isEnabled = false
-            binding.btnSendChat.text = "任务进行中..."
+            binding.btnSendChat.text = "Task in progress..."
             binding.btnStopTask.isEnabled = true
             Log.d(TAG, "performSendChatMessage: UI已更新")
         } catch (e: Exception) {
@@ -5559,7 +5559,7 @@ class MainActivity : AppCompatActivity() {
                         withContext(Dispatchers.Main) {
                             addChatMessage("系统", "截图权限未授权，请先授权")
                             binding.btnSendChat.isEnabled = true
-                            binding.btnSendChat.text = "发送"
+                            binding.btnSendChat.text = "Send"
                         }
                         return@launch
                     }
@@ -5599,7 +5599,7 @@ class MainActivity : AppCompatActivity() {
                     withContext(Dispatchers.Main) {
                         addChatMessage("小助手", "截图失败，请重试")
                         binding.btnSendChat.isEnabled = true
-                        binding.btnSendChat.text = "发送"
+                        binding.btnSendChat.text = "Send"
                     }
                     return@launch
                 }
@@ -5613,7 +5613,7 @@ class MainActivity : AppCompatActivity() {
                     withContext(Dispatchers.Main) {
                         addChatMessage("系统", "图片转换失败: ${e.message}")
                         binding.btnSendChat.isEnabled = true
-                        binding.btnSendChat.text = "发送"
+                        binding.btnSendChat.text = "Send"
                     }
                     return@launch
                 }
@@ -5662,7 +5662,7 @@ class MainActivity : AppCompatActivity() {
                     withContext(Dispatchers.Main) {
                         addChatMessage("系统", "Base64编码验证失败，请重试")
                         binding.btnSendChat.isEnabled = true
-                        binding.btnSendChat.text = "发送"
+                        binding.btnSendChat.text = "Send"
                     }
                     return@launch
                 }
@@ -5695,7 +5695,7 @@ class MainActivity : AppCompatActivity() {
                     withContext(Dispatchers.Main) {
                         addChatMessage("系统", "网络服务未初始化")
                         binding.btnSendChat.isEnabled = true
-                        binding.btnSendChat.text = "发送"
+                        binding.btnSendChat.text = "Send"
                     }
                     return@launch
                 }
@@ -5752,7 +5752,7 @@ class MainActivity : AppCompatActivity() {
                         addChatMessage("系统", "网络请求失败: ${e.message}")
                         addLog("网络请求异常: ${e.stackTraceToString()}")
                         binding.btnSendChat.isEnabled = true
-                        binding.btnSendChat.text = "发送"
+                        binding.btnSendChat.text = "Send"
                     }
                     return@launch
                 }
@@ -5975,7 +5975,7 @@ class MainActivity : AppCompatActivity() {
                     try {
                         withContext(Dispatchers.Main) {
                             binding.btnSendChat.isEnabled = true
-                            binding.btnSendChat.text = "发送"
+                            binding.btnSendChat.text = "Send"
                             binding.btnStopTask.isEnabled = false
                         }
                     } catch (e: Exception) {
@@ -5995,7 +5995,7 @@ class MainActivity : AppCompatActivity() {
             // 恢复发送按钮
             try {
                 binding.btnSendChat.isEnabled = true
-                binding.btnSendChat.text = "发送"
+                binding.btnSendChat.text = "Send"
             } catch (ex: Exception) {
                 Log.e(TAG, "恢复UI失败: ${ex.message}", ex)
             }
@@ -6593,7 +6593,7 @@ class MainActivity : AppCompatActivity() {
         // 恢复发送按钮，禁用结束任务按钮
         try {
             binding.btnSendChat.isEnabled = true
-            binding.btnSendChat.text = "发送"
+            binding.btnSendChat.text = "Send"
             binding.btnStopTask.isEnabled = false
         } catch (e: Exception) {
             Log.e(TAG, "恢复UI失败: ${e.message}", e)
@@ -6637,10 +6637,10 @@ class MainActivity : AppCompatActivity() {
         val chatService = ChatScreenshotService.getInstance()
         val hasPermission = chatService != null && chatService.isReady()
         if (hasPermission) {
-            binding.btnRequestChatPermission.text = "截图权限已授权 ✓"
+            binding.btnRequestChatPermission.text = "Screenshot permission granted ✓"
             binding.btnRequestChatPermission.isEnabled = false
         } else {
-            binding.btnRequestChatPermission.text = "授权截图权限"
+            binding.btnRequestChatPermission.text = "Grant screenshot permission"
             binding.btnRequestChatPermission.isEnabled = true
         }
     }
@@ -6726,12 +6726,12 @@ class MainActivity : AppCompatActivity() {
                             }
                         } else {
                             Log.w(TAG, "问字按钮Broadcast缺少截图数据")
-                            Toast.makeText(this@MainActivity, "截图数据缺失", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@MainActivity, "Screenshot data missing", Toast.LENGTH_SHORT).show()
                         }
                     }
                 } catch (e: Exception) {
                     Log.e(TAG, "处理问字按钮Broadcast失败: ${e.message}", e)
-                    Toast.makeText(this@MainActivity, "处理失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MainActivity, "Processing failed: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -6959,7 +6959,7 @@ class MainActivity : AppCompatActivity() {
             val switchSuccess = switchToChatPage()
             if (!switchSuccess) {
                 Log.e(TAG, "跳转到TopoClaw界面失败")
-                Toast.makeText(this@MainActivity, "跳转失败，请手动进入${ChatConstants.ASSISTANT_DISPLAY_NAME}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "Couldn't open it. Please open ${ChatConstants.ASSISTANT_DISPLAY_NAME} manually.", Toast.LENGTH_SHORT).show()
                 return@withContext
             }
             
@@ -6988,7 +6988,7 @@ class MainActivity : AppCompatActivity() {
             
             if (chatFragment == null) {
                 Log.e(TAG, "ChatFragment未找到，无法发送任务")
-                Toast.makeText(this@MainActivity, "界面加载失败，请重试", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "Failed to load the screen. Please try again.", Toast.LENGTH_SHORT).show()
             } else {
                 // 找到Fragment，发送任务（sendQuestionTask内部会再次检查Fragment状态）
                 Log.d(TAG, "找到ChatFragment，准备发送任务")
@@ -6996,7 +6996,7 @@ class MainActivity : AppCompatActivity() {
             }
         } catch (e: Exception) {
             Log.e(TAG, "处理问字按钮点击失败: ${e.message}", e)
-            Toast.makeText(this@MainActivity, "处理失败: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@MainActivity, "Processing failed: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -8359,10 +8359,10 @@ class MainActivity : AppCompatActivity() {
                     ConversationSessionNotifier.incrementUnread(this@MainActivity, targetConvId, 1)
                     // 若当前在对话列表页，实时更新缩略图
                     findConversationListFragment()?.updateLastMessage(targetConvId, previewText)
-                    Toast.makeText(this@MainActivity, "收到小助手新消息", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MainActivity, "New message from the assistant", Toast.LENGTH_SHORT).show()
                 } catch (e: Exception) {
                     Log.e(TAG, "handleAssistantSyncMessage 保存失败: ${e.message}", e)
-                    Toast.makeText(this@MainActivity, "收到小助手新消息", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MainActivity, "New message from the assistant", Toast.LENGTH_SHORT).show()
                 }
             }
         } catch (e: Exception) {
@@ -9086,7 +9086,7 @@ class MainActivity : AppCompatActivity() {
         val btnClose = dialogView.findViewById<android.widget.ImageButton>(R.id.btnClose)
         
         // 设置发送者信息
-        tvSenderName.text = request.senderName ?: "用户"
+        tvSenderName.text = request.senderName ?: "User"
         tvSenderImei.text = "IMEI: ${request.senderImei.take(8)}..."
         
         val dialog = android.app.AlertDialog.Builder(this)
@@ -9167,7 +9167,7 @@ class MainActivity : AppCompatActivity() {
                     val btnClose = dialogView.findViewById<android.widget.ImageButton>(R.id.btnClose)
                     
                     // 设置信息
-                    tvName.text = profile?.name ?: request.senderName ?: "用户"
+                    tvName.text = profile?.name ?: request.senderName ?: "User"
                     tvImei.text = "IMEI: ${request.senderImei}"
                     tvGender.text = profile?.gender ?: getString(R.string.not_filled)
                     tvAddress.text = profile?.address ?: getString(R.string.not_filled)
@@ -9200,9 +9200,9 @@ class MainActivity : AppCompatActivity() {
                 // 如果获取失败，只显示IMEI
                 withContext(Dispatchers.Main) {
                     android.app.AlertDialog.Builder(this@MainActivity)
-                        .setTitle("用户信息")
+                        .setTitle("User info")
                         .setMessage("IMEI: ${request.senderImei}")
-                        .setPositiveButton("确定", null)
+                        .setPositiveButton("OK", null)
                         .show()
                 }
             }
@@ -9223,7 +9223,7 @@ class MainActivity : AppCompatActivity() {
                 val apiService = CustomerServiceNetwork.getApiService()
                 
                 if (apiService == null) {
-                    android.widget.Toast.makeText(this@MainActivity, "无法连接到服务器", android.widget.Toast.LENGTH_SHORT).show()
+                    android.widget.Toast.makeText(this@MainActivity, "Can't connect to the server", android.widget.Toast.LENGTH_SHORT).show()
                     return@launch
                 }
                 
@@ -9268,14 +9268,14 @@ class MainActivity : AppCompatActivity() {
                     refreshConversationList()
                     refreshFriendFragmentBadge()
                     
-                    android.widget.Toast.makeText(this@MainActivity, "已同意好友申请", android.widget.Toast.LENGTH_SHORT).show()
+                    android.widget.Toast.makeText(this@MainActivity, "Friend request accepted", android.widget.Toast.LENGTH_SHORT).show()
                 } else {
                     val errorMsg = response.body()?.message ?: "同意失败"
                     android.widget.Toast.makeText(this@MainActivity, errorMsg, android.widget.Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "同意好友申请失败: ${e.message}", e)
-                android.widget.Toast.makeText(this@MainActivity, "同意好友申请失败: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
+                android.widget.Toast.makeText(this@MainActivity, "Failed to accept friend request: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -9290,7 +9290,7 @@ class MainActivity : AppCompatActivity() {
         // 刷新好友Fragment的红点显示
         refreshFriendFragmentBadge()
         
-        android.widget.Toast.makeText(this, "已拒绝好友申请", android.widget.Toast.LENGTH_SHORT).show()
+        android.widget.Toast.makeText(this, "Friend request declined", android.widget.Toast.LENGTH_SHORT).show()
     }
     
     /**
@@ -9846,7 +9846,7 @@ class MainActivity : AppCompatActivity() {
         testScope.launch {
             try {
                 Log.i(TAG, "========== 开始测试端侧模型 ==========")
-                Toast.makeText(this@MainActivity, "正在测试端侧模型...", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "Testing the on-device model...", Toast.LENGTH_SHORT).show()
                 
                 val manager = AnomalyDetectionManager.getInstance(this@MainActivity)
                 
@@ -9885,7 +9885,7 @@ class MainActivity : AppCompatActivity() {
             } catch (e: Exception) {
                 Log.e(TAG, "测试端侧模型时出错: ${e.message}", e)
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@MainActivity, "✗ 模型测试失败: ${e.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@MainActivity, "✗ Model test failed: ${e.message}", Toast.LENGTH_LONG).show()
                 }
             }
         }

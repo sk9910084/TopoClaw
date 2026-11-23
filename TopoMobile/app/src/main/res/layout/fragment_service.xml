@@ -98,7 +98,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="开启无障碍服务" />
+                android:text="Enable accessibility service" />
         </LinearLayout>
         
         <!-- 第二行：授权截图权限 和 授权悬浮窗权限 -->

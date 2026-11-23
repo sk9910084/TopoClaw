@@ -244,7 +244,7 @@ class TestFragment : Fragment() {
             if (_binding == null) {
                 Log.e(TAG, "startBatchTest: _binding为null，无法启动批测")
                 try {
-                    Toast.makeText(mainActivity, "界面未就绪，请稍后重试", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mainActivity, "Screen isn't ready yet. Please try again shortly.", Toast.LENGTH_SHORT).show()
                 } catch (e: Exception) {
                     Log.e(TAG, "startBatchTest: 显示Toast异常: ${e.message}", e)
                 }
@@ -255,7 +255,7 @@ class TestFragment : Fragment() {
             if (!isAdded) {
                 Log.e(TAG, "startBatchTest: Fragment未添加，无法启动批测")
                 try {
-                    Toast.makeText(mainActivity, "界面未就绪，请稍后重试", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mainActivity, "Screen isn't ready yet. Please try again shortly.", Toast.LENGTH_SHORT).show()
                 } catch (e: Exception) {
                     Log.e(TAG, "startBatchTest: 显示Toast异常: ${e.message}", e)
                 }
@@ -266,7 +266,7 @@ class TestFragment : Fragment() {
             if (view == null) {
                 Log.e(TAG, "startBatchTest: Fragment view为null，无法启动批测")
                 try {
-                    Toast.makeText(mainActivity, "界面未就绪，请稍后重试", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mainActivity, "Screen isn't ready yet. Please try again shortly.", Toast.LENGTH_SHORT).show()
                 } catch (e: Exception) {
                     Log.e(TAG, "startBatchTest: 显示Toast异常: ${e.message}", e)
                 }
@@ -301,7 +301,7 @@ class TestFragment : Fragment() {
                 Log.e(TAG, "startBatchTest: testScope为null，无法启动批测")
                 mainActivity.addLog("批测失败：协程作用域未初始化")
                 try {
-                    Toast.makeText(mainActivity, "批测失败：系统未就绪", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mainActivity, "Batch test failed: system not ready", Toast.LENGTH_SHORT).show()
                 } catch (e: Exception) {
                     Log.e(TAG, "startBatchTest: 显示Toast异常: ${e.message}", e)
                 }
@@ -313,7 +313,7 @@ class TestFragment : Fragment() {
                 Log.e(TAG, "startBatchTest: testScope不可用，无法启动批测")
                 mainActivity.addLog("批测失败：协程作用域不可用")
                 try {
-                    Toast.makeText(mainActivity, "批测失败：系统未就绪", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mainActivity, "Batch test failed: system not ready", Toast.LENGTH_SHORT).show()
                 } catch (e: Exception) {
                     Log.e(TAG, "startBatchTest: 显示Toast异常: ${e.message}", e)
                 }
@@ -363,7 +363,7 @@ class TestFragment : Fragment() {
                             withContext(Dispatchers.Main) {
                                 try {
                                     context?.let {
-                                        Toast.makeText(it, "批测失败：无法切换到聊天页面", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(it, "Batch test failed: couldn't switch to the chat screen", Toast.LENGTH_SHORT).show()
                                     }
                                 } catch (e: Exception) {
                                     Log.e(TAG, "批测：显示Toast异常: ${e.message}", e)
@@ -405,7 +405,7 @@ class TestFragment : Fragment() {
                     Log.e(TAG, "批测失败：ChatFragment未找到（已重试${maxRetries}次）")
                     withContext(Dispatchers.Main) {
                         context?.let {
-                            Toast.makeText(it, "批测失败：ChatFragment未找到（已重试${maxRetries}次）", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(it, "Batch test failed: ChatFragment not found (retried ${maxRetries} times)", Toast.LENGTH_SHORT).show()
                         }
                         mainActivity.addLog("批测失败：ChatFragment未找到（已重试${maxRetries}次）")
                         stopBatchTest()
@@ -419,7 +419,7 @@ class TestFragment : Fragment() {
                     mainActivity.addLog("批测失败：ChatFragment的view未创建完成")
                     withContext(Dispatchers.Main) {
                         context?.let {
-                            Toast.makeText(it, "批测失败：界面未就绪，请稍后重试", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(it, "Batch test failed: screen isn't ready yet. Please try again shortly.", Toast.LENGTH_SHORT).show()
                         }
                         stopBatchTest()
                     }
@@ -441,7 +441,7 @@ class TestFragment : Fragment() {
                             withContext(Dispatchers.Main) {
                                 try {
                                     context?.let {
-                                        Toast.makeText(it, "批测失败：创建批测控制器异常", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(it, "Batch test failed: error creating the batch test controller", Toast.LENGTH_SHORT).show()
                                     }
                                 } catch (toastEx: Exception) {
                                     Log.e(TAG, "批测：显示Toast异常: ${toastEx.message}", toastEx)
@@ -514,7 +514,7 @@ class TestFragment : Fragment() {
                     mainActivity.addLog("批测失败：网络服务未初始化")
                     withContext(Dispatchers.Main) {
                         context?.let {
-                            Toast.makeText(it, "批测失败：网络服务未初始化", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(it, "Batch test failed: network service not initialized", Toast.LENGTH_SHORT).show()
                         }
                         stopBatchTest()
                     }
@@ -542,7 +542,7 @@ class TestFragment : Fragment() {
                             withContext(Dispatchers.Main) {
                                 try {
                                     context?.let {
-                                        Toast.makeText(it, "批测失败：网络请求异常", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(it, "Batch test failed: network request error", Toast.LENGTH_SHORT).show()
                                     }
                                 } catch (toastEx: Exception) {
                                     Log.e(TAG, "批测：显示Toast异常: ${toastEx.message}", toastEx)
@@ -570,7 +570,7 @@ class TestFragment : Fragment() {
                         mainActivity.addLog("批测失败：解析响应体异常: ${e.message}")
                         withContext(Dispatchers.Main) {
                             context?.let {
-                                Toast.makeText(it, "批测失败：解析响应体异常", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(it, "Batch test failed: error parsing the response", Toast.LENGTH_SHORT).show()
                             }
                             stopBatchTest()
                         }
@@ -596,7 +596,7 @@ class TestFragment : Fragment() {
                                 mainActivity.addLog("批测失败：ChatFragment状态无效")
                                 withContext(Dispatchers.Main) {
                                     context?.let {
-                                        Toast.makeText(it, "批测失败：界面未就绪", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(it, "Batch test failed: screen isn't ready", Toast.LENGTH_SHORT).show()
                                     }
                                     stopBatchTest()
                                 }
@@ -615,7 +615,7 @@ class TestFragment : Fragment() {
                                         withContext(Dispatchers.Main) {
                                             try {
                                                 context?.let {
-                                                    Toast.makeText(it, "批测失败：界面未就绪", Toast.LENGTH_SHORT).show()
+                                                    Toast.makeText(it, "Batch test failed: screen isn't ready", Toast.LENGTH_SHORT).show()
                                                 }
                                             } catch (toastEx: Exception) {
                                                 Log.e(TAG, "显示Toast异常: ${toastEx.message}", toastEx)
@@ -632,7 +632,7 @@ class TestFragment : Fragment() {
                                         withContext(Dispatchers.Main) {
                                             try {
                                                 context?.let {
-                                                    Toast.makeText(it, "批测失败：系统未就绪", Toast.LENGTH_SHORT).show()
+                                                    Toast.makeText(it, "Batch test failed: system not ready", Toast.LENGTH_SHORT).show()
                                                 }
                                             } catch (toastEx: Exception) {
                                                 Log.e(TAG, "显示Toast异常: ${toastEx.message}", toastEx)
@@ -657,7 +657,7 @@ class TestFragment : Fragment() {
                                             withContext(Dispatchers.Main) {
                                                 try {
                                                     context?.let {
-                                                        Toast.makeText(it, "批测失败：界面未就绪", Toast.LENGTH_SHORT).show()
+                                                        Toast.makeText(it, "Batch test failed: screen isn't ready", Toast.LENGTH_SHORT).show()
                                                     }
                                                 } catch (toastEx: Exception) {
                                                     Log.e(TAG, "显示Toast异常: ${toastEx.message}", toastEx)
@@ -678,7 +678,7 @@ class TestFragment : Fragment() {
                                             withContext(Dispatchers.Main) {
                                                 try {
                                                     context?.let {
-                                                        Toast.makeText(it, "批测失败：界面未就绪", Toast.LENGTH_SHORT).show()
+                                                        Toast.makeText(it, "Batch test failed: screen isn't ready", Toast.LENGTH_SHORT).show()
                                                     }
                                                 } catch (toastEx: Exception) {
                                                     Log.e(TAG, "显示Toast异常: ${toastEx.message}", toastEx)
@@ -705,7 +705,7 @@ class TestFragment : Fragment() {
                                             withContext(Dispatchers.Main) {
                                                 try {
                                                     context?.let {
-                                                        Toast.makeText(it, "批测异常: ${e.message}", Toast.LENGTH_SHORT).show()
+                                                        Toast.makeText(it, "Batch test error: ${e.message}", Toast.LENGTH_SHORT).show()
                                                     }
                                                 } catch (toastEx: Exception) {
                                                     Log.e(TAG, "显示Toast异常: ${toastEx.message}", toastEx)
@@ -726,7 +726,7 @@ class TestFragment : Fragment() {
                                         withContext(Dispatchers.Main) {
                                             try {
                                                 context?.let {
-                                                    Toast.makeText(it, "批测异常: ${e.message}", Toast.LENGTH_SHORT).show()
+                                                    Toast.makeText(it, "Batch test error: ${e.message}", Toast.LENGTH_SHORT).show()
                                                 }
                                             } catch (toastEx: Exception) {
                                                 Log.e(TAG, "显示Toast异常: ${toastEx.message}", toastEx)
@@ -744,7 +744,7 @@ class TestFragment : Fragment() {
                                 withContext(Dispatchers.Main) {
                                     try {
                                         context?.let {
-                                            Toast.makeText(it, "批测失败：批测控制器未初始化", Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(it, "Batch test failed: batch test controller not initialized", Toast.LENGTH_SHORT).show()
                                         }
                                     } catch (toastEx: Exception) {
                                         Log.e(TAG, "显示Toast异常: ${toastEx.message}", toastEx)
@@ -757,7 +757,7 @@ class TestFragment : Fragment() {
                             mainActivity.addLog("批测失败：查询列表为空")
                             withContext(Dispatchers.Main) {
                                 context?.let {
-                                    Toast.makeText(it, "批测：查询列表为空", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(it, "Batch test: query list is empty", Toast.LENGTH_SHORT).show()
                                 }
                                 stopBatchTest()
                             }
@@ -770,7 +770,7 @@ class TestFragment : Fragment() {
                         mainActivity.addLog("批测失败：未获取到查询列表（响应体为空或查询列表为空）")
                         withContext(Dispatchers.Main) {
                             context?.let {
-                                Toast.makeText(it, "批测：未获取到查询列表", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(it, "Batch test: couldn't get the query list", Toast.LENGTH_SHORT).show()
                             }
                             stopBatchTest()
                         }
@@ -786,7 +786,7 @@ class TestFragment : Fragment() {
                     mainActivity.addLog("批测失败：HTTP ${response.code()}, 错误: $errorBody")
                     withContext(Dispatchers.Main) {
                         context?.let {
-                            Toast.makeText(it, "批测失败：${response.code()}", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(it, "Batch test failed: ${response.code()}", Toast.LENGTH_SHORT).show()
                         }
                         stopBatchTest()
                     }
@@ -798,7 +798,7 @@ class TestFragment : Fragment() {
                         withContext(Dispatchers.Main) {
                             try {
                                 context?.let {
-                                    Toast.makeText(it, "批测异常: ${e.message}", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(it, "Batch test error: ${e.message}", Toast.LENGTH_SHORT).show()
                                 }
                             } catch (toastEx: Exception) {
                                 Log.e(TAG, "批测：显示Toast异常: ${toastEx.message}", toastEx)
@@ -832,7 +832,7 @@ class TestFragment : Fragment() {
                 mainActivity?.isBatchTesting = false
                 try {
                     context?.let {
-                        Toast.makeText(it, "批测失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(it, "Batch test failed: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
                 } catch (toastEx: Exception) {
                     Log.e(TAG, "startBatchTest: 显示Toast异常: ${toastEx.message}", toastEx)
@@ -887,7 +887,7 @@ class TestFragment : Fragment() {
         val mainActivity = activity as? MainActivity
         if (mainActivity == null) {
             Log.e(TAG, "stopBatchTest: MainActivity为null，无法停止批测")
-            Toast.makeText(context, "无法停止批测：MainActivity未找到", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Can't stop the batch test: MainActivity not found", Toast.LENGTH_SHORT).show()
             return
         }
         
@@ -969,7 +969,7 @@ class TestFragment : Fragment() {
         // 显示Toast（如果Fragment还存在且已attached）
         try {
             val ctx = context ?: mainActivity
-            Toast.makeText(ctx, "批测已停止", Toast.LENGTH_SHORT).show()
+            Toast.makeText(ctx, "Batch test stopped", Toast.LENGTH_SHORT).show()
             Log.d(TAG, "stopBatchTest: Toast 已显示")
         } catch (e: Exception) {
             Log.e(TAG, "stopBatchTest: 显示Toast异常: ${e.message}", e)
@@ -989,21 +989,21 @@ class TestFragment : Fragment() {
         if (mainActivity == null) {
             Log.e(TAG, "startDynamicBatchTest: MainActivity为null")
             context?.let {
-                Toast.makeText(it, "动态批测失败：MainActivity未找到", Toast.LENGTH_SHORT).show()
+                Toast.makeText(it, "Dynamic batch test failed: MainActivity not found", Toast.LENGTH_SHORT).show()
             }
             return
         }
         
         if (dynamicBatchTestController?.state?.value?.isRunning == true) {
             Log.w(TAG, "startDynamicBatchTest: 动态批测正在进行中")
-            Toast.makeText(mainActivity, "动态批测正在进行中", Toast.LENGTH_SHORT).show()
+            Toast.makeText(mainActivity, "Dynamic batch test is running", Toast.LENGTH_SHORT).show()
             return
         }
         
         // 切换到聊天页面
         if (!mainActivity.switchToChatPage()) {
             Log.e(TAG, "startDynamicBatchTest: 切换到聊天页面失败")
-            Toast.makeText(mainActivity, "动态批测失败：无法切换到聊天页面", Toast.LENGTH_SHORT).show()
+            Toast.makeText(mainActivity, "Dynamic batch test failed: couldn't switch to the chat screen", Toast.LENGTH_SHORT).show()
             return
         }
         
@@ -1014,7 +1014,7 @@ class TestFragment : Fragment() {
             if (chatFragment == null || !chatFragment.isAdded || chatFragment.view == null) {
                 Log.e(TAG, "startDynamicBatchTest: ChatFragment未就绪")
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(mainActivity, "动态批测失败：聊天界面未就绪", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mainActivity, "Dynamic batch test failed: chat screen isn't ready", Toast.LENGTH_SHORT).show()
                 }
                 return@launch
             }
@@ -1027,7 +1027,7 @@ class TestFragment : Fragment() {
             } catch (e: Exception) {
                 Log.e(TAG, "startDynamicBatchTest: 启动异常: ${e.message}", e)
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(mainActivity, "动态批测启动失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mainActivity, "Failed to start the dynamic batch test: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -1044,7 +1044,7 @@ class TestFragment : Fragment() {
         updateDynamicBatchTestUI()
         
         context?.let {
-            Toast.makeText(it, "动态批测已停止", Toast.LENGTH_SHORT).show()
+            Toast.makeText(it, "Dynamic batch test stopped", Toast.LENGTH_SHORT).show()
         }
         
         Log.d(TAG, "========== stopDynamicBatchTest 执行完成 ==========")
@@ -1116,7 +1116,7 @@ class TestFragment : Fragment() {
                 mainActivity.addLog("批测失败：无障碍服务未连接，请开启无障碍服务")
                 withContext(Dispatchers.Main) {
                     context?.let {
-                        Toast.makeText(it, "批测失败：无障碍服务未连接", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(it, "Batch test failed: accessibility service not connected", Toast.LENGTH_SHORT).show()
                     }
                     stopBatchTest()
                 }
@@ -1270,7 +1270,7 @@ class TestFragment : Fragment() {
             mainActivity?.addLog("批测异常：executeBatchQueries执行失败: ${e.message}")
             withContext(Dispatchers.Main) {
                 context?.let {
-                    Toast.makeText(it, "批测异常: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(it, "Batch test error: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
                 stopBatchTest()
             }

@@ -65,14 +65,14 @@ object VersionUpdateOverlayManager {
             
             // 设置标题
             val titleTextView = dialogView.findViewById<TextView>(R.id.tvDialogTitle)
-            titleTextView?.text = if (forceUpdate) "检测到版本更新" else "检测到版本更新"
+            titleTextView?.text = if (forceUpdate) "Update available" else "Update available"
             
             // 设置版本信息
             val currentVersionTextView = dialogView.findViewById<TextView>(R.id.tvCurrentVersion)
-            currentVersionTextView?.text = "当前版本：$currentVersion"
+            currentVersionTextView?.text = "Current version: $currentVersion"
             
             val latestVersionTextView = dialogView.findViewById<TextView>(R.id.tvLatestVersion)
-            latestVersionTextView?.text = "最新版本：$latestVersion"
+            latestVersionTextView?.text = "Latest version: $latestVersion"
             
             // 设置更新消息（将每行前面加上点号变成无序列表）
             val updateMessageTextView = dialogView.findViewById<TextView>(R.id.tvUpdateMessage)
@@ -165,7 +165,7 @@ object VersionUpdateOverlayManager {
                         Log.e(TAG, "打开更新链接失败: ${e.message}", e)
                         android.widget.Toast.makeText(
                             context,
-                            "无法打开更新链接",
+                            "Can't open the update link",
                             android.widget.Toast.LENGTH_SHORT
                         ).show()
                     }

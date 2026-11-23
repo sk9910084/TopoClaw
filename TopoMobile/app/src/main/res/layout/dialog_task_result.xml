@@ -39,7 +39,7 @@
             android:lineSpacingMultiplier="1.2"
             android:padding="16dp"
             android:background="@drawable/text_background_rounded"
-            android:text="任务已完成" />
+            android:text="Task completed" />
     </ScrollView>
 
     <!-- 按钮区域（固定在底部） -->

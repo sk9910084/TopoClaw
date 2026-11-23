@@ -52,11 +52,11 @@ object AppInstallConfirmOverlayManager {
             
             // 设置标题
             val titleTextView = dialogView.findViewById<TextView>(R.id.tvDialogTitle)
-            titleTextView?.text = "是否允许下载应用"
+            titleTextView?.text = "Allow downloading the app?"
             
             // 设置消息内容
             val messageTextView = dialogView.findViewById<TextView>(R.id.tvDialogMessage)
-            messageTextView?.text = "系统将自动在软件商店中搜索并下载应用\"$appName\"，是否允许？"
+            messageTextView?.text = "The system will search for and download \"$appName\" from the app store. Allow?"
             
             val btnCancel = dialogView.findViewById<android.widget.Button>(R.id.btnCancel)
             val btnConfirm = dialogView.findViewById<android.widget.Button>(R.id.btnConfirm)

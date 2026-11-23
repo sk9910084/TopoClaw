@@ -24,7 +24,7 @@
             android:layout_height="48dp"
             android:src="@drawable/ic_arrow_back"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="返回"
+            android:contentDescription="Back"
             android:tint="@android:color/black"
             android:padding="12dp"
             android:layout_marginStart="-8dp" />
@@ -33,7 +33,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="好友记录"
+            android:text="Friend history"
             android:textSize="18sp"
             android:textColor="@android:color/black"
             android:gravity="center" />
@@ -59,7 +59,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="待处理的好友申请"
+                android:text="Pending friend requests"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
@@ -90,7 +90,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="被添加的好友"
+                android:text="Friends who added you"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
@@ -121,7 +121,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="添加的好友"
+                android:text="Friends added"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"

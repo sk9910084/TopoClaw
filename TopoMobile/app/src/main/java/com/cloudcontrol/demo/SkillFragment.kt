@@ -249,7 +249,7 @@ class SkillFragment : Fragment() {
                 // 显示刷新成功提示
                 withContext(Dispatchers.Main) {
                     if (isAdded && context != null) {
-                        Toast.makeText(context, "已刷新", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Refreshed", Toast.LENGTH_SHORT).show()
                     }
                 }
             } catch (e: Exception) {
@@ -257,7 +257,7 @@ class SkillFragment : Fragment() {
                 // 显示刷新失败提示
                 withContext(Dispatchers.Main) {
                     if (isAdded && context != null) {
-                        Toast.makeText(context, "刷新失败", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Refresh failed", Toast.LENGTH_SHORT).show()
                     }
                 }
             } finally {
@@ -290,7 +290,7 @@ class SkillFragment : Fragment() {
                 // 显示刷新失败提示
                 withContext(Dispatchers.Main) {
                     if (isAdded && context != null) {
-                        Toast.makeText(context, "刷新失败", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Refresh failed", Toast.LENGTH_SHORT).show()
                     }
                 }
             } finally {
@@ -1037,7 +1037,7 @@ class SkillFragment : Fragment() {
     private fun updateLoadMoreView(isLoading: Boolean) {
         loadMoreView?.let { view ->
             if (view is TextView) {
-                view.text = if (isLoading) "正在加载..." else "加载更多..."
+                view.text = if (isLoading) "Loading..." else "Load more..."
             }
         }
     }
@@ -1100,12 +1100,12 @@ class SkillFragment : Fragment() {
                 }, 300)
             } else {
                 Log.e(TAG, "executeSkill: MainActivity为空")
-                Toast.makeText(requireContext(), "执行技能失败: 无法获取MainActivity", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Failed to run skill: MainActivity not available", Toast.LENGTH_SHORT).show()
             }
                 
         } catch (e: Exception) {
             Log.e(TAG, "executeSkill异常: ${e.message}", e)
-            Toast.makeText(requireContext(), "执行技能失败: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to run skill: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -1493,14 +1493,14 @@ class SkillFragment : Fragment() {
                     if (success) {
                         // 从父容器移除
                         parent?.removeView(container)
-                        Toast.makeText(requireContext(), "技能已删除", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Skill deleted", Toast.LENGTH_SHORT).show()
                         // 更新"我的技能"标题，显示新的技能数量
                         updateMySkillsTitle()
                     } else {
                         // 删除失败，恢复位置
                         cardView.translationX = 0f
                         cardView.alpha = 1f
-                        Toast.makeText(requireContext(), "删除失败", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Delete failed", Toast.LENGTH_SHORT).show()
                     }
                 }
             })
@@ -1521,14 +1521,14 @@ class SkillFragment : Fragment() {
             // 如果该技能在临时存储中，删除它（因为已经添加到"我的技能"了）
             TemporarySkillManager.deleteTemporarySkill(requireContext(), skill.id)
             if (showToast) {
-                Toast.makeText(requireContext(), "技能已添加到我的技能", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Skill added to My Skills", Toast.LENGTH_SHORT).show()
             }
             // 刷新"我的技能"列表
             loadAndDisplaySkills()
             return true
         } else {
             if (showToast) {
-                Toast.makeText(requireContext(), "添加失败，该技能可能已存在", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Add failed: this skill may already exist", Toast.LENGTH_SHORT).show()
             }
             return false
         }
@@ -1586,7 +1586,7 @@ class SkillFragment : Fragment() {
                             // 刷新列表
                             loadAndDisplaySkills()
                         } else {
-                            Toast.makeText(requireContext(), "更新失败", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "Update failed", Toast.LENGTH_SHORT).show()
                             // 即使更新失败，也恢复显示
                             restoreTitleView(parent, editText, finalTitle, skill.id, index, layoutParams)
                         }
@@ -1653,7 +1653,7 @@ class SkillFragment : Fragment() {
      */
     private fun showShareOptionsDialog(skill: Skill) {
         android.app.AlertDialog.Builder(requireContext())
-            .setTitle("选择分享方式")
+            .setTitle("Choose how to share")
             .setItems(arrayOf("分享到技能社区", "分享到好友/群组")) { _, which ->
                 when (which) {
                     0 -> shareSkillToCommunity(skill)
@@ -1691,13 +1691,13 @@ class SkillFragment : Fragment() {
         }
         
         if (options.isEmpty()) {
-            Toast.makeText(requireContext(), "暂无好友或群组可分享", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "No friends or groups to share with", Toast.LENGTH_SHORT).show()
             return
         }
         
         // 显示选择对话框
         android.app.AlertDialog.Builder(requireContext())
-            .setTitle("选择分享对象")
+            .setTitle("Choose who to share with")
             .setItems(options.toTypedArray()) { _, which ->
                 val selectedType = optionTypes[which]
                 val skillMessage = formatSkillAsMessage(skill)
@@ -1756,13 +1756,13 @@ class SkillFragment : Fragment() {
                 chatFragment?.addSkillMessage(skill, "我", isUserMessage = true)
                 mainActivity?.switchToChatFragment(friendConversation)
                 
-                Toast.makeText(requireContext(), "技能已分享给好友", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Skill shared with friend", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(requireContext(), "无法连接到服务器，请稍后重试", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Cannot connect to the server. Please try again later.", Toast.LENGTH_SHORT).show()
             }
         } catch (e: Exception) {
             Log.e(TAG, "分享技能到好友失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "分享失败：${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Share failed: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -1794,13 +1794,13 @@ class SkillFragment : Fragment() {
                 chatFragment?.addSkillMessage(skill, "我", isUserMessage = true)
                 mainActivity?.switchToChatFragment(groupConversation)
                 
-                Toast.makeText(requireContext(), "技能已分享到群组", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Skill shared to group", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(requireContext(), "无法连接到服务器，请稍后重试", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Cannot connect to the server. Please try again later.", Toast.LENGTH_SHORT).show()
             }
         } catch (e: Exception) {
             Log.e(TAG, "分享技能到群组失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "分享失败：${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Share failed: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -1812,7 +1812,7 @@ class SkillFragment : Fragment() {
         val localSuccess = SkillManager.saveSkillToCommunity(requireContext(), skill)
         
         if (localSuccess) {
-            Toast.makeText(requireContext(), "技能已分享到本地技能社区", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Skill shared to the local skill community", Toast.LENGTH_SHORT).show()
             // 刷新技能社区列表
             refreshCommunitySkillsList()
         } else {
@@ -1848,16 +1848,16 @@ class SkillFragment : Fragment() {
                     Log.d(TAG, "技能已存在，显示覆盖对话框")
                     withContext(Dispatchers.Main) {
                         android.app.AlertDialog.Builder(requireContext())
-                            .setTitle("云端技能已存在")
-                            .setMessage("技能「${skill.title}」已在云端技能服务中存在，是否要覆盖上传？\n\n注意：覆盖上传会创建新的技能记录，不会删除旧记录。")
-                            .setPositiveButton("覆盖上传") { _, _ ->
+                            .setTitle("Skill already exists in the cloud")
+                            .setMessage("Skill \"${skill.title}\" already exists in the cloud skill service. Overwrite it?\n\nNote: Overwriting creates a new skill record and does not delete the old one.")
+                            .setPositiveButton("Overwrite") { _, _ ->
                                 Log.d(TAG, "用户选择覆盖上传")
                                 // 用户选择覆盖，继续上传
                                 performUploadForShare(skill, skillServiceUrl)
                             }
-                            .setNegativeButton("跳过") { _, _ ->
+                            .setNegativeButton("Skip") { _, _ ->
                                 Log.d(TAG, "用户选择跳过上传")
-                                Toast.makeText(requireContext(), "已跳过云端上传", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(requireContext(), "Cloud upload skipped", Toast.LENGTH_SHORT).show()
                             }
                             .show()
                     }
@@ -1910,7 +1910,7 @@ class SkillFragment : Fragment() {
                 Log.e(TAG, "分享上传异常: ${e.message}", e)
                 e.printStackTrace()
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(requireContext(), "云端上传失败：${e.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), "Cloud upload failed: ${e.message}", Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -1975,7 +1975,7 @@ class SkillFragment : Fragment() {
                 val apiService = SkillServiceNetwork.getApiService()
                 
                 if (apiService == null) {
-                    Toast.makeText(requireContext(), "技能服务未初始化", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Skill service not initialized", Toast.LENGTH_SHORT).show()
                     return@launch
                 }
                 
@@ -1986,7 +1986,7 @@ class SkillFragment : Fragment() {
                     val errorBody = response.errorBody()?.string()
                     Log.e(TAG, "获取技能列表失败: code=${response.code()}, errorBody=$errorBody")
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(requireContext(), "获取技能列表失败: HTTP ${response.code()}", Toast.LENGTH_LONG).show()
+                        Toast.makeText(requireContext(), "Failed to get skill list: HTTP ${response.code()}", Toast.LENGTH_LONG).show()
                     }
                     return@launch
                 }
@@ -2025,7 +2025,7 @@ class SkillFragment : Fragment() {
             } catch (e: Exception) {
                 Log.e(TAG, "获取技能列表异常: ${e.message}", e)
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(requireContext(), "获取技能列表失败：${e.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), "Failed to get skill list: ${e.message}", Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -2229,7 +2229,7 @@ class SkillFragment : Fragment() {
             } catch (e: Exception) {
                 Log.e(TAG, "同步技能异常: ${e.message}", e)
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(requireContext(), "同步失败：${e.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), "Sync failed: ${e.message}", Toast.LENGTH_LONG).show()
                     binding.swipeRefreshLayoutCommunity.isRefreshing = false
                 }
             }
@@ -2385,7 +2385,7 @@ class SkillFragment : Fragment() {
                 val localSuccess = SkillManager.saveSkillToCommunity(requireContext(), skill)
                 if (localSuccess) {
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(requireContext(), "已分享到本地技能社区", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Shared to the local skill community", Toast.LENGTH_SHORT).show()
                         refreshCommunitySkillsList()
                     }
                 }
@@ -2401,14 +2401,14 @@ class SkillFragment : Fragment() {
                     // 技能已存在，询问用户是否覆盖
                     withContext(Dispatchers.Main) {
                         android.app.AlertDialog.Builder(requireContext())
-                            .setTitle("云端技能已存在")
-                            .setMessage("技能「${skill.title}」已在云端技能服务中存在，是否要覆盖上传？\n\n注意：覆盖上传会创建新的技能记录，不会删除旧记录。")
-                            .setPositiveButton("覆盖上传") { _, _ ->
+                            .setTitle("Skill already exists in the cloud")
+                            .setMessage("Skill \"${skill.title}\" already exists in the cloud skill service. Overwrite it?\n\nNote: Overwriting creates a new skill record and does not delete the old one.")
+                            .setPositiveButton("Overwrite") { _, _ ->
                                 // 用户选择覆盖，继续上传
                                 performUpload(skill, skillServiceUrl)
                             }
-                            .setNegativeButton("跳过") { _, _ ->
-                                Toast.makeText(requireContext(), "已跳过云端上传", Toast.LENGTH_SHORT).show()
+                            .setNegativeButton("Skip") { _, _ ->
+                                Toast.makeText(requireContext(), "Cloud upload skipped", Toast.LENGTH_SHORT).show()
                                 binding.btnUploadMySkills.isEnabled = true
                             }
                             .setOnDismissListener {
@@ -2437,7 +2437,7 @@ class SkillFragment : Fragment() {
      */
     private fun performUpload(skill: Skill, skillServiceUrl: String) {
         // 显示加载提示
-        val loadingToast = Toast.makeText(requireContext(), "正在上传到云端...", Toast.LENGTH_SHORT)
+        val loadingToast = Toast.makeText(requireContext(), "Uploading to cloud...", Toast.LENGTH_SHORT)
         loadingToast.show()
         
         lifecycleScope.launch {
@@ -2464,7 +2464,7 @@ class SkillFragment : Fragment() {
                 
             } catch (e: Exception) {
                 Log.e(TAG, "上传技能异常: ${e.message}", e)
-                Toast.makeText(requireContext(), "云端上传失败：${e.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Cloud upload failed: ${e.message}", Toast.LENGTH_LONG).show()
             } finally {
                 // 恢复上传按钮
                 binding.btnUploadMySkills.isEnabled = true
@@ -2504,15 +2504,15 @@ class SkillFragment : Fragment() {
      */
     private fun showDeleteConfirmDialog(skill: Skill) {
         android.app.AlertDialog.Builder(requireContext())
-            .setTitle("删除技能")
-            .setMessage("确定要删除技能「${skill.title}」吗？")
-            .setPositiveButton("删除") { _, _ ->
+            .setTitle("Delete skill")
+            .setMessage("Delete skill \"${skill.title}\"?")
+            .setPositiveButton("Delete") { _, _ ->
                 val success = SkillManager.deleteSkill(requireContext(), skill.id)
                 if (success) {
-                    Toast.makeText(requireContext(), "技能已删除", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Skill deleted", Toast.LENGTH_SHORT).show()
                     loadAndDisplaySkills() // 刷新列表
                 } else {
-                    Toast.makeText(requireContext(), "删除失败", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Delete failed", Toast.LENGTH_SHORT).show()
                 }
             }
             .setNegativeButton(getString(R.string.cancel), null)
@@ -2652,10 +2652,10 @@ class SkillFragment : Fragment() {
         val count = selectedSkills.size
         if (multiSelectModeType == 0) {
             // 上传模式
-            binding.tvSelectedCountMySkills.text = "已选择 $count 个"
+            binding.tvSelectedCountMySkills.text = "Selected $count"
         } else {
             // 下载模式
-            binding.tvSelectedCountCommunity.text = "已选择 $count 个"
+            binding.tvSelectedCountCommunity.text = "Selected $count"
         }
     }
     
@@ -2802,8 +2802,8 @@ class SkillFragment : Fragment() {
     private fun importSkillsFromSOPs() {
         // 显示进度提示
         val progressDialog = android.app.ProgressDialog(requireContext()).apply {
-            setTitle("导入本地技能库")
-            setMessage("正在读取SOPs.json...")
+            setTitle("Import local skill library")
+            setMessage("Reading SOPs.json...")
             setProgressStyle(android.app.ProgressDialog.STYLE_HORIZONTAL)
             setCancelable(false)
             show()
@@ -2820,7 +2820,7 @@ class SkillFragment : Fragment() {
                 if (tasks.isEmpty()) {
                     withContext(Dispatchers.Main) {
                         progressDialog.dismiss()
-                        Toast.makeText(requireContext(), "SOPs.json中没有找到任务数据", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "No task data found in SOPs.json", Toast.LENGTH_SHORT).show()
                     }
                     return@launch
                 }
@@ -2828,7 +2828,7 @@ class SkillFragment : Fragment() {
                 // 更新进度对话框
                 withContext(Dispatchers.Main) {
                     progressDialog.max = totalCount
-                    progressDialog.setMessage("正在导入技能...")
+                    progressDialog.setMessage("Importing skills...")
                 }
                 
                 // 先加载所有已有技能，用于去重检查
@@ -2847,7 +2847,7 @@ class SkillFragment : Fragment() {
                         // 更新进度（在主线程更新UI）
                         withContext(Dispatchers.Main) {
                             progressDialog.progress = index
-                            progressDialog.setMessage("正在导入: ${task.query} (${index + 1}/$totalCount)")
+                            progressDialog.setMessage("Importing: ${task.query} (${index + 1}/$totalCount)")
                         }
                         
                         // 检查query和initial_task_breakdown是否有效
@@ -2910,7 +2910,7 @@ class SkillFragment : Fragment() {
                     }
                     
                     android.app.AlertDialog.Builder(requireContext())
-                        .setTitle("导入完成")
+                        .setTitle("Import complete")
                         .setMessage(message)
                         .setPositiveButton(getString(R.string.ok), null)
                         .show()
@@ -2920,7 +2920,7 @@ class SkillFragment : Fragment() {
                 Log.e(TAG, "导入技能库失败: ${e.message}", e)
                 withContext(Dispatchers.Main) {
                     progressDialog.dismiss()
-                    Toast.makeText(requireContext(), "导入失败: ${e.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), "Import failed: ${e.message}", Toast.LENGTH_LONG).show()
                 }
             }
         }

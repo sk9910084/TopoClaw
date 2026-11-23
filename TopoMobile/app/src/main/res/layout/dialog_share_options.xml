@@ -24,7 +24,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="选择分享方式"
+            android:text="Choose how to share"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
@@ -36,7 +36,7 @@
             android:layout_height="40dp"
             android:src="@android:drawable/ic_menu_close_clear_cancel"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="关闭"
+            android:contentDescription="Close"
             android:tint="#666666"
             android:padding="8dp" />
     </LinearLayout>
@@ -74,7 +74,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="分享给应用内好友"
+                android:text="Share with in-app friends"
                 android:textSize="16sp"
                 android:textColor="#212121"
                 android:textStyle="normal" />
@@ -82,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="发送给应用内的好友"
+                android:text="Send to in-app friends"
                 android:textSize="13sp"
                 android:textColor="#757575" />
         </LinearLayout>
@@ -102,7 +102,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="分享到其他应用"
+                android:text="Share to other apps"
                 android:textSize="16sp"
                 android:textColor="#212121"
                 android:textStyle="normal" />
@@ -110,7 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="通过系统分享功能分享"
+                android:text="Share via system share"
                 android:textSize="13sp"
                 android:textColor="#757575" />
         </LinearLayout>

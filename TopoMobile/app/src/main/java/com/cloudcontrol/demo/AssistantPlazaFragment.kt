@@ -374,9 +374,9 @@ class AssistantPlazaFragment : Fragment() {
     private fun creatorDisplayLetter(creatorLine: String): String {
         val sep = " · "
         return if (creatorLine.contains(sep)) {
-            creatorLine.substringAfterLast(sep).trim().take(1).ifEmpty { "创" }
+            creatorLine.substringAfterLast(sep).trim().take(1).ifEmpty { "C" }
         } else {
-            creatorLine.take(1).ifEmpty { "创" }
+            creatorLine.take(1).ifEmpty { "C" }
         }
     }
 
@@ -437,13 +437,13 @@ class AssistantPlazaFragment : Fragment() {
             ivAsst,
             tvAsstLetter,
             item.avatar,
-            item.name.take(1).ifEmpty { "助" },
+            item.name.take(1).ifEmpty { "A" },
             cacheKey = "plaza_asst_${item.id}",
             validationTag = "plaza_intro_asst_${item.id}",
         )
         val ivCreator = dialogView.findViewById<ImageView>(R.id.ivIntroCreatorAvatar)
         val tvCreatorLetter = dialogView.findViewById<TextView>(R.id.tvIntroCreatorLetter)
-        val cLetter = if (creatorLine == "—") "创" else creatorDisplayLetter(creatorLine)
+        val cLetter = if (creatorLine == "—") "C" else creatorDisplayLetter(creatorLine)
         bindPlazaAvatarAsync(
             ivCreator,
             tvCreatorLetter,
@@ -620,7 +620,7 @@ class AssistantPlazaFragment : Fragment() {
                 ivAvatar,
                 tvLetter,
                 item.avatar,
-                item.name.take(1).ifEmpty { "助" },
+                item.name.take(1).ifEmpty { "A" },
                 cacheKey = "plaza_asst_${item.id}",
                 validationTag = item.id,
             )
@@ -724,7 +724,7 @@ class AssistantPlazaFragment : Fragment() {
             }
             val ivAvatar = card.findViewById<ImageView>(R.id.ivCardAvatar)
             val tvLetter = card.findViewById<TextView>(R.id.tvCardAvatarLetter)
-            tvLetter.text = assistant.name.take(1).ifEmpty { "助" }
+            tvLetter.text = assistant.name.take(1).ifEmpty { "A" }
             if (!assistant.avatar.isNullOrBlank()) {
                 try {
                     val decodedBytes = Base64.decode(assistant.avatar, Base64.DEFAULT)

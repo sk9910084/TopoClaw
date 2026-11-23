@@ -610,12 +610,12 @@ class ServiceSettingsFragment : Fragment() {
         }
         val parsed = raw.toIntOrNull()
         if (parsed == null) {
-            Toast.makeText(requireContext(), "请输入有效整数（秒）", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Please enter a valid whole number (seconds)", Toast.LENGTH_SHORT).show()
             loadCloudApiReadTimeoutSetting()
             return
         }
         if (parsed < 10 || parsed > 600) {
-            Toast.makeText(requireContext(), "请输入 10～600 之间的秒数", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Please enter a value between 10 and 600 seconds", Toast.LENGTH_SHORT).show()
             loadCloudApiReadTimeoutSetting()
             return
         }
@@ -648,12 +648,12 @@ class ServiceSettingsFragment : Fragment() {
         }
         val parsed = raw.toFloatOrNull()
         if (parsed == null) {
-            Toast.makeText(requireContext(), "请输入有效数字", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Please enter a valid number", Toast.LENGTH_SHORT).show()
             loadScreenshotCompressionRatioSetting()
             return
         }
         if (parsed < 0.05f || parsed > 1.0f) {
-            Toast.makeText(requireContext(), "请输入 0.05～1.0 之间的数", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Please enter a value between 0.05 and 1.0", Toast.LENGTH_SHORT).show()
             loadScreenshotCompressionRatioSetting()
             return
         }
@@ -677,11 +677,11 @@ class ServiceSettingsFragment : Fragment() {
             // 验证范围：0-5000ms
             val validDelayMs = when {
                 delayMs < 0 -> {
-                    Toast.makeText(requireContext(), "延迟时间不能小于0，已设置为0", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Delay can't be less than 0 — set to 0", Toast.LENGTH_SHORT).show()
                     0
                 }
                 delayMs > 5000 -> {
-                    Toast.makeText(requireContext(), "延迟时间不能大于5000ms，已设置为5000", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Delay can't be more than 5000 ms — set to 5000", Toast.LENGTH_SHORT).show()
                     5000
                 }
                 else -> delayMs
@@ -694,7 +694,7 @@ class ServiceSettingsFragment : Fragment() {
             }
             (activity as? MainActivity)?.addLog("动作完成后延迟时间已设置为：${validDelayMs}ms")
         } catch (e: NumberFormatException) {
-            Toast.makeText(requireContext(), "请输入有效的数字", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Please enter a valid number", Toast.LENGTH_SHORT).show()
             // 恢复为默认值
             val prefs = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
             val defaultDelay = prefs.getInt("action_completion_delay_ms", 500)
@@ -741,10 +741,10 @@ class ServiceSettingsFragment : Fragment() {
         try {
             val intent = Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)
             startActivity(intent)
-            Toast.makeText(requireContext(), "请在系统设置中为 TopoClaw 开启通知使用权", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Please turn on notification access for TopoClaw in system Settings", Toast.LENGTH_LONG).show()
         } catch (e: Exception) {
             Log.e(TAG, "打开通知使用权设置失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "无法打开通知使用权设置", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Can't open notification access settings", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -785,7 +785,7 @@ class ServiceSettingsFragment : Fragment() {
     private fun applyServerUrl() {
         val serverUrl = binding.etServerUrl.text.toString().trim()
         if (serverUrl.isEmpty()) {
-            Toast.makeText(requireContext(), "请输入云侧服务地址", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Please enter the cloud service address", Toast.LENGTH_SHORT).show()
             return
         }
         
@@ -800,7 +800,7 @@ class ServiceSettingsFragment : Fragment() {
         NetworkService.initialize(serverUrl, requireContext())
         
         (activity as? MainActivity)?.addLog("已更新云侧服务地址: $serverUrl")
-        Toast.makeText(requireContext(), "云侧服务地址已更新", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Cloud service address updated", Toast.LENGTH_SHORT).show()
     }
 
     private fun applyExtraServiceUrls() {
@@ -820,7 +820,7 @@ class ServiceSettingsFragment : Fragment() {
         (activity as? MainActivity)?.addLog(
             "已更新扩展服务地址：客服=${ServiceUrlConfig.getCustomerServiceUrl(context)}，聊天助手=${ServiceUrlConfig.getChatAssistantUrl(context)}，技能社区=${ServiceUrlConfig.getSkillCommunityUrl(context)}"
         )
-        Toast.makeText(requireContext(), "扩展服务地址已更新", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Extension service address updated", Toast.LENGTH_SHORT).show()
     }
     
     /**
@@ -836,7 +836,7 @@ class ServiceSettingsFragment : Fragment() {
         allUrls.addAll(serverUrlHistory)
         
         if (allUrls.isEmpty()) {
-            Toast.makeText(requireContext(), "暂无地址记录", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "No saved addresses", Toast.LENGTH_SHORT).show()
             return
         }
         
@@ -1061,7 +1061,7 @@ class ServiceSettingsFragment : Fragment() {
                 requireActivity().runOnUiThread {
                     loadingDialog.dismiss()
                     if (isAdded) {
-                        Toast.makeText(requireContext(), "获取失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Failed to load: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -1174,7 +1174,7 @@ class ServiceSettingsFragment : Fragment() {
                 requireActivity().runOnUiThread {
                     loadingDialog.dismiss()
                     if (isAdded) {
-                        Toast.makeText(requireContext(), "获取失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Failed to load: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -1315,10 +1315,10 @@ class ServiceSettingsFragment : Fragment() {
             val intent = android.content.Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS)
             startActivity(intent)
             (activity as? MainActivity)?.addLog("已打开无障碍设置，请找到\"TopoClaw\"并开启")
-            Toast.makeText(requireContext(), "请找到\"TopoClaw\"并开启", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Find \"TopoClaw\" and turn it on", Toast.LENGTH_LONG).show()
         } catch (e: Exception) {
             Log.e(TAG, "打开无障碍设置失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "打开设置失败", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to open Settings", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -1337,15 +1337,15 @@ class ServiceSettingsFragment : Fragment() {
                 }
                 startActivityForResult(intent, REQUEST_OVERLAY_PERMISSION)
                 (activity as? MainActivity)?.addLog("正在请求悬浮窗权限...")
-                Toast.makeText(requireContext(), "请在设置中开启'显示在其他应用的上层'权限", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Please turn on the 'Display over other apps' permission in Settings", Toast.LENGTH_LONG).show()
             } else {
                 (activity as? MainActivity)?.addLog("悬浮窗权限已授权")
-                Toast.makeText(requireContext(), "悬浮窗权限已授权", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Overlay permission granted", Toast.LENGTH_SHORT).show()
                 InteractionOverlayManager.initialize(requireContext())
             }
         } else {
             (activity as? MainActivity)?.addLog("Android版本过低，不需要悬浮窗权限")
-            Toast.makeText(requireContext(), "Android版本过低，不需要悬浮窗权限", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Android version is too old — no overlay permission needed", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -1389,7 +1389,7 @@ class ServiceSettingsFragment : Fragment() {
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS) 
                 == PackageManager.PERMISSION_GRANTED) {
                 (activity as? MainActivity)?.addLog("通知权限已授权")
-                Toast.makeText(requireContext(), "通知权限已授权", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Notification permission granted", Toast.LENGTH_SHORT).show()
                 // 更新快捷设置按钮状态
                 updateQuickSettingsButtons()
             } else {
@@ -1404,10 +1404,10 @@ class ServiceSettingsFragment : Fragment() {
                 }
                 startActivity(intent)
                 (activity as? MainActivity)?.addLog("已打开通知设置页面")
-                Toast.makeText(requireContext(), "请在设置中开启通知权限", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Please turn on notification permission in Settings", Toast.LENGTH_LONG).show()
             } catch (e: Exception) {
                 Log.e(TAG, "打开通知设置失败: ${e.message}", e)
-                Toast.makeText(requireContext(), "无法打开通知设置", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Can't open notification settings", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -1416,13 +1416,13 @@ class ServiceSettingsFragment : Fragment() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO) 
             == PackageManager.PERMISSION_GRANTED) {
             (activity as? MainActivity)?.addLog("麦克风权限已授权")
-            Toast.makeText(requireContext(), "麦克风权限已授权", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Microphone permission granted", Toast.LENGTH_SHORT).show()
             // 更新快捷设置按钮状态
             updateQuickSettingsButtons()
         } else {
             requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), REQUEST_MICROPHONE_PERMISSION)
             (activity as? MainActivity)?.addLog("正在请求麦克风权限...")
-            Toast.makeText(requireContext(), "请在弹窗中授予麦克风权限", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Please grant microphone permission in the popup", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -1431,12 +1431,12 @@ class ServiceSettingsFragment : Fragment() {
             == PackageManager.PERMISSION_GRANTED
         ) {
             (activity as? MainActivity)?.addLog("地理位置权限已授权")
-            Toast.makeText(requireContext(), "地理位置权限已授权", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Location permission granted", Toast.LENGTH_SHORT).show()
             updateQuickSettingsButtons()
         } else {
             requestPermissions(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), REQUEST_NETWORK_LOCATION_PERMISSION)
             (activity as? MainActivity)?.addLog("正在请求地理位置权限...")
-            Toast.makeText(requireContext(), "请在弹窗中授予地理位置权限", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Please grant location permission in the popup", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -1575,10 +1575,10 @@ class ServiceSettingsFragment : Fragment() {
         if (requestCode == REQUEST_NOTIFICATION_PERMISSION) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 (activity as? MainActivity)?.addLog("通知权限已授权")
-                Toast.makeText(requireContext(), "通知权限已授权", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Notification permission granted", Toast.LENGTH_SHORT).show()
             } else {
                 (activity as? MainActivity)?.addLog("通知权限授权失败")
-                Toast.makeText(requireContext(), "通知权限授权失败，请手动在设置中开启", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Failed to grant notification permission. Please turn it on manually in Settings.", Toast.LENGTH_LONG).show()
             }
             // 更新快捷设置按钮状态
             updateQuickSettingsButtons()
@@ -1604,19 +1604,19 @@ class ServiceSettingsFragment : Fragment() {
             ) == PackageManager.PERMISSION_GRANTED
             if (granted) {
                 (activity as? MainActivity)?.addLog("地理位置权限已授权")
-                Toast.makeText(requireContext(), "地理位置权限已授权", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Location permission granted", Toast.LENGTH_SHORT).show()
             } else {
                 (activity as? MainActivity)?.addLog("地理位置权限授权失败")
-                Toast.makeText(requireContext(), "地理位置权限授权失败，请手动在设置中开启", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Failed to grant location permission. Please turn it on manually in Settings.", Toast.LENGTH_LONG).show()
             }
             updateQuickSettingsButtons()
         } else if (requestCode == REQUEST_MICROPHONE_PERMISSION) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 (activity as? MainActivity)?.addLog("麦克风权限已授权")
-                Toast.makeText(requireContext(), "麦克风权限已授权", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Microphone permission granted", Toast.LENGTH_SHORT).show()
             } else {
                 (activity as? MainActivity)?.addLog("麦克风权限授权失败")
-                Toast.makeText(requireContext(), "麦克风权限授权失败，请手动在设置中开启", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Failed to grant microphone permission. Please turn it on manually in Settings.", Toast.LENGTH_LONG).show()
             }
             // 更新快捷设置按钮状态
             updateQuickSettingsButtons()
@@ -1642,7 +1642,7 @@ class ServiceSettingsFragment : Fragment() {
                 }
                 
                 (activity as? MainActivity)?.addLog("聊天截图权限已授权，正在启动服务...")
-                Toast.makeText(requireContext(), "聊天截图权限已授权", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Chat screenshot permission granted", Toast.LENGTH_SHORT).show()
                 
                 // 延迟检查服务是否就绪（给服务一些时间初始化）
                 view?.postDelayed({
@@ -1659,21 +1659,21 @@ class ServiceSettingsFragment : Fragment() {
                 }, 1000)
             } else {
                 (activity as? MainActivity)?.addLog("聊天截图权限授权失败")
-                Toast.makeText(requireContext(), "聊天截图权限授权失败", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Failed to grant chat screenshot permission", Toast.LENGTH_SHORT).show()
             }
         } else if (requestCode == REQUEST_OVERLAY_PERMISSION) {
             // 处理悬浮窗权限
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (android.provider.Settings.canDrawOverlays(requireContext())) {
                     (activity as? MainActivity)?.addLog("悬浮窗权限已授权")
-                    Toast.makeText(requireContext(), "悬浮窗权限已授权，正在初始化交互覆盖层...", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Overlay permission granted. Initializing the interaction overlay...", Toast.LENGTH_SHORT).show()
                     // 重新初始化覆盖层
                     InteractionOverlayManager.initialize(requireContext())
                     // 更新快捷设置按钮状态
                     updateQuickSettingsButtons()
                 } else {
                     (activity as? MainActivity)?.addLog("悬浮窗权限授权失败")
-                    Toast.makeText(requireContext(), "悬浮窗权限授权失败，请手动在设置中开启", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), "Failed to grant overlay permission. Please turn it on manually in Settings.", Toast.LENGTH_LONG).show()
                 }
             }
         }

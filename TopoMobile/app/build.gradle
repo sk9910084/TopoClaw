@@ -39,8 +39,8 @@ android {
         applicationId "com.cloudcontrol.demo"
         minSdk 21
         targetSdk 34
-        versionCode 21101
-        versionName "2.1.2"
+        versionCode 21102
+        versionName "2.1.2-en"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         

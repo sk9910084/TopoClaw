@@ -38,7 +38,7 @@
             android:layout_marginTop="-11dp"
             android:src="@drawable/ic_expand"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="扩大"
+            android:contentDescription="Expand"
             android:padding="8dp"
             android:tint="#757575"
             android:scaleType="fitCenter" />
@@ -85,7 +85,7 @@
             android:layout_marginEnd="8dp"
             android:background="@drawable/bg_ask_screen_chip"
             android:gravity="center"
-            android:text="问屏"
+            android:text="Ask about this screen"
             android:textColor="#8A94A6"
             android:textSize="11sp"
             android:textStyle="bold"
@@ -103,7 +103,7 @@
             android:layout_marginTop="3dp"
             android:src="@drawable/ic_mic"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="语音输入"
+            android:contentDescription="Voice input"
             android:padding="8dp" />
     </FrameLayout>
 
@@ -152,7 +152,7 @@
                 android:layout_height="80dp"
                 android:src="@drawable/ic_mic"
                 android:background="@drawable/voice_record_button_background"
-                android:contentDescription="点击录音"
+                android:contentDescription="Tap to record"
                 android:paddingTop="22dp"
                 android:paddingBottom="18dp"
                 android:paddingStart="20dp"

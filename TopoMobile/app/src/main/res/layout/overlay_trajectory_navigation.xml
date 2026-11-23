@@ -16,7 +16,7 @@
         android:textColor="@android:color/white"
         android:background="@drawable/button_primary_background"
         android:layout_marginBottom="8dp"
-        android:contentDescription="返回" />
+        android:contentDescription="Back" />
 
     <!-- 主页按钮 -->
     <Button
@@ -28,7 +28,7 @@
         android:textColor="@android:color/white"
         android:background="@drawable/button_primary_background"
         android:layout_marginBottom="8dp"
-        android:contentDescription="主页" />
+        android:contentDescription="Home" />
 
     <!-- 结束轨迹采集按钮 -->
     <Button
@@ -40,7 +40,7 @@
         android:textColor="@android:color/white"
         android:background="@drawable/button_primary_background"
         android:layout_marginBottom="8dp"
-        android:contentDescription="结束轨迹采集" />
+        android:contentDescription="Stop trajectory recording" />
 
     <!-- 控制按钮（切换左右位置） -->
     <Button
@@ -51,7 +51,7 @@
         android:textSize="20sp"
         android:textColor="@android:color/white"
         android:background="@drawable/button_primary_background"
-        android:contentDescription="切换悬浮窗位置" />
+        android:contentDescription="Change floating window position" />
 
 </LinearLayout>
 

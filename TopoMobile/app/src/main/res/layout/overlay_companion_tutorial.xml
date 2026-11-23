@@ -50,7 +50,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:scaleType="fitCenter"
-                        android:contentDescription="悬浮球图标" />
+                        android:contentDescription="Floating ball icon" />
                 </FrameLayout>
 
                 <!-- 标题 -->
@@ -59,7 +59,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="伴随悬浮球使用指南"
+                    android:text="Floating ball usage guide"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="#FF333333"
@@ -99,7 +99,7 @@
                         android:id="@+id/tvTopTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="滑动到顶部"
+                        android:text="Scroll to top"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:textColor="#FF333333"
@@ -109,7 +109,7 @@
                         android:id="@+id/tvTopDesc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="返回TopoClaw"
+                        android:text="Back to TopoClaw"
                         android:textSize="14sp"
                         android:textColor="#FF666666" />
                 </LinearLayout>
@@ -147,7 +147,7 @@
                         android:id="@+id/tvBottomTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="滑动到底部"
+                        android:text="Scroll to bottom"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:textColor="#FF333333"
@@ -157,7 +157,7 @@
                         android:id="@+id/tvBottomDesc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="关闭TopoClaw"
+                        android:text="Close TopoClaw"
                         android:textSize="14sp"
                         android:textColor="#FF666666" />
                 </LinearLayout>
@@ -195,7 +195,7 @@
                         android:id="@+id/tvDoubleClickTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="双击"
+                        android:text="Double-tap"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:textColor="#FF333333"
@@ -205,7 +205,7 @@
                         android:id="@+id/tvDoubleClickDesc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="放缩悬浮球"
+                        android:text="Resize floating ball"
                         android:textSize="14sp"
                         android:textColor="#FF666666" />
                 </LinearLayout>
@@ -243,7 +243,7 @@
                         android:id="@+id/tvClickTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="点击"
+                        android:text="Tap"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:textColor="#FF333333"
@@ -253,7 +253,7 @@
                         android:id="@+id/tvClickDesc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="发起任务\n初次使用需要在TopoClaw内点击悬浮球激活"
+                        android:text="Start a task\nTap the floating ball in TopoClaw to activate on first use"
                         android:textSize="14sp"
                         android:textColor="#FF666666" />
                 </LinearLayout>
@@ -291,7 +291,7 @@
                         android:id="@+id/tvLongPressTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="长按"
+                        android:text="Long press"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:textColor="#FF333333"
@@ -301,7 +301,7 @@
                         android:id="@+id/tvLongPressDesc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="返回TopoClaw"
+                        android:text="Back to TopoClaw"
                         android:textSize="14sp"
                         android:textColor="#FF666666" />
                 </LinearLayout>
@@ -312,7 +312,7 @@
                 android:id="@+id/btnGotIt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="我知道了"
+                android:text="Got it"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:textStyle="bold"

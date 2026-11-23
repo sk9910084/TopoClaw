@@ -52,7 +52,7 @@ class SimpleInputMethodService : InputMethodService() {
     
     companion object {
         private const val TAG = "SimpleInputMethod"
-        private const val VOICE_DISABLED_MESSAGE = "语音识别功能已临时下线。你仍可使用文本输入继续聊天。"
+        private const val VOICE_DISABLED_MESSAGE = "Speech recognition is temporarily unavailable. You can still chat using text input."
         const val ACTION_INPUT_TEXT = "com.cloudcontrol.demo.INPUT_TEXT"
         const val EXTRA_TEXT = "text"
         const val EXTRA_FROM_MODEL = "from_model"
@@ -483,7 +483,7 @@ class SimpleInputMethodService : InputMethodService() {
                 }
                 
                 // 左侧：返回按键（用于返回普通符号模式）
-                val backSymbolKey = createKeyButton("符号", isFunctionKey = true).apply {
+                val backSymbolKey = createKeyButton("Symbols", isFunctionKey = true).apply {
                     layoutParams = LinearLayout.LayoutParams(0, dpToPx(42)).apply {
                         weight = 1.2f
                         setMargins(dpToPx(2), 0, dpToPx(2), 0)
@@ -664,7 +664,7 @@ class SimpleInputMethodService : InputMethodService() {
                 }
                 
                 // 左侧：符号按键（用于进入更多符号层）
-                val moreSymbolKey = createKeyButton("符号", isFunctionKey = true).apply {
+                val moreSymbolKey = createKeyButton("Symbols", isFunctionKey = true).apply {
                     layoutParams = LinearLayout.LayoutParams(0, dpToPx(42)).apply {
                         weight = 1.2f
                         setMargins(dpToPx(2), 0, dpToPx(2), 0)
@@ -1298,7 +1298,7 @@ class SimpleInputMethodService : InputMethodService() {
         }
         
         val langKey = Button(this).apply {
-            text = if (isChineseMode) "中" else "EN"
+            text = if (isChineseMode) "CN" else "EN"
             textSize = 14f
             setTextColor(Color.BLACK)
             setPadding(0, 0, 0, 0)
@@ -1361,7 +1361,7 @@ class SimpleInputMethodService : InputMethodService() {
         
         // 回车键
         val enterKey = Button(this).apply {
-            text = "换行"
+            text = "Enter"
             textSize = 14f  // 功能键文字大小
             setTextColor(Color.BLACK)
             // 减小padding，让背景更小更紧凑
@@ -1836,7 +1836,7 @@ class SimpleInputMethodService : InputMethodService() {
                     
                     // 添加"输入法切换"文字
                     val labelText = android.widget.TextView(this@SimpleInputMethodService).apply {
-                        text = "输入法切换"
+                        text = "Switch input method"
                         textSize = 12f
                         setTextColor(Color.parseColor("#666666"))
                         gravity = Gravity.CENTER
@@ -1876,7 +1876,7 @@ class SimpleInputMethodService : InputMethodService() {
                                         startActivity(intent)
                                     } catch (e: Exception) {
                                         Log.e(TAG, "跳转到键盘设置页面失败: ${e.message}", e)
-                                        Toast.makeText(this@SimpleInputMethodService, "打开设置失败", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(this@SimpleInputMethodService, "Failed to open Settings", Toast.LENGTH_SHORT).show()
                                     }
                                 }
                                 false
@@ -1901,7 +1901,7 @@ class SimpleInputMethodService : InputMethodService() {
                             startActivity(intent)
                         } catch (e: Exception) {
                             Log.e(TAG, "跳转到键盘设置页面失败: ${e.message}", e)
-                            Toast.makeText(this@SimpleInputMethodService, "打开设置失败", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@SimpleInputMethodService, "Failed to open Settings", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -1964,7 +1964,7 @@ class SimpleInputMethodService : InputMethodService() {
                 
                 // 添加"输入法切换"文字
                 val labelText = android.widget.TextView(this@SimpleInputMethodService).apply {
-                    text = "输入法切换"
+                    text = "Switch input method"
                     textSize = 10f
                     setTextColor(Color.parseColor("#666666"))
                     gravity = Gravity.CENTER
@@ -2004,7 +2004,7 @@ class SimpleInputMethodService : InputMethodService() {
                                     startActivity(intent)
                                 } catch (e: Exception) {
                                     Log.e(TAG, "跳转到键盘设置页面失败: ${e.message}", e)
-                                    Toast.makeText(this@SimpleInputMethodService, "打开设置失败", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this@SimpleInputMethodService, "Failed to open Settings", Toast.LENGTH_SHORT).show()
                                 }
                             }
                             false
@@ -2029,7 +2029,7 @@ class SimpleInputMethodService : InputMethodService() {
                         startActivity(intent)
                     } catch (e: Exception) {
                         Log.e(TAG, "跳转到键盘设置页面失败: ${e.message}", e)
-                        Toast.makeText(this@SimpleInputMethodService, "打开设置失败", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@SimpleInputMethodService, "Failed to open Settings", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -2974,12 +2974,12 @@ class SimpleInputMethodService : InputMethodService() {
                 Log.d(TAG, "语音识别准备就绪")
                 isListening = true
                 updateVoiceButtonInKeyboard()
-                showVoiceStatus("正在听...")
+                showVoiceStatus("Listening...")
             }
             
             override fun onBeginningOfSpeech() {
                 Log.d(TAG, "开始说话")
-                showVoiceStatus("正在识别...")
+                showVoiceStatus("Recognizing...")
             }
             
             override fun onRmsChanged(rmsdB: Float) {
@@ -2992,14 +2992,14 @@ class SimpleInputMethodService : InputMethodService() {
             
             override fun onEndOfSpeech() {
                 Log.d(TAG, "说话结束")
-                showVoiceStatus("处理中...")
+                showVoiceStatus("Processing...")
             }
             
             override fun onError(error: Int) {
                 val errorMessage = when (error) {
                     SpeechRecognizer.ERROR_AUDIO -> "音频错误"
                     SpeechRecognizer.ERROR_CLIENT -> "客户端错误"
-                    SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS -> "权限不足"
+                    SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS -> "Insufficient permissions"
                     SpeechRecognizer.ERROR_NETWORK -> "网络错误"
                     SpeechRecognizer.ERROR_NETWORK_TIMEOUT -> "网络超时"
                     SpeechRecognizer.ERROR_NO_MATCH -> "无匹配结果"
@@ -3015,7 +3015,7 @@ class SimpleInputMethodService : InputMethodService() {
                 
                 // 如果是权限错误，提示用户
                 if (error == SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS) {
-                    showVoiceStatus("需要麦克风权限")
+                    showVoiceStatus("Microphone permission required")
                 }
             }
             
@@ -3035,7 +3035,7 @@ class SimpleInputMethodService : InputMethodService() {
                     hideVoiceStatus()
                 } else {
                     Log.w(TAG, "未识别到任何内容")
-                    showVoiceStatus("未识别到内容")
+                    showVoiceStatus("Nothing recognized")
                 }
             }
             
@@ -3079,7 +3079,7 @@ class SimpleInputMethodService : InputMethodService() {
             // 检查权限
             if (!checkAudioPermission()) {
                 Log.w(TAG, "没有录音权限，无法启动语音识别")
-                showVoiceStatus("需要麦克风权限")
+                showVoiceStatus("Microphone permission required")
                 return
             }
             
@@ -3101,7 +3101,7 @@ class SimpleInputMethodService : InputMethodService() {
             
             if (mAsr == null) {
                 Log.w(TAG, "科大讯飞ASR未初始化，无法启动语音识别")
-                showVoiceStatus("识别器未就绪，请稍后重试")
+                showVoiceStatus("Recognizer not ready. Please try again later")
                 return
             }
             
@@ -3122,7 +3122,7 @@ class SimpleInputMethodService : InputMethodService() {
                 if (!isLongPressVoiceMode) {
                     updateVoiceButtonInKeyboard()
                 }
-                showVoiceStatus("正在听...")
+                showVoiceStatus("Listening...")
                 
                 // 初始化录音管理器
                 if (audioRecorderManager == null) {
@@ -3138,7 +3138,7 @@ class SimpleInputMethodService : InputMethodService() {
                 if (!isLongPressVoiceMode) {
                     updateVoiceButtonInKeyboard()
                 }
-                showVoiceStatus("启动失败: $ret")
+                showVoiceStatus("Failed to start: $ret")
             }
         } catch (e: Exception) {
             Log.e(TAG, "启动语音识别失败: ${e.message}", e)
@@ -3148,7 +3148,7 @@ class SimpleInputMethodService : InputMethodService() {
             if (!isLongPressVoiceMode) {
                 updateVoiceButtonInKeyboard()
             }
-            showVoiceStatus("启动失败: ${e.message}")
+            showVoiceStatus("Failed to start: ${e.message}")
         }
     }
     
@@ -3214,7 +3214,7 @@ class SimpleInputMethodService : InputMethodService() {
                 }
                 putExtra(RecognizerIntent.EXTRA_LANGUAGE, language)
                 putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, language)
-                putExtra(RecognizerIntent.EXTRA_PROMPT, "请说话...")
+                putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak now...")
                 putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 5)
             }
             
@@ -3267,7 +3267,7 @@ class SimpleInputMethodService : InputMethodService() {
                             Log.d(TAG, "✓ 已启动语音识别应用: $foundPackage")
                             isListening = false
                             updateVoiceButtonInKeyboard()
-                            showVoiceStatus("已启动语音助手")
+                            showVoiceStatus("Voice assistant started")
                             return
                         } else {
                             Log.w(TAG, "无法获取 $foundPackage 的启动Intent")
@@ -3316,7 +3316,7 @@ class SimpleInputMethodService : InputMethodService() {
                         xiaobuIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                         startActivity(xiaobuIntent)
                         Log.d(TAG, "✓ 已启动语音助手")
-                        showVoiceStatus("已启动小布助手")
+                        showVoiceStatus("Xiao Bu assistant started")
                         isListening = false
                         updateVoiceButtonInKeyboard()
                         xiaobuStarted = true
@@ -3327,7 +3327,7 @@ class SimpleInputMethodService : InputMethodService() {
                 
                 if (!xiaobuStarted) {
                     // 显示详细的提示信息
-                    showVoiceStatus("ColorOS需使用OPPO开放平台SDK")
+                    showVoiceStatus("ColorOS requires the OPPO Open Platform SDK")
                 }
                 return
             }
@@ -3345,18 +3345,18 @@ class SimpleInputMethodService : InputMethodService() {
             Log.e(TAG, "✗ 启动语音识别Activity失败: 未找到Activity", e)
             isListening = false
             updateVoiceButtonInKeyboard()
-            showVoiceStatus("未找到语音识别应用")
+            showVoiceStatus("No speech recognition app found")
         } catch (e: SecurityException) {
             Log.e(TAG, "✗ 启动语音识别Activity失败: 权限不足", e)
             isListening = false
             updateVoiceButtonInKeyboard()
-            showVoiceStatus("权限不足")
+            showVoiceStatus("Insufficient permissions")
         } catch (e: Exception) {
             Log.e(TAG, "✗ 启动语音识别Intent失败: ${e.message}", e)
             e.printStackTrace()
             isListening = false
             updateVoiceButtonInKeyboard()
-            showVoiceStatus("启动失败: ${e.message}")
+            showVoiceStatus("Failed to start: ${e.message}")
         }
     }
     
@@ -3454,13 +3454,13 @@ class SimpleInputMethodService : InputMethodService() {
                     0 -> {
                         // 识别的第一块结果（中间结果）
                         if (result.isNotEmpty()) {
-                            showVoiceStatus("识别中: $result")
+                            showVoiceStatus("Recognizing: $result")
                         }
                     }
                     1 -> {
                         // 识别中间结果
                         if (result.isNotEmpty()) {
-                            showVoiceStatus("识别中: $result")
+                            showVoiceStatus("Recognizing: $result")
                         }
                     }
                     2 -> {
@@ -3470,7 +3470,7 @@ class SimpleInputMethodService : InputMethodService() {
                             commitText(result)
                             hideVoiceStatus()
                         } else {
-                            showVoiceStatus("未识别到内容")
+                            showVoiceStatus("Nothing recognized")
                         }
                         
                         // 如果处于长按语音模式，继续识别
@@ -3516,21 +3516,21 @@ class SimpleInputMethodService : InputMethodService() {
                 if (!isLongPressVoiceMode) {
                     updateVoiceButtonInKeyboard()
                 }
-                showVoiceStatus("识别失败: $msg")
+                showVoiceStatus("Recognition failed: $msg")
             }
         }
         
         override fun onBeginOfSpeech() {
             Log.d(TAG, "开始说话")
             mainHandler.post {
-                showVoiceStatus("正在识别...")
+                showVoiceStatus("Recognizing...")
             }
         }
         
         override fun onEndOfSpeech() {
             Log.d(TAG, "结束说话")
             mainHandler.post {
-                showVoiceStatus("处理中...")
+                showVoiceStatus("Processing...")
             }
         }
     }
@@ -3601,10 +3601,10 @@ class SimpleInputMethodService : InputMethodService() {
         candidatesContainer?.let { container ->
             container.removeAllViews()
             
-            if (status.contains("权限")) {
+            if (status.contains("permission", ignoreCase = true)) {
                 // 如果是权限相关，显示可点击的按钮
                 val statusButton = Button(this).apply {
-                    text = "🎤 $status (点击授权)"
+                    text = "🎤 $status (Tap to authorize)"
                     textSize = 14f
                     setTextColor(Color.WHITE)
                     setPadding(16, 12, 16, 12)
@@ -3632,7 +3632,7 @@ class SimpleInputMethodService : InputMethodService() {
             } else if (status.contains("OPPO") || status.contains("SDK")) {
                 // 相关提示
                 val statusText = android.widget.TextView(this).apply {
-                    text = "🎤 $status\n提示：ColorOS需集成OPPO开放平台语音SDK\n或使用第三方语音输入法"
+                    text = "🎤 $status\nNote: ColorOS needs the OPPO Open Platform voice SDK\nor a third-party voice input method"
                     textSize = 12f
                     setTextColor(Color.parseColor("#FF5722"))
                     setPadding(12, 8, 12, 8)
@@ -3642,7 +3642,7 @@ class SimpleInputMethodService : InputMethodService() {
             } else if (status.contains("不可用") || status.contains("未安装")) {
                 // 如果是服务不可用，显示提示信息
                 val statusText = android.widget.TextView(this).apply {
-                    text = "🎤 $status\n提示：需要安装语音识别服务（如Google语音服务）"
+                    text = "🎤 $status\nNote: Install a speech recognition service (e.g. Google voice services)"
                     textSize = 14f
                     setTextColor(Color.parseColor("#FF5722"))
                     setPadding(12, 8, 12, 8)
@@ -3672,9 +3672,9 @@ class SimpleInputMethodService : InputMethodService() {
         try {
             // 显示对话框让用户确认
             val dialog = android.app.AlertDialog.Builder(this).apply {
-                setTitle("需要麦克风权限")
-                setMessage("语音输入需要麦克风权限。\n\n点击\"去设置\"跳转到权限设置页面，请开启\"麦克风\"权限。")
-                setPositiveButton("去设置") { _, _ ->
+                setTitle("Microphone permission required")
+                setMessage("Voice input needs microphone permission.\n\nTap \"Go to Settings\" to open the permission settings and turn on the \"Microphone\" permission.")
+                setPositiveButton("Go to Settings") { _, _ ->
                     try {
                         Log.d(TAG, "打开应用权限设置页面")
                         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
@@ -3697,7 +3697,7 @@ class SimpleInputMethodService : InputMethodService() {
                         }
                     }
                 }
-                setNegativeButton("取消", null)
+                setNegativeButton("Cancel", null)
             }.create()
             
             // 设置对话框窗口类型，确保在输入法服务中能显示
@@ -3780,7 +3780,7 @@ class SimpleInputMethodService : InputMethodService() {
                 if (screenshot == null) {
                     Log.w(TAG, "截图失败")
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(this@SimpleInputMethodService, "截图失败，请重试", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@SimpleInputMethodService, "Screenshot failed. Please try again", Toast.LENGTH_SHORT).show()
                     }
                     return@launch
                 }
@@ -3798,7 +3798,7 @@ class SimpleInputMethodService : InputMethodService() {
             } catch (e: Exception) {
                 Log.e(TAG, "处理问字按钮点击失败: ${e.message}", e)
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@SimpleInputMethodService, "操作失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@SimpleInputMethodService, "Operation failed: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -3841,7 +3841,7 @@ class SimpleInputMethodService : InputMethodService() {
             // 使用CallUserInputOverlayManager显示弹窗
             CallUserInputOverlayManager.show(
                 context = this,
-                questionText = "我有什么可以帮你的吗",
+                questionText = "How can I help?",
                 onSend = { userInput ->
                     Log.d(TAG, "用户确认，准备跳转并发送任务")
                     // 用户确认后，发送Broadcast通知MainActivity
@@ -3857,7 +3857,7 @@ class SimpleInputMethodService : InputMethodService() {
             )
         } catch (e: Exception) {
             Log.e(TAG, "显示问字弹窗失败: ${e.message}", e)
-            Toast.makeText(this, "显示弹窗失败: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Failed to show dialog: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
     

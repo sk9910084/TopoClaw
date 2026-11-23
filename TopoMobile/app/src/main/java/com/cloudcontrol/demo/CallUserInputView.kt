@@ -69,7 +69,7 @@ class CallUserInputView @JvmOverloads constructor(
         
         // 输入框
         inputEditText = EditText(context).apply {
-            hint = "请输入..."
+            hint = "Type here..."
             textSize = 14f
             setPadding(
                 (12 * resources.displayMetrics.density).toInt(),
@@ -90,7 +90,7 @@ class CallUserInputView @JvmOverloads constructor(
         
         // 取消按钮
         cancelButton = TextView(context).apply {
-            text = "取消"
+            text = "Cancel"
             textSize = 14f
             setTextColor(buttonTextColor)
             setPadding(
@@ -108,7 +108,7 @@ class CallUserInputView @JvmOverloads constructor(
         
         // 发送按钮
         sendButton = TextView(context).apply {
-            text = "发送"
+            text = "Send"
             textSize = 14f
             setTextColor(buttonTextColor)
             setPadding(

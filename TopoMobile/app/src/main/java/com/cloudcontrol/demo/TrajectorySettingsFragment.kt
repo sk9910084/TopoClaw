@@ -147,14 +147,14 @@ class TrajectorySettingsFragment : Fragment() {
         // 键盘高度保存按钮
         binding.btnSaveKeyboardHeight.setOnClickListener {
             if (saveKeyboardHeightSetting()) {
-                Toast.makeText(requireContext(), "键盘高度已保存", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Keyboard height saved", Toast.LENGTH_SHORT).show()
             }
         }
         
         // 状态栏高度保存按钮
         binding.btnSaveStatusBarHeight.setOnClickListener {
             if (saveStatusBarHeightSetting()) {
-                Toast.makeText(requireContext(), "状态栏高度已保存", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Status bar height saved", Toast.LENGTH_SHORT).show()
             }
         }
         
@@ -200,7 +200,7 @@ class TrajectorySettingsFragment : Fragment() {
                 // 检查悬浮窗权限
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (!Settings.canDrawOverlays(requireContext())) {
-                        Toast.makeText(requireContext(), "需要悬浮窗权限才能使用轨迹采集功能", Toast.LENGTH_LONG).show()
+                        Toast.makeText(requireContext(), "Overlay permission is needed to use trajectory recording", Toast.LENGTH_LONG).show()
                         binding.switchTrajectoryRecording.isChecked = false
                         return@setOnCheckedChangeListener
                     }
@@ -277,10 +277,10 @@ class TrajectorySettingsFragment : Fragment() {
     private fun updateTrajectoryRecordCount() {
         try {
             val files = TrajectoryRecorder.getRecordedSessions(requireContext())
-            binding.tvTrajectoryRecordCount.text = "${files.size}条"
+            binding.tvTrajectoryRecordCount.text = "${files.size} records"
         } catch (e: Exception) {
             Log.e(TAG, "更新轨迹记录数量失败: ${e.message}", e)
-            binding.tvTrajectoryRecordCount.text = "0条"
+            binding.tvTrajectoryRecordCount.text = "0 records"
         }
     }
     
@@ -400,7 +400,7 @@ class TrajectorySettingsFragment : Fragment() {
             Log.e(TAG, "保存键盘高度设置失败: ${e.message}", e)
             // 发生错误时，恢复原始值
             binding.etKeyboardHeight.setText(originalKeyboardHeight.toString())
-            Toast.makeText(requireContext(), "键盘高度设置失败，请输入有效数字", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to set keyboard height. Please enter a valid number.", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -430,12 +430,12 @@ class TrajectorySettingsFragment : Fragment() {
                 Log.d(TAG, "键盘高度设置已保存: $keyboardHeight")
                 true
             } else {
-                Toast.makeText(requireContext(), "请输入键盘高度", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Please enter the keyboard height", Toast.LENGTH_SHORT).show()
                 false
             }
         } catch (e: Exception) {
             Log.e(TAG, "保存键盘高度设置失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "键盘高度设置失败，请输入有效数字", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to set keyboard height. Please enter a valid number.", Toast.LENGTH_SHORT).show()
             false
         }
     }
@@ -490,12 +490,12 @@ class TrajectorySettingsFragment : Fragment() {
                 Log.d(TAG, "状态栏高度设置已保存: $statusBarHeight")
                 true
             } else {
-                Toast.makeText(requireContext(), "请输入状态栏高度", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Please enter the status bar height", Toast.LENGTH_SHORT).show()
                 false
             }
         } catch (e: Exception) {
             Log.e(TAG, "保存状态栏高度设置失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "状态栏高度设置失败，请输入有效数字", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to set status bar height. Please enter a valid number.", Toast.LENGTH_SHORT).show()
             false
         }
     }
@@ -533,7 +533,7 @@ class TrajectorySettingsFragment : Fragment() {
         // 采集前等待保存按钮
         binding.btnSaveCaptureDelay.setOnClickListener {
             if (saveCaptureDelaySetting()) {
-                Toast.makeText(requireContext(), "采集前等待已保存", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Pre-recording wait saved", Toast.LENGTH_SHORT).show()
             }
         }
         
@@ -576,7 +576,7 @@ class TrajectorySettingsFragment : Fragment() {
             true
         } catch (e: Exception) {
             Log.e(TAG, "保存采集前等待设置失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "请输入有效数字(0-2000)", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Please enter a valid number (0-2000)", Toast.LENGTH_SHORT).show()
             false
         }
     }
@@ -599,7 +599,7 @@ class TrajectorySettingsFragment : Fragment() {
     private fun testCloudConnection() {
         val url = binding.etCloudServerUrl.text.toString().trim()
         if (url.isEmpty()) {
-            Toast.makeText(requireContext(), "请输入服务器地址", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Please enter the server address", Toast.LENGTH_SHORT).show()
             return
         }
         
@@ -608,9 +608,9 @@ class TrajectorySettingsFragment : Fragment() {
         
         // 显示测试中状态
         binding.btnTestConnection.isEnabled = false
-        binding.btnTestConnection.text = "测试中..."
+        binding.btnTestConnection.text = "Testing..."
         binding.tvConnectionStatus.visibility = View.VISIBLE
-        binding.tvConnectionStatus.text = "正在测试连接..."
+        binding.tvConnectionStatus.text = "Testing connection..."
         binding.tvConnectionStatus.setTextColor(0xFF666666.toInt())
         
         mainScope.launch {
@@ -620,22 +620,22 @@ class TrajectorySettingsFragment : Fragment() {
                 }
                 
                 if (success) {
-                    binding.tvConnectionStatus.text = "连接成功"
+                    binding.tvConnectionStatus.text = "Connected"
                     binding.tvConnectionStatus.setTextColor(0xFF4CAF50.toInt())
-                    Toast.makeText(requireContext(), "连接成功", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Connected", Toast.LENGTH_SHORT).show()
                 } else {
-                    binding.tvConnectionStatus.text = "连接失败，请检查服务器地址"
+                    binding.tvConnectionStatus.text = "Connection failed. Please check the server address."
                     binding.tvConnectionStatus.setTextColor(0xFFF44336.toInt())
-                    Toast.makeText(requireContext(), "连接失败", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Connection failed", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "测试连接异常: ${e.message}", e)
-                binding.tvConnectionStatus.text = "连接异常: ${e.message}"
+                binding.tvConnectionStatus.text = "Connection error: ${e.message}"
                 binding.tvConnectionStatus.setTextColor(0xFFF44336.toInt())
-                Toast.makeText(requireContext(), "连接异常: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Connection error: ${e.message}", Toast.LENGTH_SHORT).show()
             } finally {
                 binding.btnTestConnection.isEnabled = true
-                binding.btnTestConnection.text = "测试连接"
+                binding.btnTestConnection.text = "Test connection"
             }
         }
     }
@@ -646,11 +646,11 @@ class TrajectorySettingsFragment : Fragment() {
     private fun updateConnectionStatus() {
         if (TrajectoryCloudConfig.isEnabled() && TrajectoryCloudConfig.isValid()) {
             binding.tvConnectionStatus.visibility = View.VISIBLE
-            binding.tvConnectionStatus.text = "已启用"
+            binding.tvConnectionStatus.text = "Enabled"
             binding.tvConnectionStatus.setTextColor(0xFF4CAF50.toInt())
         } else if (TrajectoryCloudConfig.isEnabled()) {
             binding.tvConnectionStatus.visibility = View.VISIBLE
-            binding.tvConnectionStatus.text = "服务器地址无效"
+            binding.tvConnectionStatus.text = "Invalid server address"
             binding.tvConnectionStatus.setTextColor(0xFFFF9800.toInt())
         } else {
             binding.tvConnectionStatus.visibility = View.GONE
@@ -672,10 +672,10 @@ class TrajectorySettingsFragment : Fragment() {
             val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
             startActivity(intent)
             (activity as? MainActivity)?.addLog("已打开无障碍设置，请找到\"TopoClaw\"并开启")
-            Toast.makeText(requireContext(), "请找到\"TopoClaw\"并开启", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Find \"TopoClaw\" and turn it on", Toast.LENGTH_LONG).show()
         } catch (e: Exception) {
             Log.e(TAG, "打开无障碍设置失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "打开设置失败", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to open Settings", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -720,16 +720,16 @@ class TrajectorySettingsFragment : Fragment() {
         if (showDialog) {
             val permissionText = missingPermissions.joinToString("、")
             AlertDialog.Builder(requireContext())
-                .setTitle("无法开始轨迹采集")
-                .setMessage("请先授权：$permissionText")
-                .setPositiveButton("去授权") { _, _ ->
+                .setTitle("Can't start trajectory recording")
+                .setMessage("Please grant permission first: $permissionText")
+                .setPositiveButton("Grant permission") { _, _ ->
                     if (!isAccessibilityGranted()) {
                         openAccessibilitySettings()
                     } else if (!isScreenshotPermissionGranted()) {
                         requestTrajectoryScreenshotPermission()
                     }
                 }
-                .setNegativeButton("取消", null)
+                .setNegativeButton("Cancel", null)
                 .show()
         }
 
@@ -758,10 +758,10 @@ class TrajectorySettingsFragment : Fragment() {
             }
 
             (activity as? MainActivity)?.addLog("轨迹采集截图权限已授权")
-            Toast.makeText(requireContext(), "截图权限已授权", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Screenshot permission granted", Toast.LENGTH_SHORT).show()
         } else {
             (activity as? MainActivity)?.addLog("轨迹采集截图权限授权失败")
-            Toast.makeText(requireContext(), "截图权限授权失败", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to grant screenshot permission", Toast.LENGTH_SHORT).show()
         }
         updateTrajectoryPermissionButtons()
     }

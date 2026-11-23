@@ -131,7 +131,7 @@ class SkillDetailFragment : Fragment() {
             Log.e(TAG, "技能不存在，返回上一页")
             try {
                 // 显示错误提示
-                Toast.makeText(requireContext(), "技能信息不存在或已删除", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Skill not found or already deleted", Toast.LENGTH_SHORT).show()
                 // 返回上一页
                 if (parentFragmentManager.backStackEntryCount > 0) {
                     parentFragmentManager.popBackStack()
@@ -149,7 +149,7 @@ class SkillDetailFragment : Fragment() {
         if (currentSkill.id.isNullOrEmpty() || currentSkill.title.isNullOrEmpty()) {
             Log.e(TAG, "技能对象无效: skillId=${currentSkill.id}, skillTitle=${currentSkill.title}")
             try {
-                Toast.makeText(requireContext(), "技能信息无效", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Invalid skill info", Toast.LENGTH_SHORT).show()
                 if (parentFragmentManager.backStackEntryCount > 0) {
                     parentFragmentManager.popBackStack()
                 } else {
@@ -169,7 +169,7 @@ class SkillDetailFragment : Fragment() {
             setupViews()
         } catch (e: Exception) {
             Log.e(TAG, "onViewCreated设置视图失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "加载技能详情失败: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to load skill details: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -227,7 +227,7 @@ class SkillDetailFragment : Fragment() {
             val scheduleButton = android.widget.ImageButton(requireContext()).apply {
                 id = android.view.View.generateViewId()
                 setImageResource(android.R.drawable.ic_menu_recent_history)
-                contentDescription = "定时设置"
+                contentDescription = "Schedule settings"
                 // 使用与执行和分享按钮相同的样式
                 layoutParams = LinearLayout.LayoutParams(
                     0,
@@ -256,13 +256,13 @@ class SkillDetailFragment : Fragment() {
                         this.skill = updatedSkill
                         if (config.isEnabled) {
                             SkillScheduleManager.scheduleSkill(requireContext(), updatedSkill)
-                            Toast.makeText(requireContext(), "定时设置已保存", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "Schedule settings saved", Toast.LENGTH_SHORT).show()
                         } else {
                             SkillScheduleManager.cancelSchedule(requireContext(), skill.id)
-                            Toast.makeText(requireContext(), "定时已禁用", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "Schedule disabled", Toast.LENGTH_SHORT).show()
                         }
                     } else {
-                        Toast.makeText(requireContext(), "保存失败", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Failed to save", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -273,14 +273,14 @@ class SkillDetailFragment : Fragment() {
         if (allowEdit) {
             // 我的技能：显示分享按钮
             shareButton.setImageResource(android.R.drawable.ic_menu_share)
-            shareButton.contentDescription = "分享"
+            shareButton.contentDescription = "Share"
             shareButton.setOnClickListener {
                 showShareOptionsDialog(skill)
             }
         } else {
             // 技能社区：显示加号按钮
             shareButton.setImageResource(android.R.drawable.ic_input_add)
-            shareButton.contentDescription = "添加到我的技能"
+            shareButton.contentDescription = "Add to My Skills"
             shareButton.setOnClickListener {
                 // 创建新ID的技能，避免ID冲突
                 val newSkill = skill.copy(
@@ -291,9 +291,9 @@ class SkillDetailFragment : Fragment() {
                 if (success) {
                     // 如果该技能在临时存储中，删除它（因为已经添加到"我的技能"了）
                     TemporarySkillManager.deleteTemporarySkill(requireContext(), skill.id)
-                    Toast.makeText(requireContext(), "技能已添加到我的技能", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Skill added to My Skills", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(requireContext(), "添加失败，该技能可能已存在", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Failed to add — the skill may already exist", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -485,12 +485,12 @@ class SkillDetailFragment : Fragment() {
                 }, 300)
             } else {
                 Log.e(TAG, "executeSkill: MainActivity为空")
-                Toast.makeText(requireContext(), "执行技能失败: 无法获取MainActivity", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Failed to run skill: MainActivity not found", Toast.LENGTH_SHORT).show()
             }
                 
         } catch (e: Exception) {
             Log.e(TAG, "executeSkill异常: ${e.message}", e)
-            Toast.makeText(requireContext(), "执行技能失败: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to run skill: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -499,14 +499,14 @@ class SkillDetailFragment : Fragment() {
      */
     private fun showShareOptionsDialog(skill: Skill) {
         android.app.AlertDialog.Builder(requireContext())
-            .setTitle("选择分享方式")
+            .setTitle("Choose how to share")
             .setItems(arrayOf("分享到技能社区", "分享到好友/群组")) { _, which ->
                 when (which) {
                     0 -> shareSkillToCommunity(skill)
                     1 -> shareSkillToFriendOrGroup(skill)
                 }
             }
-            .setNegativeButton("取消", null)
+            .setNegativeButton("Cancel", null)
             .show()
     }
     
@@ -516,9 +516,9 @@ class SkillDetailFragment : Fragment() {
     private fun shareSkillToCommunity(skill: Skill) {
         val success = SkillManager.saveSkillToCommunity(requireContext(), skill)
         if (success) {
-            Toast.makeText(requireContext(), "技能已分享到技能社区", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Skill shared to the skill community", Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(requireContext(), "分享失败，该技能可能已在技能社区中", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to share — the skill may already be in the skill community", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -549,13 +549,13 @@ class SkillDetailFragment : Fragment() {
         }
         
         if (options.isEmpty()) {
-            Toast.makeText(requireContext(), "暂无好友或群组可分享", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "No friends or groups to share with", Toast.LENGTH_SHORT).show()
             return
         }
         
         // 显示选择对话框
         android.app.AlertDialog.Builder(requireContext())
-            .setTitle("选择分享对象")
+            .setTitle("Choose who to share with")
             .setItems(options.toTypedArray()) { _, which ->
                 val selectedType = optionTypes[which]
                 val skillMessage = formatSkillAsMessage(skill)
@@ -568,7 +568,7 @@ class SkillDetailFragment : Fragment() {
                     sendSkillToGroup(groupId, skill, skillMessage)
                 }
             }
-            .setNegativeButton("取消", null)
+            .setNegativeButton("Cancel", null)
             .show()
     }
     
@@ -614,13 +614,13 @@ class SkillDetailFragment : Fragment() {
                 chatFragment?.addSkillMessage(skill, "我", isUserMessage = true)
                 mainActivity?.switchToChatFragment(friendConversation)
                 
-                Toast.makeText(requireContext(), "技能已分享给好友", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Skill shared with a friend", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(requireContext(), "无法连接到服务器，请稍后重试", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Can't connect to the server. Please try again later.", Toast.LENGTH_SHORT).show()
             }
         } catch (e: Exception) {
             Log.e(TAG, "分享技能到好友失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "分享失败：${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to share: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -652,13 +652,13 @@ class SkillDetailFragment : Fragment() {
                 chatFragment?.addSkillMessage(skill, "我", isUserMessage = true)
                 mainActivity?.switchToChatFragment(groupConversation)
                 
-                Toast.makeText(requireContext(), "技能已分享到群组", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Skill shared to the group", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(requireContext(), "无法连接到服务器，请稍后重试", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Can't connect to the server. Please try again later.", Toast.LENGTH_SHORT).show()
             }
         } catch (e: Exception) {
             Log.e(TAG, "分享技能到群组失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "分享失败：${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to share: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -676,7 +676,7 @@ class SkillDetailFragment : Fragment() {
             // 进入编辑模式：同时编辑技能名和步骤
             isEditingSteps = true
             val editButton = view?.findViewById<TextView>(R.id.btnEditSteps)
-            editButton?.text = "保存"
+            editButton?.text = "Save"
             
             // 让技能标题变为可编辑状态（但不自动保存，等点击保存按钮时再保存）
             val titleView = view?.findViewById<TextView>(R.id.tvSkillTitle)
@@ -709,7 +709,7 @@ class SkillDetailFragment : Fragment() {
         }
         
         if (updatedSteps.isEmpty()) {
-            Toast.makeText(requireContext(), "至少需要保留一个步骤", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Keep at least one step", Toast.LENGTH_SHORT).show()
             return
         }
         
@@ -741,7 +741,7 @@ class SkillDetailFragment : Fragment() {
             this.skill = updatedSkill
             isEditingSteps = false
             val editButton = view?.findViewById<TextView>(R.id.btnEditSteps)
-            editButton?.text = "编辑"
+            editButton?.text = "Edit"
             
             // 恢复标题显示（确保显示最新的标题）
             val finalTitleView = view?.findViewById<View>(R.id.tvSkillTitle)
@@ -769,9 +769,9 @@ class SkillDetailFragment : Fragment() {
             }
             
             refreshStepsDisplay()
-            Toast.makeText(requireContext(), "已保存", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Saved", Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(requireContext(), "保存失败", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to save", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -911,7 +911,7 @@ class SkillDetailFragment : Fragment() {
         val deleteButton = android.widget.ImageButton(requireContext()).apply {
             setImageResource(android.R.drawable.ic_menu_delete)
             background = android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT)
-            contentDescription = "删除"
+            contentDescription = "Delete"
             layoutParams = LinearLayout.LayoutParams(
                 40.dpToPx(),
                 40.dpToPx()
@@ -928,7 +928,7 @@ class SkillDetailFragment : Fragment() {
         val addButton = android.widget.ImageButton(requireContext()).apply {
             setImageResource(android.R.drawable.ic_input_add)
             background = android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT)
-            contentDescription = "添加"
+            contentDescription = "Add"
             layoutParams = LinearLayout.LayoutParams(
                 40.dpToPx(),
                 40.dpToPx()
@@ -951,7 +951,7 @@ class SkillDetailFragment : Fragment() {
         val skill = this.skill ?: return
         
         if (skill.steps.size <= 1) {
-            Toast.makeText(requireContext(), "至少需要保留一个步骤", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Keep at least one step", Toast.LENGTH_SHORT).show()
             return
         }
         
@@ -968,7 +968,7 @@ class SkillDetailFragment : Fragment() {
         // 更新步骤显示（不保存，等点击保存按钮时再保存）
         this.skill = skill.copy(steps = reindexedSteps)
         refreshStepsDisplay()
-        Toast.makeText(requireContext(), "步骤已删除", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Step deleted", Toast.LENGTH_SHORT).show()
     }
     
     /**
@@ -976,14 +976,14 @@ class SkillDetailFragment : Fragment() {
      */
     private fun showAddStepDialog(currentIndex: Int) {
         android.app.AlertDialog.Builder(requireContext())
-            .setTitle("添加步骤")
+            .setTitle("Add step")
             .setItems(arrayOf("上方加一行", "下方加一行")) { _, which ->
                 when (which) {
                     0 -> addStep(currentIndex, true)
                     1 -> addStep(currentIndex, false)
                 }
             }
-            .setNegativeButton("取消", null)
+            .setNegativeButton("Cancel", null)
             .show()
     }
     

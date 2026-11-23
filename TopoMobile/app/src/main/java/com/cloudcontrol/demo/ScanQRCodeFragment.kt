@@ -156,7 +156,7 @@ class ScanQRCodeFragment : Fragment() {
                 .commit()
         } catch (e: Exception) {
             Log.e(TAG, "打开我的二维码页面失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "打开失败: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to open: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -169,7 +169,7 @@ class ScanQRCodeFragment : Fragment() {
             startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE)
         } catch (e: Exception) {
             Log.e(TAG, "选择图片失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "选择图片失败: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to select image: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -203,7 +203,7 @@ class ScanQRCodeFragment : Fragment() {
             try {
                 // 显示加载对话框
                 val progressDialog = android.app.ProgressDialog(requireContext()).apply {
-                    setMessage("正在识别二维码...")
+                    setMessage("Recognizing QR code...")
                     setCancelable(false)
                     show()
                 }
@@ -216,7 +216,7 @@ class ScanQRCodeFragment : Fragment() {
                     
                     if (bitmap == null) {
                         progressDialog.dismiss()
-                        Toast.makeText(requireContext(), "加载图片失败", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Failed to load image", Toast.LENGTH_SHORT).show()
                         // 重新开始相机扫码
                         startScanning()
                         return@launch
@@ -234,20 +234,20 @@ class ScanQRCodeFragment : Fragment() {
                         Log.d(TAG, "从图片识别到二维码: $qrCodeText")
                         handleScanResult(qrCodeText)
                     } else {
-                        Toast.makeText(requireContext(), "未识别到二维码，请确保图片中包含清晰的二维码", Toast.LENGTH_LONG).show()
+                        Toast.makeText(requireContext(), "No QR code found. Make sure the image contains a clear QR code", Toast.LENGTH_LONG).show()
                         // 重新开始相机扫码
                         startScanning()
                     }
                 } catch (e: Exception) {
                     progressDialog.dismiss()
                     Log.e(TAG, "识别二维码失败: ${e.message}", e)
-                    Toast.makeText(requireContext(), "识别失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Recognition failed: ${e.message}", Toast.LENGTH_SHORT).show()
                     // 重新开始相机扫码
                     startScanning()
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "显示进度对话框失败: ${e.message}", e)
-                Toast.makeText(requireContext(), "识别失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Recognition failed: ${e.message}", Toast.LENGTH_SHORT).show()
                 // 重新开始相机扫码
                 startScanning()
             }
@@ -336,7 +336,7 @@ class ScanQRCodeFragment : Fragment() {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startScanning()
             } else {
-                Toast.makeText(requireContext(), "需要相机权限才能扫码", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Camera permission is required to scan", Toast.LENGTH_SHORT).show()
                 // 延迟返回，让用户看到提示
                 binding.root.postDelayed({
                     parentFragmentManager.popBackStack()
@@ -356,7 +356,7 @@ class ScanQRCodeFragment : Fragment() {
                 Log.d(TAG, "开始扫码")
             } catch (e: Exception) {
                 Log.e(TAG, "启动扫码失败: ${e.message}", e)
-                Toast.makeText(requireContext(), "启动相机失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Failed to start camera: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -431,7 +431,7 @@ class ScanQRCodeFragment : Fragment() {
      */
     private fun handleScanResult(scannedText: String) {
         if (scannedText.isEmpty()) {
-            Toast.makeText(requireContext(), "扫描结果为空", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Scan result is empty", Toast.LENGTH_SHORT).show()
             startScanning()
             return
         }
@@ -507,13 +507,13 @@ class ScanQRCodeFragment : Fragment() {
                     }
                 }, 500)
             } else {
-                Toast.makeText(requireContext(), "无法打开浏览器", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Can't open the browser", Toast.LENGTH_SHORT).show()
                 // 重新开始扫码
                 startScanning()
             }
         } catch (e: Exception) {
             Log.e(TAG, "打开浏览器失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "打开浏览器失败: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to open the browser: ${e.message}", Toast.LENGTH_SHORT).show()
             // 重新开始扫码
             startScanning()
         }
@@ -524,12 +524,12 @@ class ScanQRCodeFragment : Fragment() {
      */
     private fun showAddFriendConfirmDialog(friendImei: String) {
         android.app.AlertDialog.Builder(requireContext())
-            .setTitle("扫描结果")
-            .setMessage("扫描到IMEI: $friendImei\n\n是否添加为好友？")
-            .setPositiveButton("添加") { _, _ ->
+            .setTitle("Scan result")
+            .setMessage("Found IMEI: $friendImei\n\nAdd as a friend?")
+            .setPositiveButton("Add") { _, _ ->
                 addFriend(friendImei)
             }
-            .setNegativeButton("取消") { _, _ ->
+            .setNegativeButton("Cancel") { _, _ ->
                 // 重新开始扫码
                 startScanning()
             }
@@ -549,7 +549,7 @@ class ScanQRCodeFragment : Fragment() {
         // 检查是否是自己
         val currentImei = ProfileManager.getOrGenerateImei(requireContext())
         if (friendImei == currentImei) {
-            Toast.makeText(requireContext(), "不能添加自己为好友", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "You can't add yourself as a friend", Toast.LENGTH_SHORT).show()
             startScanning()
             return
         }
@@ -558,7 +558,7 @@ class ScanQRCodeFragment : Fragment() {
         val existingFriend = FriendManager.getFriends(requireContext())
             .firstOrNull { it.imei == friendImei }
         if (existingFriend != null) {
-            Toast.makeText(requireContext(), "该用户已经是您的好友", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "This user is already your friend", Toast.LENGTH_SHORT).show()
             startScanning()
             return
         }
@@ -571,7 +571,7 @@ class ScanQRCodeFragment : Fragment() {
      * 扫码绑定：上报手机 IMEI 到服务端，供 PC 轮询获取
      */
     private fun submitBindingToken(payload: PcBindingPayload) {
-        val loadingToast = Toast.makeText(requireContext(), "正在绑定...", Toast.LENGTH_SHORT)
+        val loadingToast = Toast.makeText(requireContext(), "Binding...", Toast.LENGTH_SHORT)
         loadingToast.show()
         
         mainScope.launch {
@@ -590,7 +590,7 @@ class ScanQRCodeFragment : Fragment() {
                 
                 if (apiService == null) {
                     loadingToast.cancel()
-                    Toast.makeText(requireContext(), "无法连接服务器", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Unable to connect to the server", Toast.LENGTH_SHORT).show()
                     startScanning()
                     return@launch
                 }
@@ -604,7 +604,7 @@ class ScanQRCodeFragment : Fragment() {
                         refreshDataAfterServiceDomainChanged(applyResult)
                     }
                     loadingToast.cancel()
-                    Toast.makeText(requireContext(), "绑定成功，已与 PC 端打通", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), "Bound successfully. Connected to the PC", Toast.LENGTH_LONG).show()
                     binding.root.postDelayed({
                         if (isAdded) {
                             (activity as? MainActivity)?.showStatusBar()
@@ -613,14 +613,14 @@ class ScanQRCodeFragment : Fragment() {
                     }, 1500)
                 } else {
                     loadingToast.cancel()
-                    val errorMsg = response.body()?.message ?: "绑定失败"
+                    val errorMsg = response.body()?.message ?: "Binding failed"
                     Toast.makeText(requireContext(), errorMsg, Toast.LENGTH_SHORT).show()
                     startScanning()
                 }
             } catch (e: Exception) {
                 loadingToast.cancel()
                 Log.e(TAG, "绑定失败: ${e.message}", e)
-                Toast.makeText(requireContext(), "绑定失败: ${e.message ?: ""}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Binding failed: ${e.message ?: ""}", Toast.LENGTH_SHORT).show()
                 startScanning()
             }
         }

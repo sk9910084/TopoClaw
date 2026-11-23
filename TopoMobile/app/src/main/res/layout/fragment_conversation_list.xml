@@ -126,12 +126,12 @@
                     android:src="@drawable/ic_alarm"
                     android:tint="#666666"
                     android:layout_marginEnd="10dp"
-                    android:contentDescription="定时任务" />
+                    android:contentDescription="Scheduled tasks" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="定时任务"
+                    android:text="Scheduled tasks"
                     android:textSize="18sp"
                     android:textColor="#222222" />
 
@@ -256,12 +256,12 @@
                     android:layout_height="20dp"
                     android:src="@drawable/ic_sidebar_quick_note"
                     android:layout_marginEnd="10dp"
-                    android:contentDescription="随手记" />
+                    android:contentDescription="Quick notes" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="随手记"
+                    android:text="Quick notes"
                     android:textSize="18sp"
                     android:textColor="#222222" />
 

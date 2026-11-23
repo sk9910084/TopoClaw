@@ -319,7 +319,7 @@
                 android:id="@+id/btnSwitchTopoclawModel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="切换 Chat/GUI 模型"
+                android:text="Switch Chat/GUI model"
                 android:textSize="16sp"
                 android:textColor="@android:color/black"
                 android:backgroundTint="#E0E0E0"

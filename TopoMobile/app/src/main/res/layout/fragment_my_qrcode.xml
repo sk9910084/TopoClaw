@@ -22,7 +22,7 @@
             android:layout_height="48dp"
             android:src="@drawable/ic_arrow_back"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="返回"
+            android:contentDescription="Back"
             android:tint="@android:color/black"
             android:padding="12dp"
             android:layout_marginStart="-8dp" />
@@ -79,7 +79,7 @@
                         android:scaleType="centerCrop"
                         android:src="@drawable/ic_person"
                         android:background="@drawable/circle_background"
-                        android:contentDescription="头像"
+                        android:contentDescription="Avatar"
                         android:clipToOutline="true"
                         android:layout_marginBottom="16dp" />
                     
@@ -112,7 +112,7 @@
                         android:scaleType="fitCenter"
                         android:background="#FFFFFF"
                         android:padding="16dp"
-                        android:contentDescription="二维码" />
+                        android:contentDescription="QR code" />
                     
                     <!-- 提示文字 -->
                     <TextView

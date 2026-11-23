@@ -426,7 +426,7 @@ class ProfileFragment : Fragment() {
         
         // 更新地址
         if (!profile.address.isNullOrEmpty()) {
-            binding.tvAddress.text = "地址：${profile.address}"
+            binding.tvAddress.text = "Address: ${profile.address}"
             binding.tvAddress.visibility = View.VISIBLE
         } else {
             binding.tvAddress.visibility = View.GONE
@@ -434,7 +434,7 @@ class ProfileFragment : Fragment() {
         
         // 更新电话
         if (!profile.phone.isNullOrEmpty()) {
-            binding.tvPhone.text = "电话：${profile.phone}"
+            binding.tvPhone.text = "Phone: ${profile.phone}"
             binding.tvPhone.visibility = View.VISIBLE
         } else {
             binding.tvPhone.visibility = View.GONE
@@ -442,7 +442,7 @@ class ProfileFragment : Fragment() {
         
         // 更新生日
         if (!profile.birthday.isNullOrEmpty()) {
-            binding.tvBirthday.text = "生日：${profile.birthday}"
+            binding.tvBirthday.text = "Birthday: ${profile.birthday}"
             binding.tvBirthday.visibility = View.VISIBLE
         } else {
             binding.tvBirthday.visibility = View.GONE
@@ -450,7 +450,7 @@ class ProfileFragment : Fragment() {
         
         // 更新喜好
         if (!profile.preferences.isNullOrEmpty()) {
-            binding.tvPreferences.text = "喜好：${profile.preferences}"
+            binding.tvPreferences.text = "Likes: ${profile.preferences}"
             binding.tvPreferences.visibility = View.VISIBLE
         } else {
             binding.tvPreferences.visibility = View.GONE
@@ -493,11 +493,11 @@ class ProfileFragment : Fragment() {
                     }
                     
                     (activity as? MainActivity)?.addLog("聊天截图权限已授权")
-                    Toast.makeText(requireContext(), "聊天截图权限已授权", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Chat screenshot permission granted", Toast.LENGTH_SHORT).show()
                     updateQuickSettingsButtons()
                 } else {
                     (activity as? MainActivity)?.addLog("聊天截图权限授权失败")
-                    Toast.makeText(requireContext(), "聊天截图权限授权失败", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Failed to grant chat screenshot permission", Toast.LENGTH_SHORT).show()
                 }
             }
             REQUEST_OVERLAY_PERMISSION -> {
@@ -505,11 +505,11 @@ class ProfileFragment : Fragment() {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (Settings.canDrawOverlays(requireContext())) {
                         (activity as? MainActivity)?.addLog("悬浮窗权限已授权")
-                        Toast.makeText(requireContext(), "悬浮窗权限已授权", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Overlay permission granted", Toast.LENGTH_SHORT).show()
                         InteractionOverlayManager.initialize(requireContext())
                     } else {
                         (activity as? MainActivity)?.addLog("悬浮窗权限授权失败")
-                        Toast.makeText(requireContext(), "悬浮窗权限授权失败，请手动在设置中开启", Toast.LENGTH_LONG).show()
+                        Toast.makeText(requireContext(), "Failed to grant overlay permission. Please turn it on manually in Settings.", Toast.LENGTH_LONG).show()
                     }
                     updateQuickSettingsButtons()
                 }
@@ -539,13 +539,13 @@ class ProfileFragment : Fragment() {
                         binding.ivAvatar.setImageBitmap(compressedBitmap)
                     }
                     
-                    Toast.makeText(requireContext(), "头像已更新", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Profile picture updated", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(requireContext(), "加载图片失败", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Failed to load image", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "加载头像失败: ${e.message}", e)
-                Toast.makeText(requireContext(), "加载头像失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Failed to load profile picture: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -819,7 +819,7 @@ class ProfileFragment : Fragment() {
             try {
                 DATE_FORMAT.parse(birthday)
             } catch (e: Exception) {
-                Toast.makeText(requireContext(), "生日格式不正确，请使用 YYYY-MM-DD 格式", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Invalid birthday format. Use YYYY-MM-DD.", Toast.LENGTH_SHORT).show()
                 return
             }
         }
@@ -855,30 +855,30 @@ class ProfileFragment : Fragment() {
             // 同步到云�?
             mainScope.launch {
                 binding.btnSave.isEnabled = false
-                binding.btnSave.text = "保存中..."
+                binding.btnSave.text = "Saving..."
                 
                 try {
                     val success = saveProfileToCloud(newProfile)
                     if (success) {
-                        Toast.makeText(requireContext(), "保存成功", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Saved", Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(requireContext(), "本地保存成功，云侧同步失败", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Saved locally, but cloud sync failed", Toast.LENGTH_SHORT).show()
                     }
                     // 无论云侧是否成功，都退出编辑模式（因为本地已保存）
                     showViewMode()
                 } catch (e: Exception) {
                     Log.e(TAG, "保存个性化档案失败: ${e.message}", e)
-                    Toast.makeText(requireContext(), "本地保存成功，云侧同步失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Saved locally, but cloud sync failed: ${e.message}", Toast.LENGTH_SHORT).show()
                     // 即使云侧失败，也退出编辑模式（因为本地已保存）
                     showViewMode()
                 } finally {
                     binding.btnSave.isEnabled = true
-                    binding.btnSave.text = "保存"
+                    binding.btnSave.text = "Save"
                 }
             }
         } else {
             // 数据没有变化，直接退出编辑模�?
-            Toast.makeText(requireContext(), "没有更改", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "No changes", Toast.LENGTH_SHORT).show()
             showViewMode()
         }
     }
@@ -936,12 +936,12 @@ class ProfileFragment : Fragment() {
      */
     private fun showClearConfirmDialog() {
         android.app.AlertDialog.Builder(requireContext())
-            .setTitle("清除个性化档案")
-            .setMessage("确定要清除个性化档案吗？此操作不可恢复，将清除所有个人信息并重置IMEI。")
-            .setPositiveButton("确定") { _, _ ->
+            .setTitle("Clear personal profile")
+            .setMessage("Are you sure you want to clear your personal profile? This can't be undone — it will delete all personal info and reset the IMEI.")
+            .setPositiveButton("OK") { _, _ ->
                 clearProfile()
             }
-            .setNegativeButton("取消", null)
+            .setNegativeButton("Cancel", null)
             .show()
     }
     
@@ -951,7 +951,7 @@ class ProfileFragment : Fragment() {
     private fun clearProfile() {
         mainScope.launch {
             binding.btnClear.isEnabled = false
-            binding.btnClear.text = "清除中..."
+            binding.btnClear.text = "Clearing..."
             
             try {
                 val imei = currentImei ?: ProfileManager.getImei(requireContext())
@@ -979,13 +979,13 @@ class ProfileFragment : Fragment() {
                     updateViewModeContent()
                 }
                 
-                Toast.makeText(requireContext(), "个性化档案已清除", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Personal profile cleared", Toast.LENGTH_SHORT).show()
             } catch (e: Exception) {
                 Log.e(TAG, "清除个性化档案失败: ${e.message}", e)
-                Toast.makeText(requireContext(), "清除失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Failed to clear: ${e.message}", Toast.LENGTH_SHORT).show()
             } finally {
                 binding.btnClear.isEnabled = true
-                binding.btnClear.text = "清除个性化档案"
+                binding.btnClear.text = "Clear personal profile"
             }
         }
     }
@@ -1101,10 +1101,10 @@ class ProfileFragment : Fragment() {
             val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
             startActivity(intent)
             (activity as? MainActivity)?.addLog("已打开无障碍设置，请找到\"TopoClaw\"并开启")
-            Toast.makeText(requireContext(), "请找到\"TopoClaw\"并开启", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Find \"TopoClaw\" and turn it on", Toast.LENGTH_LONG).show()
         } catch (e: Exception) {
             Log.e(TAG, "打开无障碍设置失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "打开设置失败", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to open Settings", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -1129,15 +1129,15 @@ class ProfileFragment : Fragment() {
                 }
                 startActivityForResult(intent, REQUEST_OVERLAY_PERMISSION)
                 (activity as? MainActivity)?.addLog("正在请求悬浮窗权限...")
-                Toast.makeText(requireContext(), "请在设置中开启'显示在其他应用的上层'权限", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Please turn on the 'Display over other apps' permission in Settings", Toast.LENGTH_LONG).show()
             } else {
                 (activity as? MainActivity)?.addLog("悬浮窗权限已授权")
-                Toast.makeText(requireContext(), "悬浮窗权限已授权", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Overlay permission granted", Toast.LENGTH_SHORT).show()
                 InteractionOverlayManager.initialize(requireContext())
             }
         } else {
             (activity as? MainActivity)?.addLog("Android版本过低，不需要悬浮窗权限")
-            Toast.makeText(requireContext(), "Android版本过低，不需要悬浮窗权限", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Android version is too old — no overlay permission needed", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -1149,7 +1149,7 @@ class ProfileFragment : Fragment() {
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS) 
                 == PackageManager.PERMISSION_GRANTED) {
                 (activity as? MainActivity)?.addLog("通知权限已授权")
-                Toast.makeText(requireContext(), "通知权限已授权", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Notification permission granted", Toast.LENGTH_SHORT).show()
                 updateQuickSettingsButtons()
             } else {
                 requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), REQUEST_NOTIFICATION_PERMISSION)
@@ -1163,10 +1163,10 @@ class ProfileFragment : Fragment() {
                 }
                 startActivity(intent)
                 (activity as? MainActivity)?.addLog("已打开通知设置页面")
-                Toast.makeText(requireContext(), "请在设置中开启通知权限", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Please turn on notification permission in Settings", Toast.LENGTH_LONG).show()
             } catch (e: Exception) {
                 Log.e(TAG, "打开通知设置失败: ${e.message}", e)
-                Toast.makeText(requireContext(), "无法打开通知设置", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Can't open notification settings", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -1178,13 +1178,13 @@ class ProfileFragment : Fragment() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO) 
             == PackageManager.PERMISSION_GRANTED) {
             (activity as? MainActivity)?.addLog("麦克风权限已授权")
-            Toast.makeText(requireContext(), "麦克风权限已授权", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Microphone permission granted", Toast.LENGTH_SHORT).show()
             // 更新快捷设置按钮状态
             updateQuickSettingsButtons()
         } else {
             requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), REQUEST_MICROPHONE_PERMISSION)
             (activity as? MainActivity)?.addLog("正在请求麦克风权限...")
-            Toast.makeText(requireContext(), "请在弹窗中授予麦克风权限", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Please grant microphone permission in the popup", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -1196,12 +1196,12 @@ class ProfileFragment : Fragment() {
             == PackageManager.PERMISSION_GRANTED
         ) {
             (activity as? MainActivity)?.addLog("地理位置权限已授权")
-            Toast.makeText(requireContext(), "地理位置权限已授权", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Location permission granted", Toast.LENGTH_SHORT).show()
             updateQuickSettingsButtons()
         } else {
             requestPermissions(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), REQUEST_NETWORK_LOCATION_PERMISSION)
             (activity as? MainActivity)?.addLog("正在请求地理位置权限...")
-            Toast.makeText(requireContext(), "请在弹窗中授予地理位置权限", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Please grant location permission in the popup", Toast.LENGTH_LONG).show()
         }
     }
     
@@ -1258,19 +1258,19 @@ class ProfileFragment : Fragment() {
         if (requestCode == REQUEST_NOTIFICATION_PERMISSION) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 (activity as? MainActivity)?.addLog("通知权限已授权")
-                Toast.makeText(requireContext(), "通知权限已授权", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Notification permission granted", Toast.LENGTH_SHORT).show()
             } else {
                 (activity as? MainActivity)?.addLog("通知权限授权失败")
-                Toast.makeText(requireContext(), "通知权限授权失败，请手动在设置中开启", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Failed to grant notification permission. Please turn it on manually in Settings.", Toast.LENGTH_LONG).show()
             }
             updateQuickSettingsButtons()
         } else if (requestCode == REQUEST_MICROPHONE_PERMISSION) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 (activity as? MainActivity)?.addLog("麦克风权限已授权")
-                Toast.makeText(requireContext(), "麦克风权限已授权", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Microphone permission granted", Toast.LENGTH_SHORT).show()
             } else {
                 (activity as? MainActivity)?.addLog("麦克风权限授权失败")
-                Toast.makeText(requireContext(), "麦克风权限授权失败，请手动在设置中开启", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Failed to grant microphone permission. Please turn it on manually in Settings.", Toast.LENGTH_LONG).show()
             }
             updateQuickSettingsButtons()
         } else if (requestCode == REQUEST_NETWORK_LOCATION_PERMISSION) {
@@ -1280,10 +1280,10 @@ class ProfileFragment : Fragment() {
             ) == PackageManager.PERMISSION_GRANTED
             if (granted) {
                 (activity as? MainActivity)?.addLog("地理位置权限已授权")
-                Toast.makeText(requireContext(), "地理位置权限已授权", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Location permission granted", Toast.LENGTH_SHORT).show()
             } else {
                 (activity as? MainActivity)?.addLog("地理位置权限授权失败")
-                Toast.makeText(requireContext(), "地理位置权限授权失败，请手动在设置中开启", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Failed to grant location permission. Please turn it on manually in Settings.", Toast.LENGTH_LONG).show()
             }
             updateQuickSettingsButtons()
         }

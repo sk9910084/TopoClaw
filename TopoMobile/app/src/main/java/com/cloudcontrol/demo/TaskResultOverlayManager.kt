@@ -46,7 +46,7 @@ object TaskResultOverlayManager {
             
             // 设置标题
             val titleTextView = dialogView.findViewById<TextView>(R.id.tvDialogTitle)
-            titleTextView?.text = "任务完成"
+            titleTextView?.text = "Task complete"
             
             // 设置结果内容（支持滚动和Markdown链接）
             val resultTextView = dialogView.findViewById<TextView>(R.id.tvResultText)
@@ -468,7 +468,7 @@ object TaskResultOverlayManager {
                 Log.d(TAG, "【handleAppLinkForDialog】launchAppFromLink返回: $success")
                 if (!success) {
                     Log.w(TAG, "【handleAppLinkForDialog】✗ 无法打开应用: $appName")
-                    android.widget.Toast.makeText(context, "无法打开应用: $appName", android.widget.Toast.LENGTH_SHORT).show()
+                    android.widget.Toast.makeText(context, "Can't open app: $appName", android.widget.Toast.LENGTH_SHORT).show()
                 } else {
                     Log.d(TAG, "【handleAppLinkForDialog】✓ 成功打开应用: $appName")
                 }
@@ -477,7 +477,7 @@ object TaskResultOverlayManager {
             }
         } else {
             Log.w(TAG, "【handleAppLinkForDialog】✗ 未找到应用: $appName")
-            android.widget.Toast.makeText(context, "未找到应用: $appName", android.widget.Toast.LENGTH_SHORT).show()
+            android.widget.Toast.makeText(context, "App not found: $appName", android.widget.Toast.LENGTH_SHORT).show()
         }
     }
 }

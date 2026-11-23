@@ -281,19 +281,19 @@ class ConversationProfileFragment : Fragment() {
             try {
                 val ws = (activity as? MainActivity)?.getCustomerServiceWebSocket()
                 if (ws == null || !ws.isConnected()) {
-                    Toast.makeText(requireContext(), "连接未就绪，请稍后再试", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Connection not ready. Please try again later.", Toast.LENGTH_SHORT).show()
                     return@launch
                 }
                 val response = withContext(Dispatchers.IO) { ws.fetchTopoclawModelProfiles() }
                 val profiles = parseTopoclawModelProfiles(response)
                 if (profiles.chatModels.isEmpty() || profiles.guiModels.isEmpty()) {
-                    Toast.makeText(requireContext(), "未获取到模型列表", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Model list not available", Toast.LENGTH_SHORT).show()
                     return@launch
                 }
                 showTopoclawModelSwitchDialog(profiles)
             } catch (e: Exception) {
                 Log.w(TAG, "获取模型列表失败: ${e.message}")
-                Toast.makeText(requireContext(), "获取模型列表失败", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Failed to get model list", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -356,29 +356,29 @@ class ConversationProfileFragment : Fragment() {
         content.addView(guiSpinner)
 
         android.app.AlertDialog.Builder(requireContext())
-            .setTitle("切换模型")
+            .setTitle("Switch model")
             .setView(content)
-            .setPositiveButton("应用") { _, _ ->
+            .setPositiveButton("Apply") { _, _ ->
                 val selectedChat = profiles.chatModels.getOrNull(chatSpinner.selectedItemPosition).orEmpty()
                 val selectedGui = profiles.guiModels.getOrNull(guiSpinner.selectedItemPosition).orEmpty()
                 if (selectedChat.isBlank() || selectedGui.isBlank()) {
-                    Toast.makeText(requireContext(), "请选择模型", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Select a model", Toast.LENGTH_SHORT).show()
                     return@setPositiveButton
                 }
                 val ws = (activity as? MainActivity)?.getCustomerServiceWebSocket()
                 if (ws == null || !ws.isConnected()) {
-                    Toast.makeText(requireContext(), "连接未就绪，请稍后再试", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Connection not ready. Please try again later.", Toast.LENGTH_SHORT).show()
                     return@setPositiveButton
                 }
                 val chatOk = ws.sendTopoclawModelSwitchRequest(providerType = "chat", model = selectedChat)
                 val guiOk = ws.sendTopoclawModelSwitchRequest(providerType = "gui", model = selectedGui)
                 if (chatOk && guiOk) {
-                    Toast.makeText(requireContext(), "模型切换请求已发送", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Model switch request sent", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(requireContext(), "发送失败，请检查连接状态", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Send failed. Check the connection.", Toast.LENGTH_SHORT).show()
                 }
             }
-            .setNegativeButton("取消", null)
+            .setNegativeButton("Cancel", null)
             .show()
     }
     
@@ -536,7 +536,7 @@ class ConversationProfileFragment : Fragment() {
                         // 设置IMEI长按复制功能
                         binding.tvFriendImei.setOnLongClickListener {
                             copyToClipboard(friendImei, "IMEI")
-                            Toast.makeText(requireContext(), "IMEI已复制到剪贴板", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "IMEI copied to clipboard", Toast.LENGTH_SHORT).show()
                             true
                         }
                         
@@ -897,7 +897,7 @@ class ConversationProfileFragment : Fragment() {
                 val apiService = CustomerServiceNetwork.getApiService()
                 
                 if (apiService == null) {
-                    Toast.makeText(requireContext(), "无法连接到服务器", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Cannot connect to the server", Toast.LENGTH_SHORT).show()
                     return@launch
                 }
                 
@@ -921,13 +921,13 @@ class ConversationProfileFragment : Fragment() {
                         GroupManager.updateGroup(requireContext(), updatedGroup)
                         setupGroupMembers(updatedGroup)
                     }
-                    Toast.makeText(requireContext(), if (enabled) "已添加小助手" else "已移除小助手", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), if (enabled) "Assistant added" else "Assistant removed", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(requireContext(), response.body()?.message ?: "操作失败", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), response.body()?.message ?: "Operation failed", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "设置群组小助手失败: ${e.message}", e)
-                Toast.makeText(requireContext(), "操作失败: ${e.localizedMessage ?: e.toString()}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Operation failed: ${e.localizedMessage ?: e.toString()}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -946,7 +946,7 @@ class ConversationProfileFragment : Fragment() {
                 val apiService = CustomerServiceNetwork.getApiService()
                 
                 if (apiService == null) {
-                    Toast.makeText(requireContext(), "无法连接到服务器", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Cannot connect to the server", Toast.LENGTH_SHORT).show()
                     return@launch
                 }
                 
@@ -969,13 +969,13 @@ class ConversationProfileFragment : Fragment() {
                         GroupManager.updateGroup(requireContext(), updatedGroup)
                         setupGroupMembers(updatedGroup)
                     }
-                    Toast.makeText(requireContext(), "已移除小助手", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Assistant removed", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(requireContext(), response.body()?.message ?: "操作失败", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), response.body()?.message ?: "Operation failed", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "移除群组小助手失败: ${e.message}", e)
-                Toast.makeText(requireContext(), "操作失败: ${e.localizedMessage ?: e.toString()}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Operation failed: ${e.localizedMessage ?: e.toString()}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -1290,7 +1290,7 @@ class ConversationProfileFragment : Fragment() {
         }
         
         // 修改按钮文字
-        btnCreate.text = "邀请"
+        btnCreate.text = "Invite"
         
         // 创建对话框
         val dialog = android.app.AlertDialog.Builder(requireContext())
@@ -1380,7 +1380,7 @@ class ConversationProfileFragment : Fragment() {
         btnCreate.setOnClickListener {
             val assistantIdsToAdd = selectedAssistants.filter { it !in group.assistants }
             if (selectedFriends.isEmpty() && assistantIdsToAdd.isEmpty()) {
-                Toast.makeText(requireContext(), "请至少选择一位好友或一个新小助手", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Select at least one friend or a new assistant", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             
@@ -1406,7 +1406,7 @@ class ConversationProfileFragment : Fragment() {
                 val apiService = CustomerServiceNetwork.getApiService()
                 
                 if (apiService == null) {
-                    Toast.makeText(requireContext(), "无法连接到服务器", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Cannot connect to the server", Toast.LENGTH_SHORT).show()
                     return@launch
                 }
                 
@@ -1492,18 +1492,18 @@ class ConversationProfileFragment : Fragment() {
                         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
                     }
                     successCount > 0 && failCount > 0 -> {
-                        Toast.makeText(requireContext(), "成功邀请 $successCount 位成员，$failCount 位失败", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Invited $successCount members, $failCount failed", Toast.LENGTH_SHORT).show()
                     }
                     assistantAdded -> {
-                        Toast.makeText(requireContext(), "已添加 ${assistantIdsToAdd.size} 个小助手", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Added ${assistantIdsToAdd.size} assistants", Toast.LENGTH_SHORT).show()
                     }
                     else -> {
-                        Toast.makeText(requireContext(), "邀请失败", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Invite failed", Toast.LENGTH_SHORT).show()
                     }
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "邀请成员失败: ${e.message}", e)
-                Toast.makeText(requireContext(), "邀请成员失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Failed to invite member: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -1523,11 +1523,11 @@ class ConversationProfileFragment : Fragment() {
         selectedMembers.clear()
         
         if (isManageMode) {
-            binding.btnManageMembers.text = "取消"
+            binding.btnManageMembers.text = "Cancel"
             // 刷新成员列表以显示选择框
             setupGroupMembers(group)
         } else {
-            binding.btnManageMembers.text = "管理"
+            binding.btnManageMembers.text = "Manage"
             // 刷新成员列表以隐藏选择框
             setupGroupMembers(group)
         }
@@ -1539,12 +1539,12 @@ class ConversationProfileFragment : Fragment() {
     private fun updateManageButtonText() {
         if (isManageMode) {
             if (selectedMembers.isNotEmpty()) {
-                binding.btnManageMembers.text = "删除选中(${selectedMembers.size})"
+                binding.btnManageMembers.text = "Delete selected (${selectedMembers.size})"
             } else {
-                binding.btnManageMembers.text = "取消"
+                binding.btnManageMembers.text = "Cancel"
             }
         } else {
-            binding.btnManageMembers.text = "管理"
+            binding.btnManageMembers.text = "Manage"
         }
     }
     
@@ -1557,12 +1557,12 @@ class ConversationProfileFragment : Fragment() {
         }
         
         android.app.AlertDialog.Builder(requireContext())
-            .setTitle("删除成员")
-            .setMessage("确定要删除选中的 ${selectedMembers.size} 位成员吗？")
-            .setPositiveButton("删除") { _, _ ->
+            .setTitle("Delete member")
+            .setMessage("Delete the selected ${selectedMembers.size} members?")
+            .setPositiveButton("Delete") { _, _ ->
                 performDeleteMembers(group)
             }
-            .setNegativeButton("取消", null)
+            .setNegativeButton("Cancel", null)
             .show()
     }
     
@@ -1587,7 +1587,7 @@ class ConversationProfileFragment : Fragment() {
                 val apiService = CustomerServiceNetwork.getApiService()
                 
                 if (apiService == null) {
-                    Toast.makeText(requireContext(), "API服务未初始化", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "API service not initialized", Toast.LENGTH_SHORT).show()
                     return@launch
                 }
                 
@@ -1623,25 +1623,25 @@ class ConversationProfileFragment : Fragment() {
                 // 显示结果
                 when {
                     successCount > 0 && failCount == 0 -> {
-                        Toast.makeText(requireContext(), "成功删除 $successCount 位成员", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Deleted $successCount members", Toast.LENGTH_SHORT).show()
                     }
                     successCount > 0 && failCount > 0 -> {
-                        Toast.makeText(requireContext(), "成功删除 $successCount 位成员，$failCount 位失败", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Deleted $successCount members, $failCount failed", Toast.LENGTH_SHORT).show()
                     }
                     else -> {
-                        Toast.makeText(requireContext(), "删除成员失败", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Failed to delete member", Toast.LENGTH_SHORT).show()
                     }
                 }
                 
                 // 退出管理模式
                 isManageMode = false
                 selectedMembers.clear()
-                binding.btnManageMembers.text = "管理"
+                binding.btnManageMembers.text = "Manage"
                 setupGroupMembers(updatedGroup ?: group)
                 
             } catch (e: Exception) {
                 Log.e(TAG, "删除成员失败: ${e.message}", e)
-                Toast.makeText(requireContext(), "删除成员失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Failed to delete member: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -1945,7 +1945,7 @@ class ConversationProfileFragment : Fragment() {
         
         val dialog = android.app.AlertDialog.Builder(requireContext())
             .setView(dialogView)
-            .setNegativeButton("取消", null)
+            .setNegativeButton("Cancel", null)
             .show()
         
         // 使用默认背景按钮
@@ -1996,7 +1996,7 @@ class ConversationProfileFragment : Fragment() {
             .remove("chat_background_path_$conversationId")
             .apply()
         
-        Toast.makeText(requireContext(), "已设置为默认背景", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Set as default background", Toast.LENGTH_SHORT).show()
         Log.d(TAG, "已设置为默认背景")
     }
     
@@ -2035,7 +2035,7 @@ class ConversationProfileFragment : Fragment() {
             startActivityForResult(intent, REQUEST_CODE_CHAT_BACKGROUND_CAMERA)
         } catch (e: Exception) {
             Log.e(TAG, "启动相机失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "启动相机失败: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to start camera: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -2074,14 +2074,14 @@ class ConversationProfileFragment : Fragment() {
                     .apply()
                 
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(requireContext(), "聊天背景设置成功", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Chat background set", Toast.LENGTH_SHORT).show()
                 }
                 
                 Log.d(TAG, "聊天背景已保存到: ${backgroundFile.absolutePath}")
             } catch (e: Exception) {
                 Log.e(TAG, "保存聊天背景失败: ${e.message}", e)
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(requireContext(), "保存失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Save failed: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -2173,7 +2173,7 @@ class ConversationProfileFragment : Fragment() {
                 Log.e(TAG, "删除小助手失败: ${e.message}", e)
                 withContext(Dispatchers.Main) {
                     if (isAdded) {
-                        Toast.makeText(requireContext(), "删除失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Delete failed: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -2235,12 +2235,12 @@ class ConversationProfileFragment : Fragment() {
         val friendName = conversation?.name ?: friendImei
         
         android.app.AlertDialog.Builder(requireContext())
-            .setTitle("删除好友")
-            .setMessage("确定要删除好友 \"$friendName\" 吗？删除后对方将无法再向您发送消息。")
-            .setPositiveButton("删除") { _, _ ->
+            .setTitle("Delete friend")
+            .setMessage("Delete friend \"$friendName\"? They will no longer be able to send you messages.")
+            .setPositiveButton("Delete") { _, _ ->
                 deleteFriend(friendImei)
             }
-            .setNegativeButton("取消", null)
+            .setNegativeButton("Cancel", null)
             .show()
     }
     
@@ -2279,7 +2279,7 @@ class ConversationProfileFragment : Fragment() {
                         
                         // 显示成功提示
                         withContext(Dispatchers.Main) {
-                            Toast.makeText(requireContext(), "已删除好友", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "Friend deleted", Toast.LENGTH_SHORT).show()
                             // 返回到对话列表
                             navigateBackToConversationList()
                         }
@@ -2293,14 +2293,14 @@ class ConversationProfileFragment : Fragment() {
                     // API服务未初始化，只删除本地数据
                     FriendManager.removeFriend(requireContext(), friendImei)
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(requireContext(), "已删除好友（本地）", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Friend deleted (local)", Toast.LENGTH_SHORT).show()
                         navigateBackToConversationList()
                     }
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "删除好友失败: ${e.message}", e)
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(requireContext(), "删除好友失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Failed to delete friend: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -2320,7 +2320,7 @@ class ConversationProfileFragment : Fragment() {
                 val apiService = CustomerServiceNetwork.getApiService()
                 
                 if (apiService == null) {
-                    Toast.makeText(requireContext(), "无法连接到服务器", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Cannot connect to the server", Toast.LENGTH_SHORT).show()
                     return@launch
                 }
                 

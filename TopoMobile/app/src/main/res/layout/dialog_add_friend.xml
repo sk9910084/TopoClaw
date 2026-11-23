@@ -90,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:layout_marginEnd="12dp"
-                android:text="取消"
+                android:text="Cancel"
                 android:textSize="16sp"
                 android:textColor="#666666"
                 android:background="?android:attr/selectableItemBackgroundBorderless"

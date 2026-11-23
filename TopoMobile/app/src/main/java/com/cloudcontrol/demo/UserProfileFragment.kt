@@ -118,13 +118,13 @@ class UserProfileFragment : Fragment() {
                 
                 if (profile != null) {
                     // 设置名字
-                    binding.tvName.text = profile.name ?: "未设置"
+                    binding.tvName.text = profile.name ?: "Not set"
                     
                     // 设置简介（使用用户的名字或默认文本）
                     val description = if (!profile.name.isNullOrEmpty()) {
-                        "这是您的个人主页"
+                        "This is your profile page"
                     } else {
-                        "点击右上角编辑按钮建立您的个人资料"
+                        "Tap the edit button in the top-right to set up your profile"
                     }
                     binding.tvDescription.text = description
                     
@@ -132,8 +132,8 @@ class UserProfileFragment : Fragment() {
                     loadAvatar(profile.avatar)
                 } else {
                     // 没有资料，显示默认信息
-                    binding.tvName.text = "未设置"
-                    binding.tvDescription.text = "点击右上角编辑按钮建立您的个人资料"
+                    binding.tvName.text = "Not set"
+                    binding.tvDescription.text = "Tap the edit button in the top-right to set up your profile"
                     binding.ivAvatar.setImageResource(R.drawable.ic_person)
                     binding.ivAvatar.background = ContextCompat.getDrawable(requireContext(), R.drawable.circle_background)
                 }

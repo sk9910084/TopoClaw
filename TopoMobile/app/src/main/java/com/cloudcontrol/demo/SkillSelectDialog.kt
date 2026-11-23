@@ -160,13 +160,13 @@ class SkillSelectDialog(
                         switchTab(currentTab)
                         
                         // 显示刷新成功提示
-                        Toast.makeText(context, "刷新成功", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Refreshed", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     Log.w(TAG, "技能刷新失败: ${result.message}")
                     // 显示刷新失败提示
                     if (b != null && dialog?.isShowing == true) {
-                        Toast.makeText(context, "刷新失败: ${result.message}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Refresh failed: ${result.message}", Toast.LENGTH_SHORT).show()
                     }
                 }
             } catch (e: Exception) {
@@ -174,7 +174,7 @@ class SkillSelectDialog(
                 // 显示刷新异常提示
                 val b = binding
                 if (b != null && dialog?.isShowing == true) {
-                    Toast.makeText(context, "刷新失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Refresh failed: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             } finally {
                 isRefreshing = false

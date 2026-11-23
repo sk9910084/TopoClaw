@@ -208,23 +208,23 @@ class TrajectoryRecordFragment : Fragment() {
      */
     private fun showDeleteDialog(sessionInfo: TrajectorySessionInfo) {
         android.app.AlertDialog.Builder(requireContext())
-            .setTitle("删除轨迹记录")
-            .setMessage("确定要删除这条轨迹记录吗？\n\n会话ID: ${sessionInfo.sessionId}\n时间: ${DATE_FORMAT.format(Date(sessionInfo.startTime))}")
-            .setPositiveButton("删除") { _, _ ->
+            .setTitle("Delete trajectory record")
+            .setMessage("Delete this trajectory record?\n\nSession ID: ${sessionInfo.sessionId}\nTime: ${DATE_FORMAT.format(Date(sessionInfo.startTime))}")
+            .setPositiveButton("Delete") { _, _ ->
                 try {
                     val success = TrajectoryRecorder.deleteSession(requireContext(), sessionInfo.fileName)
                     if (success) {
-                        Toast.makeText(requireContext(), "已删除", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Deleted", Toast.LENGTH_SHORT).show()
                         loadTrajectoryRecords()
                     } else {
-                        Toast.makeText(requireContext(), "删除失败", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Delete failed", Toast.LENGTH_SHORT).show()
                     }
                 } catch (e: Exception) {
                     Log.e(TAG, "删除会话失败: ${e.message}", e)
-                    Toast.makeText(requireContext(), "删除失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Delete failed: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
-            .setNegativeButton("取消", null)
+            .setNegativeButton("Cancel", null)
             .show()
     }
     
@@ -235,7 +235,7 @@ class TrajectoryRecordFragment : Fragment() {
         try {
             val file = sessionInfo.file
             if (!file.exists()) {
-                Toast.makeText(requireContext(), "文件不存在", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "File not found", Toast.LENGTH_SHORT).show()
                 return
             }
             
@@ -254,14 +254,14 @@ class TrajectoryRecordFragment : Fragment() {
             val intent = Intent(Intent.ACTION_SEND).apply {
                 type = "application/json"
                 putExtra(Intent.EXTRA_STREAM, uri)
-                putExtra(Intent.EXTRA_SUBJECT, "轨迹记录_${sessionInfo.sessionId}")
+                putExtra(Intent.EXTRA_SUBJECT, "Trajectory record_${sessionInfo.sessionId}")
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }
             
-            startActivity(Intent.createChooser(intent, "分享轨迹记录"))
+            startActivity(Intent.createChooser(intent, "Share trajectory record"))
         } catch (e: Exception) {
             Log.e(TAG, "分享会话失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "分享失败: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Share failed: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -274,9 +274,9 @@ class TrajectoryRecordFragment : Fragment() {
         val hours = minutes / 60
         
         return when {
-            hours > 0 -> "${hours}时${minutes % 60}分"
-            minutes > 0 -> "${minutes}分${seconds % 60}秒"
-            else -> "${seconds}秒"
+            hours > 0 -> "${hours}h ${minutes % 60}m"
+            minutes > 0 -> "${minutes}m ${seconds % 60}s"
+            else -> "${seconds}s"
         }
     }
     
@@ -304,8 +304,8 @@ class TrajectoryRecordFragment : Fragment() {
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val session = sessions[position]
             
-            holder.tvSessionId.text = "会话: ${session.sessionId}"
-            holder.tvTime.text = "${DATE_FORMAT.format(Date(session.startTime))}\n${session.eventCount} 个事件 | ${formatDuration(session.duration)}"
+            holder.tvSessionId.text = "Session: ${session.sessionId}"
+            holder.tvTime.text = "${DATE_FORMAT.format(Date(session.startTime))}\n${session.eventCount} events | ${formatDuration(session.duration)}"
             
             holder.itemView.setOnClickListener {
                 onItemClick(session)
@@ -325,9 +325,9 @@ class TrajectoryRecordFragment : Fragment() {
             val hours = minutes / 60
             
             return when {
-                hours > 0 -> "${hours}时${minutes % 60}分"
-                minutes > 0 -> "${minutes}分${seconds % 60}秒"
-                else -> "${seconds}秒"
+                hours > 0 -> "${hours}h ${minutes % 60}m"
+                minutes > 0 -> "${minutes}m ${seconds % 60}s"
+                else -> "${seconds}s"
             }
         }
     }

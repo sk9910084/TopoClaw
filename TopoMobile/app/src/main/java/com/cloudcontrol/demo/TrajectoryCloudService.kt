@@ -162,14 +162,14 @@ object TrajectoryCloudService {
             } else {
                 Log.w(TAG, "无法获取截图服务实例")
                 if (TrajectoryCloudConfig.isEnabled() && TrajectoryCloudConfig.shouldUploadScreenshot()) {
-                    notifyScreenshotCaptureFailure(context, "截图服务不可用，请重新授权截图权限")
+                    notifyScreenshotCaptureFailure(context, "Screenshot service unavailable. Please re-authorize screenshot permission")
                 }
                 null
             }
         } catch (e: Exception) {
             Log.e(TAG, "捕获截图失败: ${e.message}", e)
             if (TrajectoryCloudConfig.isEnabled() && TrajectoryCloudConfig.shouldUploadScreenshot()) {
-                notifyScreenshotCaptureFailure(context, "截图失败：${e.message ?: "未知错误"}")
+                notifyScreenshotCaptureFailure(context, "Screenshot failed: ${e.message ?: "Unknown error"}")
             }
             null
         }
@@ -235,7 +235,7 @@ object TrajectoryCloudService {
             } else {
                 Log.w(TAG, "无法获取截图服务实例")
                 if (TrajectoryCloudConfig.isEnabled() && TrajectoryCloudConfig.shouldUploadScreenshot()) {
-                    notifyScreenshotCaptureFailure(context, "截图服务不可用，请重新授权截图权限")
+                    notifyScreenshotCaptureFailure(context, "Screenshot service unavailable. Please re-authorize screenshot permission")
                 }
             }
             
@@ -259,7 +259,7 @@ object TrajectoryCloudService {
                 }
             }
             if (TrajectoryCloudConfig.isEnabled() && TrajectoryCloudConfig.shouldUploadScreenshot()) {
-                notifyScreenshotCaptureFailure(context, "截图失败：${e.message ?: "未知错误"}")
+                notifyScreenshotCaptureFailure(context, "Screenshot failed: ${e.message ?: "Unknown error"}")
             }
             Pair(null, null)
         }
@@ -284,10 +284,10 @@ object TrajectoryCloudService {
                     android.R.style.Theme_DeviceDefault_Light_Dialog_Alert
                 )
                 val dialog = android.app.AlertDialog.Builder(themedContext)
-                    .setTitle("轨迹采集截图失败")
-                    .setMessage("$detail\n\n请前往「轨迹采集」页面重新授权截图权限。")
+                    .setTitle("Trajectory screenshot failed")
+                    .setMessage("$detail\n\nGo to the \"Trajectory Collection\" page to re-authorize screenshot permission.")
                     .setCancelable(true)
-                    .setPositiveButton("知道了", null)
+                    .setPositiveButton("Got it", null)
                     .create()
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

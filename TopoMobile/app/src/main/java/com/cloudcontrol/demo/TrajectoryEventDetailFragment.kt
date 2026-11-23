@@ -135,7 +135,7 @@ class TrajectoryEventDetailFragment : Fragment() {
                     adapter.notifyDataSetChanged()
                     
                     // 更新标题和统计信息
-                    binding.tvTitle.text = "事件详情 (${events.size}个)"
+                    binding.tvTitle.text = "Event details (${events.size})"
                     updateStatistics()
                     
                     // 隐藏空状态
@@ -186,7 +186,7 @@ class TrajectoryEventDetailFragment : Fragment() {
         val windowCount = events.count { it.type == TrajectoryEventType.WINDOW_CHANGE }
         val clipboardCount = events.count { it.type == TrajectoryEventType.CLIPBOARD_CHANGE }
         
-        val stats = "点击: $clickCount | 滑动: $swipeCount | 输入: $textCount | 窗口: $windowCount | 剪切板: $clipboardCount"
+        val stats = "Taps: $clickCount | Swipes: $swipeCount | Inputs: $textCount | Windows: $windowCount | Clipboard: $clipboardCount"
         binding.tvStatistics.text = stats
     }
     
@@ -214,20 +214,20 @@ class TrajectoryEventDetailFragment : Fragment() {
             
             // 事件类型
             val typeText = when (event.type) {
-                TrajectoryEventType.CLICK -> "点击"
-                TrajectoryEventType.LONG_CLICK -> "长按"
-                TrajectoryEventType.SWIPE -> "滑动"
-                TrajectoryEventType.SCROLL -> "滚动"
-                TrajectoryEventType.TEXT_INPUT -> "文本输入"
-                TrajectoryEventType.TEXT_CHANGE -> "文本变化"
-                TrajectoryEventType.WINDOW_CHANGE -> "窗口切换"
-                TrajectoryEventType.TOUCH -> "触摸"
-                TrajectoryEventType.KEYBOARD_SHOW -> "键盘弹出"
-                TrajectoryEventType.KEYBOARD_HIDE -> "键盘收起"
-                TrajectoryEventType.CLIPBOARD_CHANGE -> "剪切板变化"
+                TrajectoryEventType.CLICK -> "Tap"
+                TrajectoryEventType.LONG_CLICK -> "Long press"
+                TrajectoryEventType.SWIPE -> "Swipe"
+                TrajectoryEventType.SCROLL -> "Scroll"
+                TrajectoryEventType.TEXT_INPUT -> "Text input"
+                TrajectoryEventType.TEXT_CHANGE -> "Text changed"
+                TrajectoryEventType.WINDOW_CHANGE -> "Window changed"
+                TrajectoryEventType.TOUCH -> "Touch"
+                TrajectoryEventType.KEYBOARD_SHOW -> "Keyboard shown"
+                TrajectoryEventType.KEYBOARD_HIDE -> "Keyboard hidden"
+                TrajectoryEventType.CLIPBOARD_CHANGE -> "Clipboard changed"
                 TrajectoryEventType.BACK_BUTTON -> "back"
                 TrajectoryEventType.HOME_BUTTON -> "home"
-                TrajectoryEventType.SESSION_END -> "会话结束"
+                TrajectoryEventType.SESSION_END -> "Session ended"
             }
             holder.tvEventType.text = typeText
             
@@ -240,60 +240,60 @@ class TrajectoryEventDetailFragment : Fragment() {
                 when (event.type) {
                     TrajectoryEventType.CLICK, TrajectoryEventType.LONG_CLICK -> {
                         if (event.x != null && event.y != null) {
-                            append("坐标: (${event.x}, ${event.y})")
+                            append("Coordinates: (${event.x}, ${event.y})")
                         }
                         if (event.text != null) {
-                            append("\n文本: ${event.text}")
+                            append("\nText: ${event.text}")
                         }
                         if (event.contentDescription != null) {
-                            append("\n描述: ${event.contentDescription}")
+                            append("\nDescription: ${event.contentDescription}")
                         }
                         if (event.packageName != null) {
-                            append("\n应用: ${event.packageName}")
+                            append("\nApp: ${event.packageName}")
                         }
                     }
                     TrajectoryEventType.SWIPE -> {
                         if (event.startX != null && event.startY != null && 
                             event.endX != null && event.endY != null) {
-                            append("从 (${event.startX}, ${event.startY}) 到 (${event.endX}, ${event.endY})")
+                            append("From (${event.startX}, ${event.startY}) to (${event.endX}, ${event.endY})")
                         }
                         if (event.packageName != null) {
-                            append("\n应用: ${event.packageName}")
+                            append("\nApp: ${event.packageName}")
                         }
                     }
                     TrajectoryEventType.SCROLL -> {
                         if (event.scrollX != null && event.scrollY != null) {
-                            append("滚动偏移: (${event.scrollX}, ${event.scrollY})")
+                            append("Scroll offset: (${event.scrollX}, ${event.scrollY})")
                         }
                         if (event.packageName != null) {
-                            append("\n应用: ${event.packageName}")
+                            append("\nApp: ${event.packageName}")
                         }
                     }
                     TrajectoryEventType.TEXT_INPUT, TrajectoryEventType.TEXT_CHANGE -> {
                         if (event.text != null) {
-                            append("文本: ${event.text}")
+                            append("Text: ${event.text}")
                         }
                         if (event.x != null && event.y != null) {
-                            append("\n坐标: (${event.x}, ${event.y})")
+                            append("\nCoordinates: (${event.x}, ${event.y})")
                         }
                         if (event.packageName != null) {
-                            append("\n应用: ${event.packageName}")
+                            append("\nApp: ${event.packageName}")
                         }
                     }
                     TrajectoryEventType.WINDOW_CHANGE -> {
                         if (event.packageName != null) {
-                            append("应用: ${event.packageName}")
+                            append("App: ${event.packageName}")
                         }
                         if (event.className != null) {
-                            append("\n类名: ${event.className}")
+                            append("\nClass: ${event.className}")
                         }
                         if (event.text != null) {
-                            append("\n描述: ${event.text}")
+                            append("\nDescription: ${event.text}")
                         }
                     }
                     TrajectoryEventType.TOUCH -> {
                         if (event.x != null && event.y != null) {
-                            append("坐标: (${event.x}, ${event.y})")
+                            append("Coordinates: (${event.x}, ${event.y})")
                         }
                         if (event.action != null) {
                             val actionText = when (event.action) {
@@ -302,46 +302,46 @@ class TrajectoryEventDetailFragment : Fragment() {
                                 2 -> "ACTION_MOVE"
                                 else -> "ACTION_${event.action}"
                             }
-                            append("\n动作: $actionText")
+                            append("\nAction: $actionText")
                         }
                     }
                     TrajectoryEventType.KEYBOARD_SHOW, TrajectoryEventType.KEYBOARD_HIDE -> {
-                        append("键盘状态变化")
+                        append("Keyboard state changed")
                         if (event.packageName != null) {
-                            append("\n应用: ${event.packageName}")
+                            append("\nApp: ${event.packageName}")
                         }
                     }
                     TrajectoryEventType.CLIPBOARD_CHANGE -> {
-                        append("剪切板内容变化")
+                        append("Clipboard content changed")
                         if (!event.text.isNullOrEmpty()) {
-                            append("\n内容: ${event.text}")
+                            append("\nContent: ${event.text}")
                         }
                         if (event.packageName != null) {
-                            append("\n应用: ${event.packageName}")
+                            append("\nApp: ${event.packageName}")
                         }
                         if (event.className != null) {
-                            append("\n类名: ${event.className}")
+                            append("\nClass: ${event.className}")
                         }
                     }
                     TrajectoryEventType.BACK_BUTTON -> {
-                        append("返回按钮点击")
+                        append("Back button tapped")
                         if (event.packageName != null) {
-                            append("\n应用: ${event.packageName}")
+                            append("\nApp: ${event.packageName}")
                         }
                     }
                     TrajectoryEventType.HOME_BUTTON -> {
-                        append("主页按钮点击")
+                        append("Home button tapped")
                         if (event.packageName != null) {
-                            append("\n应用: ${event.packageName}")
+                            append("\nApp: ${event.packageName}")
                         }
                     }
                     TrajectoryEventType.SESSION_END -> {
-                        append("点击结束采集时的最后一张截图")
+                        append("Last screenshot when recording stopped")
                     }
                 }
             }
             
-            holder.tvDetails.text = details.ifEmpty { "无详细信息" }
+            holder.tvDetails.text = details.ifEmpty { "No details" }
         }
         
         override fun getItemCount() = events.size

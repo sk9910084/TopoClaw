@@ -115,11 +115,11 @@ object IMESwitchGuideOverlayManager {
                     btnContinue?.visibility = android.view.View.VISIBLE
                     // 更新提示文本
                     val messageView = dialogView.findViewById<android.widget.TextView>(R.id.tvDialogMessage)
-                    messageView?.text = "请切换到 TopoClaw 键盘\n切换完成后回退到操作页面，然后点击继续"
+                    messageView?.text = "Switch to the TopoClaw keyboard\nOnce switched, go back to the previous page and tap Continue"
                     onSettings()
                 } catch (e: Exception) {
                     Log.e(TAG, "打开设置页面失败: ${e.message}", e)
-                    Toast.makeText(context, "打开设置失败", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Failed to open Settings", Toast.LENGTH_SHORT).show()
                 }
             }
             
@@ -130,7 +130,7 @@ object IMESwitchGuideOverlayManager {
                 val accessibilityService = MyAccessibilityService.getInstance()
                 if (accessibilityService == null) {
                     Log.e(TAG, "无障碍服务未启用")
-                    Toast.makeText(context, "无障碍服务未启用", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Accessibility service is not enabled", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
                 
@@ -142,7 +142,7 @@ object IMESwitchGuideOverlayManager {
                 
                 if (isInSettings) {
                     Log.w(TAG, "仍在设置页面，提示用户退出")
-                    Toast.makeText(context, "请先退出设置页面", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Please exit the Settings page first", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
                 

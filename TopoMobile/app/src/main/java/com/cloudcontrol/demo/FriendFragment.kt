@@ -272,7 +272,7 @@ class FriendFragment : Fragment() {
                 // 显示刷新成功提示
                 withContext(Dispatchers.Main) {
                     if (isAdded && context != null) {
-                        Toast.makeText(context, "已刷新", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Refreshed", Toast.LENGTH_SHORT).show()
                     }
                 }
             } catch (e: Exception) {
@@ -280,7 +280,7 @@ class FriendFragment : Fragment() {
                 // 显示刷新失败提示
                 withContext(Dispatchers.Main) {
                     if (isAdded && context != null) {
-                        Toast.makeText(context, "刷新失败", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Refresh failed", Toast.LENGTH_SHORT).show()
                     }
                 }
             } finally {
@@ -602,7 +602,7 @@ class FriendFragment : Fragment() {
         
         fun updateSelectedCount() {
             var text = getString(R.string.selected_count_people_format, selectedFriends.size)
-            if (selectedAssistants.isNotEmpty()) text += "，${selectedAssistants.size} 个小助手"
+            if (selectedAssistants.isNotEmpty()) text += ", ${selectedAssistants.size} assistants"
             tvSelectedCount.text = text
         }
         
@@ -712,12 +712,12 @@ class FriendFragment : Fragment() {
             val groupName = etGroupName.text?.toString()?.trim() ?: ""
             
             if (groupName.isEmpty()) {
-                Toast.makeText(requireContext(), "请输入群组名称", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Enter a group name", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             
             if (selectedFriends.isEmpty()) {
-                Toast.makeText(requireContext(), "请至少选择一个好友", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Select at least one friend", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             
@@ -749,7 +749,7 @@ class FriendFragment : Fragment() {
                 val apiService = CustomerServiceNetwork.getApiService()
                 
                 if (apiService == null) {
-                    Toast.makeText(requireContext(), "无法连接到服务器", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Unable to connect to the server", Toast.LENGTH_SHORT).show()
                     return@launch
                 }
                 
@@ -786,7 +786,7 @@ class FriendFragment : Fragment() {
                             Log.w(TAG, "刷新对话列表失败: ${e.message}")
                         }
                         
-                        Toast.makeText(requireContext(), "群组创建成功", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Group created", Toast.LENGTH_SHORT).show()
                         
                         // 可选：自动跳转到新创建的群组聊天界面
             val groupConv = Conversation(
@@ -811,7 +811,7 @@ class FriendFragment : Fragment() {
                         Toast.makeText(requireContext(), getString(R.string.create_group_failed_no_id), Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    val errorMsg = response.body()?.message ?: "创建失败"
+                    val errorMsg = response.body()?.message ?: "Creation failed"
                     Toast.makeText(requireContext(), errorMsg, Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
@@ -866,7 +866,7 @@ class FriendFragment : Fragment() {
                 dialog.dismiss()
                 addFriend(friendImei)
             } else {
-                Toast.makeText(requireContext(), "请输入IMEI", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Enter the IMEI", Toast.LENGTH_SHORT).show()
             }
         }
         
@@ -893,7 +893,7 @@ class FriendFragment : Fragment() {
                 val apiService = CustomerServiceNetwork.getApiService()
                 
                 if (apiService == null) {
-                    Toast.makeText(requireContext(), "无法连接到服务器", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Unable to connect to the server", Toast.LENGTH_SHORT).show()
                     return@launch
                 }
                 
@@ -951,7 +951,7 @@ class FriendFragment : Fragment() {
                     
                     Toast.makeText(requireContext(), getString(R.string.add_friend_success), Toast.LENGTH_SHORT).show()
                 } else {
-                    val errorMsg = response.body()?.message ?: "添加失败"
+                    val errorMsg = response.body()?.message ?: "Failed to add"
                     Toast.makeText(requireContext(), errorMsg, Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
@@ -1037,7 +1037,7 @@ class FriendFragment : Fragment() {
 
         if (friends.isEmpty()) {
             val emptyView = android.widget.TextView(requireContext()).apply {
-                text = "暂无好友"
+                text = "No friends yet"
                 textSize = 14f
                 setTextColor(0xFF999999.toInt())
                 gravity = android.view.Gravity.CENTER

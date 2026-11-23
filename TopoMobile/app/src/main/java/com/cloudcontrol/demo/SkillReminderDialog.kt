@@ -43,7 +43,7 @@ object SkillReminderDialog {
         
         // 标题
         val titleView = TextView(context).apply {
-            text = "⏰ 技能提醒"
+            text = "⏰ Skill Reminder"
             textSize = 20f
             setTypeface(null, android.graphics.Typeface.BOLD)
             setTextColor(0xFF333333.toInt())
@@ -64,7 +64,7 @@ object SkillReminderDialog {
         
         // 提示文字
         val hintView = TextView(context).apply {
-            text = "到时间执行技能了，是否立即执行？"
+            text = "It's time to run the skill. Run it now?"
             textSize = 14f
             setTextColor(0xFF999999.toInt())
             setPadding(0, 0, 0, dpToPx(20))
@@ -87,7 +87,7 @@ object SkillReminderDialog {
         
         // 稍后提醒按钮（第一个）
         val snoozeButton = Button(context).apply {
-            text = "稍后提醒"
+            text = "Remind me later"
             textSize = 15f
             setTextColor(0xFF2196F3.toInt())
             background = android.graphics.drawable.GradientDrawable().apply {
@@ -109,7 +109,7 @@ object SkillReminderDialog {
         
         // 执行按钮（第二个）
         val executeButton = Button(context).apply {
-            text = "执行"
+            text = "Run"
             textSize = 15f
             setTextColor(0xFFFFFFFF.toInt())
             background = android.graphics.drawable.GradientDrawable().apply {
@@ -144,7 +144,7 @@ object SkillReminderDialog {
         val density = context.resources.displayMetrics.density
         fun dpToPx(dp: Int) = (dp * density).toInt()
         
-        val options = arrayOf("5分钟", "30分钟", "1小时")
+        val options = arrayOf("5 minutes", "30 minutes", "1 hour")
         val delays = arrayOf(5 * 60 * 1000L, 30 * 60 * 1000L, 60 * 60 * 1000L)
         
         val container = LinearLayout(context).apply {
@@ -153,7 +153,7 @@ object SkillReminderDialog {
         }
         
         val titleView = TextView(context).apply {
-            text = "选择稍后提醒时间"
+            text = "Choose a reminder time"
             textSize = 18f
             setTypeface(null, android.graphics.Typeface.BOLD)
             setTextColor(0xFF333333.toInt())
@@ -164,7 +164,7 @@ object SkillReminderDialog {
         
         val dialog = AlertDialog.Builder(context)
             .setView(container)
-            .setNegativeButton("取消", null)
+            .setNegativeButton("Cancel", null)
             .create()
         
         // 设置圆角背景
@@ -198,7 +198,7 @@ object SkillReminderDialog {
                         val updatedSkill = skill.copy(scheduleConfig = config)
                         SkillManager.updateSkill(context, updatedSkill)
                         SkillScheduleManager.scheduleSkill(context, updatedSkill)
-                        android.widget.Toast.makeText(context, "已设置${option}后提醒", android.widget.Toast.LENGTH_SHORT).show()
+                        android.widget.Toast.makeText(context, "Reminder set for ${option} later", android.widget.Toast.LENGTH_SHORT).show()
                     }
                     dialog.dismiss()
                 }

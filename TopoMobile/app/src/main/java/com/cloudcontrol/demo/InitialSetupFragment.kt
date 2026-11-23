@@ -200,14 +200,14 @@ class InitialSetupFragment : Fragment() {
                     // 更新头像显示
                     binding.ivAvatar.setImageBitmap(compressedBitmap)
                     
-                    Toast.makeText(requireContext(), "头像已更新", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Avatar updated", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(requireContext(), "加载图片失败", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Failed to load image", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "加载头像失败: ${e.message}", e)
                 if (_binding != null && isAdded) {
-                    Toast.makeText(requireContext(), "加载头像失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Failed to load avatar: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -221,7 +221,7 @@ class InitialSetupFragment : Fragment() {
         
         // 如果昵称为空，提示用户
         if (nickname.isEmpty()) {
-            Toast.makeText(requireContext(), "请输入昵称", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Enter a nickname", Toast.LENGTH_SHORT).show()
             return
         }
         
@@ -270,7 +270,7 @@ class InitialSetupFragment : Fragment() {
             } catch (e: Exception) {
                 Log.e(TAG, "保存资料失败: ${e.message}", e)
                 if (_binding != null && isAdded) {
-                    Toast.makeText(requireContext(), "保存失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Save failed: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         }

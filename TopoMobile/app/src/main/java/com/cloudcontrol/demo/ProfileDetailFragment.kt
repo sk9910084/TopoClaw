@@ -277,7 +277,7 @@ class ProfileDetailFragment : Fragment() {
         isEditMode = true
         binding.viewModeLayout.visibility = View.GONE
         binding.editModeLayout.visibility = View.VISIBLE
-        binding.btnEdit.text = "保存"
+        binding.btnEdit.text = "Save"
         
         // 填充表单
         fillForm(profile ?: return)
@@ -292,7 +292,7 @@ class ProfileDetailFragment : Fragment() {
         isEditMode = false
         binding.viewModeLayout.visibility = View.VISIBLE
         binding.editModeLayout.visibility = View.GONE
-        binding.btnEdit.text = "编辑"
+        binding.btnEdit.text = "Edit"
         
         // 刷新显示（包括背景）
         displayProfile()
@@ -362,7 +362,7 @@ class ProfileDetailFragment : Fragment() {
                 DATE_FORMAT.parse(birthday)
             } catch (e: Exception) {
                 val ctx = context ?: return
-                Toast.makeText(ctx, "生日格式不正确，请使用 YYYY-MM-DD 格式", Toast.LENGTH_SHORT).show()
+                Toast.makeText(ctx, "Invalid birthday format. Use YYYY-MM-DD", Toast.LENGTH_SHORT).show()
                 return
             }
         }
@@ -390,28 +390,28 @@ class ProfileDetailFragment : Fragment() {
             // 检查Fragment是否还存在
             if (_binding == null || !isAdded) return@launch
             binding.btnSave.isEnabled = false
-            binding.btnSave.text = "保存中..."
+            binding.btnSave.text = "Saving..."
             
             try {
                 val success = saveProfileToCloud(newProfile)
                 // 再次检查Fragment是否还存在
                 if (_binding == null || !isAdded) return@launch
                 if (success) {
-                    Toast.makeText(requireContext(), "保存成功", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Saved", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(requireContext(), "本地保存成功，云侧同步失败", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Saved locally, but cloud sync failed", Toast.LENGTH_SHORT).show()
                 }
                 // 退出编辑模式
                 exitEditMode()
             } catch (e: Exception) {
                 Log.e(TAG, "保存失败: ${e.message}", e)
                 if (_binding != null && isAdded) {
-                    Toast.makeText(requireContext(), "保存失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Save failed: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             } finally {
                 if (_binding != null && isAdded) {
                     binding.btnSave.isEnabled = true
-                    binding.btnSave.text = "保存"
+                    binding.btnSave.text = "Save"
                 }
             }
         }
@@ -521,14 +521,14 @@ class ProfileDetailFragment : Fragment() {
                         saveAvatarOnly()
                     }
                     
-                    Toast.makeText(requireContext(), "头像已更新", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Avatar updated", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(requireContext(), "加载图片失败", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Failed to load image", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "加载头像失败: ${e.message}", e)
                 if (_binding != null && isAdded) {
-                    Toast.makeText(requireContext(), "加载头像失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Failed to load avatar: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -723,12 +723,12 @@ class ProfileDetailFragment : Fragment() {
      */
     private fun showClearConfirmDialog() {
         android.app.AlertDialog.Builder(requireContext())
-            .setTitle("清空所有个人资料")
-            .setMessage("确定要清空所有个人资料吗？此操作不可恢复，将清除所有个人信息（包括头像、昵称、性别、地址、电话、生日、喜好等）。")
-            .setPositiveButton("确定") { _, _ ->
+            .setTitle("Clear all profile info")
+            .setMessage("Clear all profile info? This can't be undone. All personal info will be removed (avatar, nickname, gender, address, phone, birthday, interests, etc.).")
+            .setPositiveButton("OK") { _, _ ->
                 clearProfile()
             }
-            .setNegativeButton("取消", null)
+            .setNegativeButton("Cancel", null)
             .show()
     }
     
@@ -741,7 +741,7 @@ class ProfileDetailFragment : Fragment() {
             if (_binding == null || !isAdded) return@launch
             
             binding.btnClear.isEnabled = false
-            binding.btnClear.text = "清空中..."
+            binding.btnClear.text = "Clearing..."
             
             try {
                 val imei = profile?.imei ?: ProfileManager.getImei(requireContext())
@@ -792,17 +792,17 @@ class ProfileDetailFragment : Fragment() {
                 
                 // 再次检查Fragment是否还存在
                 if (_binding != null && isAdded) {
-                    Toast.makeText(requireContext(), "个人资料已清空", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Profile cleared", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "清空个人资料失败: ${e.message}", e)
                 if (_binding != null && isAdded) {
-                    Toast.makeText(requireContext(), "清空失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Clear failed: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             } finally {
                 if (_binding != null && isAdded) {
                     binding.btnClear.isEnabled = true
-                    binding.btnClear.text = "清空所有个人资料"
+                    binding.btnClear.text = "Clear all profile info"
                 }
             }
         }

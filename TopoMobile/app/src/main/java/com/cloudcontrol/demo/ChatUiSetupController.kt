@@ -235,9 +235,9 @@ object ChatUiSetupController {
                 if (!isTopoClawConversation) return@setOnClickListener
                 PcOnlineStatusManager.checkNow(requireContext())
                 val hint = if (PcOnlineStatusManager.isPcOnline()) {
-                    "正在检测电脑在线状态（当前：在线）"
+                    "Checking PC online status (currently: online)"
                 } else {
-                    "正在检测电脑在线状态（当前：离线）"
+                    "Checking PC online status (currently: offline)"
                 }
                 Toast.makeText(requireContext(), hint, Toast.LENGTH_SHORT).show()
             }
@@ -274,7 +274,7 @@ object ChatUiSetupController {
 
             binding.btnSendChat.setOnClickListener {
                 if (isTaskRunning || isCustomAssistantProcessing) {
-                    addChatMessage("小助手", "用户中断任务", isAnswer = true)
+                    addChatMessage("小助手", "User interrupted the task", isAnswer = true)
                     val taskUuidForFeedback = chatUuid
                     val taskQueryForFeedback = currentQuery
                     val convId = currentConversation?.id ?: ""
@@ -294,7 +294,7 @@ object ChatUiSetupController {
             }
 
             binding.btnStopTask.setOnClickListener {
-                addChatMessage("小助手", "用户中断任务", isAnswer = true)
+                addChatMessage("小助手", "User interrupted the task", isAnswer = true)
                 val taskUuidForFeedback = chatUuid
                 val taskQueryForFeedback = currentQuery
                 val convId = currentConversation?.id ?: ""
@@ -325,7 +325,7 @@ object ChatUiSetupController {
             binding.btnNewTopic.setOnClickListener {
                 vibrate()
                 clearHistoryAndSummary()
-                Toast.makeText(requireContext(), "开始新话题", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Starting a new topic", Toast.LENGTH_SHORT).show()
             }
 
             binding.btnCustomAssistantMore.setOnClickListener {
@@ -456,10 +456,10 @@ object ChatUiSetupController {
                         skillSelectDialog.show()
                     } catch (e: Exception) {
                         Log.e(ChatConstants.TAG, "显示技能选择弹窗失败: ${e.message}", e)
-                        Toast.makeText(requireContext(), "显示技能选择弹窗失败", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Failed to show the skill picker", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(requireContext(), "功能正在开发中", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "This feature is coming soon", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -468,7 +468,7 @@ object ChatUiSetupController {
                     activity?.runOnUiThread {
                         isRecording = true
                         hideMediaPanel()
-                        Toast.makeText(requireContext(), "录屏已开始", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Screen recording started", Toast.LENGTH_SHORT).show()
                         Log.d(ChatConstants.TAG, "录屏已开始: $videoPath")
                         activity?.let { act ->
                             Log.d(ChatConstants.TAG, "准备显示录屏悬浮窗，activity=$act")
@@ -524,7 +524,7 @@ object ChatUiSetupController {
                         } catch (e: Exception) {
                             Log.e(ChatConstants.TAG, "处理录屏停止失败: ${e.message}", e)
                             withContext(Dispatchers.Main) {
-                                Toast.makeText(requireContext(), "处理录屏失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(requireContext(), "Failed to process screen recording: ${e.message}", Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
@@ -533,7 +533,7 @@ object ChatUiSetupController {
                 override fun onRecordingError(error: String) {
                     activity?.runOnUiThread {
                         isRecording = false
-                        Toast.makeText(requireContext(), "录屏错误: $error", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Screen recording error: $error", Toast.LENGTH_SHORT).show()
                         Log.e(ChatConstants.TAG, "录屏错误: $error")
                         RecordingOverlayManager.hide()
                     }

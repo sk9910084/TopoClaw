@@ -54,16 +54,16 @@ object SkillScheduleListDialog {
     fun show(context: Context, ws: CustomerServiceWebSocket? = null) {
         val socket = ws ?: resolveWebSocket(context)
         val loadingDialog = AlertDialog.Builder(context)
-            .setMessage("正在加载定时任务...")
+            .setMessage("Loading scheduled tasks...")
             .setCancelable(true)
             .create()
         loadingDialog.show()
         if (socket == null || !socket.isConnected()) {
             loadingDialog.dismiss()
             AlertDialog.Builder(context)
-                .setTitle("连接未就绪")
-                .setMessage("暂时无法加载定时任务，请确认手机与中转服务已连接，且电脑端在线。")
-                .setPositiveButton("知道了", null)
+                .setTitle("Connection not ready")
+                .setMessage("Can't load scheduled tasks right now. Make sure the phone is connected to the relay service and the computer is online.")
+                .setPositiveButton("Got it", null)
                 .show()
             return
         }
@@ -81,7 +81,7 @@ object SkillScheduleListDialog {
                 showJobsDialog(context, socket, jobs)
             } catch (e: Exception) {
                 loadingDialog.dismiss()
-                Toast.makeText(context, "获取定时任务失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Failed to load scheduled tasks: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -144,7 +144,7 @@ object SkillScheduleListDialog {
         }
 
         val titleView = TextView(context).apply {
-            text = "⏰ 定时任务"
+            text = "⏰ Scheduled tasks"
             textSize = 18f
             setTypeface(null, android.graphics.Typeface.BOLD)
             setTextColor(0xFF333333.toInt())
@@ -158,7 +158,7 @@ object SkillScheduleListDialog {
             gravity = Gravity.END
         }
         val addButton = Button(context).apply {
-            text = "新增"
+            text = "Add"
             background = null
             setTextColor(0xFF2196F3.toInt())
             setOnClickListener {
@@ -176,14 +176,14 @@ object SkillScheduleListDialog {
                                 )
                             }
                             if (created.optBoolean("ok", false)) {
-                                Toast.makeText(context, "定时任务已新增", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "Scheduled task added", Toast.LENGTH_SHORT).show()
                                 dialog?.dismiss()
                                 show(context)
                             } else {
-                                Toast.makeText(context, created.optString("error", "新增失败"), Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, created.optString("error", "Failed to add"), Toast.LENGTH_SHORT).show()
                             }
                         } catch (e: Exception) {
-                            Toast.makeText(context, "新增失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Failed to add: ${e.message}", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -194,7 +194,7 @@ object SkillScheduleListDialog {
 
         if (jobs.isEmpty()) {
             container.addView(TextView(context).apply {
-                text = "暂无定时任务"
+                text = "No scheduled tasks yet"
                 textSize = 14f
                 setTextColor(0xFF999999.toInt())
                 gravity = Gravity.CENTER
@@ -234,7 +234,7 @@ object SkillScheduleListDialog {
                     layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT).apply { weight = 1f }
                 })
                 row.addView(Button(context).apply {
-                    text = "编辑"
+                    text = "Edit"
                     textSize = 12f
                     background = null
                     setTextColor(0xFF2196F3.toInt())
@@ -244,7 +244,7 @@ object SkillScheduleListDialog {
                                 try {
                                     val deleted = withContext(Dispatchers.IO) { ws.deleteTopoclawCronJob(job.id) }
                                     if (!deleted.optBoolean("ok", false)) {
-                                        Toast.makeText(context, deleted.optString("error", "编辑失败"), Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(context, deleted.optString("error", "Failed to edit"), Toast.LENGTH_SHORT).show()
                                         return@launch
                                     }
                                     val created = withContext(Dispatchers.IO) {
@@ -258,69 +258,69 @@ object SkillScheduleListDialog {
                                         )
                                     }
                                     if (created.optBoolean("ok", false)) {
-                                        Toast.makeText(context, "定时任务已更新", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(context, "Scheduled task updated", Toast.LENGTH_SHORT).show()
                                         dialog?.dismiss()
                                         show(context)
                                     } else {
-                                        Toast.makeText(context, created.optString("error", "更新失败"), Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(context, created.optString("error", "Failed to update"), Toast.LENGTH_SHORT).show()
                                     }
                                 } catch (e: Exception) {
-                                    Toast.makeText(context, "更新失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "Failed to update: ${e.message}", Toast.LENGTH_SHORT).show()
                                 }
                             }
                         }
                     }
                 })
                 row.addView(Button(context).apply {
-                    text = "删除"
+                    text = "Delete"
                     textSize = 12f
                     background = null
                     setTextColor(0xFFE53935.toInt())
                     setOnClickListener {
                         AlertDialog.Builder(context)
-                            .setTitle("删除定时任务")
-                            .setMessage("确定删除该任务吗？")
-                            .setPositiveButton("删除") { _, _ ->
+                            .setTitle("Delete scheduled task")
+                            .setMessage("Are you sure you want to delete this task?")
+                            .setPositiveButton("Delete") { _, _ ->
                                 CoroutineScope(Dispatchers.Main).launch {
                                     try {
                                         val resp = withContext(Dispatchers.IO) { ws.deleteTopoclawCronJob(job.id) }
                                         if (resp.optBoolean("ok", false)) {
-                                            Toast.makeText(context, "定时任务已删除", Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(context, "Scheduled task deleted", Toast.LENGTH_SHORT).show()
                                             dialog?.dismiss()
                                             show(context)
                                         } else {
-                                            Toast.makeText(context, resp.optString("error", "删除失败"), Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(context, resp.optString("error", "Failed to delete"), Toast.LENGTH_SHORT).show()
                                         }
                                     } catch (e: Exception) {
-                                        Toast.makeText(context, "删除失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(context, "Failed to delete: ${e.message}", Toast.LENGTH_SHORT).show()
                                     }
                                 }
                             }
-                            .setNegativeButton("取消", null)
+                            .setNegativeButton("Cancel", null)
                             .show()
                     }
                 })
                 card.addView(row)
 
                 card.addView(TextView(context).apply {
-                    text = "消息: ${job.message.ifBlank { "-" }}"
+                    text = "Message: ${job.message.ifBlank { "-" }}"
                     textSize = 13f
                     setTextColor(0xFF666666.toInt())
                     setPadding(0, dpToPx(4), 0, 0)
                 })
                 card.addView(TextView(context).apply {
-                    text = "调度: ${formatSchedule(job)}"
+                    text = "Schedule: ${formatSchedule(job)}"
                     textSize = 13f
                     setTextColor(0xFF666666.toInt())
                 })
                 card.addView(TextView(context).apply {
-                    text = "下次执行: ${formatTs(job.nextRunAtMs)}"
+                    text = "Next run: ${formatTs(job.nextRunAtMs)}"
                     textSize = 12f
                     setTextColor(0xFF999999.toInt())
                 })
                 if (!job.enabled) {
                     card.addView(TextView(context).apply {
-                        text = "状态: 已禁用"
+                        text = "Status: Disabled"
                         textSize = 12f
                         setTextColor(0xFFE53935.toInt())
                     })
@@ -332,7 +332,7 @@ object SkillScheduleListDialog {
         }
 
         val closeButton = Button(context).apply {
-            text = "关闭"
+            text = "Close"
             background = null
             setTextColor(0xFF2196F3.toInt())
             setOnClickListener { dialog?.dismiss() }
@@ -359,11 +359,11 @@ object SkillScheduleListDialog {
         }
 
         val nameInput = EditText(context).apply {
-            hint = "任务名称"
+            hint = "Task name"
             setText(initial?.name ?: "")
         }
         val messageInput = EditText(context).apply {
-            hint = "触发消息（必填）"
+            hint = "Trigger message (required)"
             setText(initial?.message ?: "")
         }
         val modeSpinner = Spinner(context)
@@ -372,20 +372,20 @@ object SkillScheduleListDialog {
             setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         }
         val everyInput = EditText(context).apply {
-            hint = "every_seconds，例如 300"
+            hint = "every_seconds, e.g. 300"
             inputType = InputType.TYPE_CLASS_NUMBER
             setText(initial?.everySeconds?.toString() ?: "")
         }
         val cronInput = EditText(context).apply {
-            hint = "cron_expr，例如 */5 * * * *"
+            hint = "cron_expr, e.g. */5 * * * *"
             setText(initial?.cronExpr ?: "")
         }
         val atInput = EditText(context).apply {
-            hint = "at，例如 2026-04-12T10:30:00"
+            hint = "at, e.g. 2026-04-12T10:30:00"
             setText(initial?.atMs?.let { toIsoLocal(it) } ?: "")
         }
         val tzInput = EditText(context).apply {
-            hint = "时区（仅 cron，可选），例如 Asia/Shanghai"
+            hint = "Timezone (cron only, optional), e.g. Asia/Shanghai"
             setText(initial?.tz ?: "")
         }
 
@@ -418,14 +418,14 @@ object SkillScheduleListDialog {
         container.addView(atInput)
 
         AlertDialog.Builder(context)
-            .setTitle(if (initial == null) "新增定时任务" else "编辑定时任务")
+            .setTitle(if (initial == null) "Add scheduled task" else "Edit scheduled task")
             .setView(container)
-            .setNegativeButton("取消", null)
-            .setPositiveButton("保存") { _, _ ->
+            .setNegativeButton("Cancel", null)
+            .setPositiveButton("Save") { _, _ ->
                 val name = nameInput.text?.toString()?.trim().orEmpty()
                 val message = messageInput.text?.toString()?.trim().orEmpty()
                 if (message.isBlank()) {
-                    Toast.makeText(context, "触发消息不能为空", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Trigger message can't be empty", Toast.LENGTH_SHORT).show()
                     return@setPositiveButton
                 }
                 val mode = modeSpinner.selectedItemPosition
@@ -433,7 +433,7 @@ object SkillScheduleListDialog {
                     0 -> {
                         val sec = everyInput.text?.toString()?.trim()?.toIntOrNull()
                         if (sec == null || sec <= 0) {
-                            Toast.makeText(context, "请输入有效 every_seconds", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Please enter a valid every_seconds value", Toast.LENGTH_SHORT).show()
                             return@setPositiveButton
                         }
                         CronJobForm(name = name, message = message, everySeconds = sec)
@@ -441,7 +441,7 @@ object SkillScheduleListDialog {
                     1 -> {
                         val expr = cronInput.text?.toString()?.trim().orEmpty()
                         if (expr.isBlank()) {
-                            Toast.makeText(context, "cron_expr 不能为空", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "cron_expr can't be empty", Toast.LENGTH_SHORT).show()
                             return@setPositiveButton
                         }
                         CronJobForm(
@@ -454,7 +454,7 @@ object SkillScheduleListDialog {
                     else -> {
                         val at = atInput.text?.toString()?.trim().orEmpty()
                         if (at.isBlank()) {
-                            Toast.makeText(context, "at 不能为空", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "at can't be empty", Toast.LENGTH_SHORT).show()
                             return@setPositiveButton
                         }
                         CronJobForm(name = name, message = message, at = at)

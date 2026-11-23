@@ -157,7 +157,7 @@ class FriendRecordFragment : Fragment() {
                 
             } catch (e: Exception) {
                 Log.e(TAG, "加载好友记录失败: ${e.message}", e)
-                Toast.makeText(requireContext(), "加载好友记录失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Failed to load friend requests: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -169,7 +169,7 @@ class FriendRecordFragment : Fragment() {
         binding.llAddedFriends.removeAllViews()
         
         if (friends.isEmpty()) {
-            val emptyView = createEmptyView("暂无添加的好友")
+            val emptyView = createEmptyView("No friends added yet")
             binding.llAddedFriends.addView(emptyView)
         } else {
             friends.forEach { friend ->
@@ -186,7 +186,7 @@ class FriendRecordFragment : Fragment() {
         binding.llReceivedFriends.removeAllViews()
         
         if (friends.isEmpty()) {
-            val emptyView = createEmptyView("暂无被添加的好友记录")
+            val emptyView = createEmptyView("No incoming friend requests yet")
             binding.llReceivedFriends.addView(emptyView)
         } else {
             friends.forEach { friend ->
@@ -274,7 +274,7 @@ class FriendRecordFragment : Fragment() {
         binding.llPendingRequests.removeAllViews()
         
         if (requests.isEmpty()) {
-            val emptyView = createEmptyView("暂无待处理的好友申请")
+            val emptyView = createEmptyView("No pending friend requests")
             binding.llPendingRequests.addView(emptyView)
         } else {
             requests.forEach { request ->
@@ -351,7 +351,7 @@ class FriendRecordFragment : Fragment() {
                 val apiService = CustomerServiceNetwork.getApiService()
                 
                 if (apiService == null) {
-                    Toast.makeText(requireContext(), "无法连接到服务器", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Unable to connect to the server", Toast.LENGTH_SHORT).show()
                     return@launch
                 }
                 
@@ -410,14 +410,14 @@ class FriendRecordFragment : Fragment() {
                         Log.w(TAG, "刷新对话列表失败: ${e.message}")
                     }
                     
-                    Toast.makeText(requireContext(), "已同意好友申请", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Friend request accepted", Toast.LENGTH_SHORT).show()
                 } else {
-                    val errorMsg = response.body()?.message ?: "同意失败"
+                    val errorMsg = response.body()?.message ?: "Failed to accept"
                     Toast.makeText(requireContext(), errorMsg, Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "同意好友申请失败: ${e.message}", e)
-                Toast.makeText(requireContext(), "同意好友申请失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Failed to accept friend request: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -441,7 +441,7 @@ class FriendRecordFragment : Fragment() {
             Log.w(TAG, "刷新好友Fragment红点失败: ${e.message}")
         }
         
-        Toast.makeText(requireContext(), "已拒绝好友申请", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Friend request declined", Toast.LENGTH_SHORT).show()
     }
     
     /**
@@ -479,7 +479,7 @@ class FriendRecordFragment : Fragment() {
                     val btnClose = dialogView.findViewById<android.widget.ImageButton>(R.id.btnClose)
                     
                     // 设置信息
-                    tvName.text = profile?.name ?: request.senderName ?: "用户"
+                    tvName.text = profile?.name ?: request.senderName ?: "User"
                     tvImei.text = "IMEI: ${request.senderImei}"
                     tvGender.text = profile?.gender ?: getString(R.string.not_filled)
                     tvAddress.text = profile?.address ?: getString(R.string.not_filled)
@@ -512,9 +512,9 @@ class FriendRecordFragment : Fragment() {
                 // 如果获取失败，只显示IMEI
                 withContext(Dispatchers.Main) {
                     android.app.AlertDialog.Builder(requireContext())
-                        .setTitle("用户信息")
+                        .setTitle("User info")
                         .setMessage("IMEI: ${request.senderImei}")
-                        .setPositiveButton("确定", null)
+                        .setPositiveButton("OK", null)
                         .show()
                 }
             }

@@ -152,11 +152,11 @@ class NewAssistantFragment : Fragment() {
                     if (!compressed.equals(bitmap)) bitmap.recycle()
                     Toast.makeText(requireContext(), getString(AppR.string.new_assistant_avatar_updated), Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(requireContext(), "加载图片失败", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Failed to load image", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "加载头像失败: ${e.message}", e)
-                Toast.makeText(requireContext(), "加载头像失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Failed to load avatar: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -274,7 +274,7 @@ class NewAssistantFragment : Fragment() {
             binding.ivQRCode.setImageBitmap(bitmap)
             binding.ivQRCode.visibility = View.VISIBLE
         } else {
-            Toast.makeText(requireContext(), "生成二维码失败", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to generate QR code", Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -54,11 +54,11 @@ object TaskPauseOverlayManager {
             
             // 设置消息内容
             val messageTextView = dialogView.findViewById<TextView>(R.id.tvDialogMessage)
-            messageTextView?.text = "任务已暂停，再次点击悬浮球可继续任务"
+            messageTextView?.text = "Task paused. Tap the floating ball again to resume"
             
             // 倒计时文本
             countdownTextView = dialogView.findViewById<TextView>(R.id.tvCountdown)
-            countdownTextView?.text = "2秒后自动关闭"
+            countdownTextView?.text = "Closing in 2 seconds"
             
             val btnKnow = dialogView.findViewById<android.widget.Button>(R.id.btnKnow)
             
@@ -134,7 +134,7 @@ object TaskPauseOverlayManager {
         stopCountdown()
         
         remainingSeconds = 2
-        countdownTextView?.text = "2秒后自动关闭"
+        countdownTextView?.text = "Closing in 2 seconds"
         
         // 使用协程进行倒计时
         countdownJob = CoroutineScope(Dispatchers.Main).launch {
@@ -144,7 +144,7 @@ object TaskPauseOverlayManager {
                     return@launch
                 }
                 remainingSeconds = i
-                countdownTextView?.text = "${i}秒后自动关闭"
+                countdownTextView?.text = "Closing in ${i} seconds"
             }
             
             // 倒计时结束，自动关闭

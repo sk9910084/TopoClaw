@@ -76,7 +76,7 @@
                 android:layout_height="14dp"
                 android:layout_marginStart="2dp"
                 android:src="@drawable/ic_lightbulb"
-                android:contentDescription="在线状态"
+                android:contentDescription="Online status"
                 android:visibility="gone" />
             
             <!-- 置顶标签 -->

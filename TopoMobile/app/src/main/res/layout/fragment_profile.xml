@@ -34,7 +34,7 @@
             android:layout_height="48dp"
             android:src="@drawable/ic_settings_thin"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="设置"
+            android:contentDescription="Settings"
             android:tint="@android:color/black"
             android:padding="12dp"
             android:layout_marginEnd="-8dp" />
@@ -77,7 +77,7 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_person"
                     android:background="@drawable/circle_background"
-                    android:contentDescription="头像"
+                    android:contentDescription="Avatar"
                     android:clipToOutline="true" />
             </RelativeLayout>
             
@@ -169,7 +169,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_arrow_forward"
-                    android:contentDescription="进入详情"
+                    android:contentDescription="View details"
                     android:clickable="true"
                     android:focusable="true" />
             </LinearLayout>
@@ -203,7 +203,7 @@
                         android:scaleType="centerCrop"
                         android:src="@drawable/ic_person"
                         android:background="@drawable/circle_background"
-                        android:contentDescription="头像"
+                        android:contentDescription="Avatar"
                         android:clipToOutline="true" />
                     <!-- 添加按钮（覆盖在右下角） -->
                     <ImageButton
@@ -216,7 +216,7 @@
                         android:layout_marginBottom="0dp"
                         android:src="@android:drawable/ic_input_add"
                         android:background="@android:color/holo_orange_light"
-                        android:contentDescription="更换头像"
+                        android:contentDescription="Change avatar"
                         android:padding="4dp"
                         android:scaleType="fitCenter" />
                 </RelativeLayout>
@@ -233,7 +233,7 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="姓名"
+                        android:hint="Name"
                         android:layout_marginBottom="8dp"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
                         <com.google.android.material.textfield.TextInputEditText
@@ -284,7 +284,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="地址"
+                android:hint="Address"
                 android:layout_marginBottom="16dp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
                 <com.google.android.material.textfield.TextInputEditText
@@ -300,7 +300,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="电话号码"
+                android:hint="Phone number"
                 android:layout_marginBottom="16dp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
                 <com.google.android.material.textfield.TextInputEditText
@@ -314,7 +314,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="生日（YYYY-MM-DD）"
+                android:hint="Birthday (YYYY-MM-DD)"
                 android:layout_marginBottom="16dp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
                 <com.google.android.material.textfield.TextInputEditText
@@ -330,7 +330,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="喜好"
+                android:hint="Interests"
                 android:layout_marginBottom="24dp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
                 <com.google.android.material.textfield.TextInputEditText
@@ -475,7 +475,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@android:drawable/ic_menu_preferences"
-                android:contentDescription="服务"
+                android:contentDescription="Services"
                 android:tint="#666666"
                 android:padding="12dp" />
             
@@ -493,7 +493,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_arrow_forward"
-                android:contentDescription="进入服务"
+                android:contentDescription="Open service"
                 android:tint="#999999" />
         </LinearLayout>
 

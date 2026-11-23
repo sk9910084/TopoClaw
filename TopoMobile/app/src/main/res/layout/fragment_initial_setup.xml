@@ -24,7 +24,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="完善您的个人信息"
+                android:text="Complete your profile"
                 android:textSize="28sp"
                 android:textColor="#212121"
                 android:textStyle="bold"
@@ -34,7 +34,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="设置头像和昵称，让朋友们更好地认识您"
+                android:text="Set your avatar and nickname so friends can recognize you"
                 android:textSize="15sp"
                 android:textColor="#757575"
                 android:lineSpacingExtra="4dp"
@@ -44,7 +44,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="完善资料，开启个性化自动执行之旅"
+                android:text="Complete your profile to start your personalized automation journey"
                 android:textSize="13sp"
                 android:textColor="#9E9E9E"
                 android:lineSpacingExtra="2dp" />
@@ -86,7 +86,7 @@
                             android:src="@drawable/ic_person"
                             android:background="@drawable/circle_background"
                             android:backgroundTint="#F5F5F5"
-                            android:contentDescription="头像"
+                            android:contentDescription="Avatar"
                             android:clipToOutline="true"
                             android:clickable="true"
                             android:focusable="true"
@@ -114,7 +114,7 @@
                                 android:src="@android:drawable/ic_menu_camera"
                                 android:background="?android:attr/selectableItemBackgroundBorderless"
                                 android:tint="#FFFFFF"
-                                android:contentDescription="更换头像"
+                                android:contentDescription="Change avatar"
                                 android:padding="6dp" />
                         </androidx.cardview.widget.CardView>
                     </RelativeLayout>
@@ -124,7 +124,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="点击头像或相机图标更换"
+                        android:text="Tap your avatar or the camera icon to change it"
                         android:textSize="12sp"
                         android:textColor="#9E9E9E" />
                 </LinearLayout>
@@ -133,7 +133,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="昵称"
+                    android:hint="Nickname"
                     android:layout_marginBottom="8dp"
                     app:boxStrokeColor="#2196F3"
                     app:hintTextColor="#2196F3"
@@ -156,7 +156,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="💡 昵称将显示在您的个人资料和聊天中"
+                    android:text="💡 Your nickname will be shown in your profile and chats"
                     android:textSize="12sp"
                     android:textColor="#9E9E9E"
                     android:layout_marginTop="4dp"
@@ -176,7 +176,7 @@
                 android:id="@+id/btnComplete"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:text="完成设置"
+                android:text="Finish setup"
                 android:textSize="17sp"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
@@ -190,7 +190,7 @@
                 android:id="@+id/tvSkip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="暂时跳过"
+                android:text="Skip for now"
                 android:textSize="15sp"
                 android:textColor="#757575"
                 android:gravity="center"
@@ -204,7 +204,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="您可以稍后在个人资料中完善更多信息"
+            android:text="You can add more details in your profile later"
             android:textSize="12sp"
             android:textColor="#BDBDBD"
             android:gravity="center"

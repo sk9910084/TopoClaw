@@ -60,7 +60,7 @@ object RemoteControlPermissionOverlayManager {
             
             // 设置消息内容
             val messageTextView = dialogView.findViewById<TextView>(R.id.tvDialogMessage)
-            messageTextView?.text = "${displayName}尝试控制您的手机"
+            messageTextView?.text = "${displayName} is trying to control your phone"
             
             val btnAccept = dialogView.findViewById<android.widget.Button>(R.id.btnAccept)
             val btnReject = dialogView.findViewById<android.widget.Button>(R.id.btnReject)

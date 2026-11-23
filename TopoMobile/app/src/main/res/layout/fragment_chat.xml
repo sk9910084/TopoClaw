@@ -329,7 +329,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:contentDescription="已选择的图片"
+                android:contentDescription="Selected images"
                 android:clickable="true"
                 android:focusable="true" />
             
@@ -340,7 +340,7 @@
                 android:layout_gravity="top|end"
                 android:src="@android:drawable/ic_menu_close_clear_cancel"
                 android:background="@android:drawable/dialog_holo_dark_frame"
-                android:contentDescription="删除图片"
+                android:contentDescription="Delete image"
                 android:padding="3dp"
                 android:tint="#FFFFFFFF"
                 android:layout_margin="3dp" />
@@ -362,7 +362,7 @@
                 android:layout_height="36dp"
                 android:src="@drawable/ic_mic"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:contentDescription="语音输入"
+                android:contentDescription="Voice input"
                 android:padding="8dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="4dp"
@@ -396,7 +396,7 @@
                     android:layout_height="36dp"
                     android:src="@drawable/ic_emoji"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="表情"
+                    android:contentDescription="Emoji"
                     android:padding="8dp"
                     android:layout_marginEnd="0dp" />
                 
@@ -414,7 +414,7 @@
                         android:layout_height="36dp"
                         android:src="@drawable/ic_add"
                         android:background="?android:attr/selectableItemBackgroundBorderless"
-                        android:contentDescription="添加媒体"
+                        android:contentDescription="Add media"
                         android:padding="8dp"
                         android:layout_marginEnd="0dp"
                         android:visibility="visible" />
@@ -426,7 +426,7 @@
                         android:layout_height="36dp"
                         android:src="@drawable/ic_send"
                         android:background="?android:attr/selectableItemBackgroundBorderless"
-                        android:contentDescription="发送"
+                        android:contentDescription="Send"
                         android:padding="8dp"
                         android:layout_marginStart="-4dp"
                         android:layout_marginEnd="0dp"
@@ -438,7 +438,7 @@
                         android:layout_height="36dp"
                         android:src="@drawable/ic_stop"
                         android:background="?android:attr/selectableItemBackgroundBorderless"
-                        android:contentDescription="结束任务"
+                        android:contentDescription="End task"
                         android:padding="8dp"
                         android:layout_marginStart="-4dp"
                         android:layout_marginEnd="0dp"
@@ -483,7 +483,7 @@
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:src="@drawable/ic_image"
-                        android:contentDescription="图片" />
+                        android:contentDescription="Image" />
                     
                     <TextView
                         android:layout_width="wrap_content"
@@ -511,7 +511,7 @@
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:src="@drawable/ic_video"
-                        android:contentDescription="视频" />
+                        android:contentDescription="Video" />
                     
                     <TextView
                         android:layout_width="wrap_content"
@@ -539,7 +539,7 @@
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:src="@drawable/ic_skill"
-                        android:contentDescription="技能" />
+                        android:contentDescription="Skills" />
                     
                     <TextView
                         android:layout_width="wrap_content"
@@ -620,7 +620,7 @@
                     android:layout_height="80dp"
                     android:src="@drawable/ic_mic"
                     android:background="@drawable/voice_record_button_background"
-                    android:contentDescription="点击录音"
+                    android:contentDescription="Tap to record"
                     android:paddingTop="22dp"
                     android:paddingBottom="18dp"
                     android:paddingStart="20dp"

@@ -1579,7 +1579,7 @@ class ChatFragment : Fragment() {
         clearHistoryAndSummary()
         chatSummary = null
         updateNewTopicHintVisibility()
-        Toast.makeText(requireContext(), "开始新话题", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Start a new topic", Toast.LENGTH_SHORT).show()
     }
     
     /**
@@ -3475,14 +3475,14 @@ class ChatFragment : Fragment() {
                             switchToSessionIfNeededForIncomingSync(targetConvId, targetSessionId)
                             withContext(kotlinx.coroutines.Dispatchers.Main) {
                                 if (isAdded) {
-                                    android.widget.Toast.makeText(requireContext(), "收到小助手新消息", android.widget.Toast.LENGTH_SHORT).show()
+                                    android.widget.Toast.makeText(requireContext(), "New message from assistant", android.widget.Toast.LENGTH_SHORT).show()
                                 }
                             }
                         } catch (e: Exception) {
                             Log.e(TAG, "保存 assistant_sync_message 图片失败: ${e.message}", e)
                             withContext(kotlinx.coroutines.Dispatchers.Main) {
                                 if (isAdded) {
-                                    android.widget.Toast.makeText(requireContext(), "收到小助手新消息", android.widget.Toast.LENGTH_SHORT).show()
+                                    android.widget.Toast.makeText(requireContext(), "New message from assistant", android.widget.Toast.LENGTH_SHORT).show()
                                 }
                             }
                         }
@@ -3511,14 +3511,14 @@ class ChatFragment : Fragment() {
                         switchToSessionIfNeededForIncomingSync(targetConvId, targetSessionId)
                         view?.post {
                             if (isAdded) {
-                                android.widget.Toast.makeText(requireContext(), "收到小助手新消息", android.widget.Toast.LENGTH_SHORT).show()
+                                android.widget.Toast.makeText(requireContext(), "New message from assistant", android.widget.Toast.LENGTH_SHORT).show()
                             }
                         }
                     } catch (e: Exception) {
                         Log.e(TAG, "保存 assistant_sync_message 失败: ${e.message}", e)
                         view?.post {
                             if (isAdded) {
-                                android.widget.Toast.makeText(requireContext(), "收到小助手新消息", android.widget.Toast.LENGTH_SHORT).show()
+                                android.widget.Toast.makeText(requireContext(), "New message from assistant", android.widget.Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
@@ -4039,12 +4039,12 @@ class ChatFragment : Fragment() {
             
             val displayName = senderName ?: senderImei.take(8) + "..."
             val dialog = android.app.AlertDialog.Builder(requireContext())
-                .setTitle("远程控制请求")
-                .setMessage("${displayName}尝试控制您的手机")
-                .setPositiveButton("同意") { _, _ ->
+                .setTitle("Remote control request")
+                .setMessage("${displayName} is trying to control your phone")
+                .setPositiveButton("Allow") { _, _ ->
                     executeRemoteCommand(groupId, command, senderImei)
                 }
-                .setNegativeButton("拒绝", null)
+                .setNegativeButton("Deny", null)
                 .setCancelable(true)
                 .create()
             dialog.show()
@@ -5552,7 +5552,7 @@ class ChatFragment : Fragment() {
      */
     internal fun showUserFilterDialog() {
         if (allUserImeis.isEmpty()) {
-            android.widget.Toast.makeText(requireContext(), "暂无用户数据", android.widget.Toast.LENGTH_SHORT).show()
+            android.widget.Toast.makeText(requireContext(), "No user data", android.widget.Toast.LENGTH_SHORT).show()
             return
         }
         
@@ -5708,9 +5708,9 @@ class ChatFragment : Fragment() {
                     
                     // 创建对话框
                     val dialogBuilder = android.app.AlertDialog.Builder(requireContext())
-                        .setTitle("筛选用户（可多选）")
+                        .setTitle("Filter users (multi-select)")
                         .setAdapter(adapter, null) // 先设置Adapter，但点击事件由ListView处理
-                        .setPositiveButton("确定") { dialog, _ ->
+                        .setPositiveButton("OK") { dialog, _ ->
                             val listView = (dialog as android.app.AlertDialog).listView
                             // 获取所有选中的用户（使用排序后的列表）
                             val selectedImeis = mutableListOf<String>()
@@ -5734,13 +5734,13 @@ class ChatFragment : Fragment() {
                             // 更新筛选按钮文本
                             when {
                                 selectedImeis.isEmpty() -> {
-                                    binding.btnFilterUsers.text = "筛选用户"
+                                    binding.btnFilterUsers.text = "Filter users"
                                 }
                                 selectedImeis.size == 1 -> {
-                                    binding.btnFilterUsers.text = "筛选用户 (${selectedImeis.first()})"
+                                    binding.btnFilterUsers.text = "Filter users (${selectedImeis.first()})"
                                 }
                                 else -> {
-                                    binding.btnFilterUsers.text = "筛选用户 (${selectedImeis.size}个)"
+                                    binding.btnFilterUsers.text = "Filter users (${selectedImeis.size})"
                                 }
                             }
                             
@@ -5752,8 +5752,8 @@ class ChatFragment : Fragment() {
                                 loadAllCustomerServiceChats(forceRefresh = true)
                             }
                         }
-                        .setNegativeButton("取消", null)
-                        .setNeutralButton("全选") { dialog, _ ->
+                        .setNegativeButton("Cancel", null)
+                        .setNeutralButton("Select all") { dialog, _ ->
                             val listView = (dialog as android.app.AlertDialog).listView
                             // 全选所有用户
                             for (i in 0 until listView.count) {
@@ -5779,7 +5779,7 @@ class ChatFragment : Fragment() {
             } catch (e: Exception) {
                 Log.e(TAG, "显示筛选用户对话框失败: ${e.message}", e)
                 withContext(Dispatchers.Main) {
-                    android.widget.Toast.makeText(requireContext(), "获取在线状态失败: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
+                    android.widget.Toast.makeText(requireContext(), "Failed to get online status: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -7014,7 +7014,7 @@ class ChatFragment : Fragment() {
         val assistant = CustomAssistantManager.getById(requireContext(), conversationId)
         val sessions = SessionStorage.loadSessions(requireContext(), conversationId)
         if (sessions.size <= 1) {
-            Toast.makeText(requireContext(), "至少保留一个会话", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Keep at least one conversation", Toast.LENGTH_SHORT).show()
             return
         }
         SessionStorage.removeSession(requireContext(), conversationId, sessionId)
@@ -7327,7 +7327,7 @@ class ChatFragment : Fragment() {
         
         if (uuid.isBlank()) {
             Log.w(TAG, "uuid为空，无法发送反馈")
-            Toast.makeText(requireContext(), "无法发送反馈：任务ID为空", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Cannot send feedback: task ID is empty", Toast.LENGTH_SHORT).show()
             return
         }
         
@@ -7340,7 +7340,7 @@ class ChatFragment : Fragment() {
                 if (apiService == null) {
                     Log.e(TAG, "无法获取API服务实例")
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(requireContext(), "无法发送反馈：网络服务未初始化", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Cannot send feedback: network service not initialized", Toast.LENGTH_SHORT).show()
                     }
                     return@launch
                 }
@@ -7381,11 +7381,11 @@ class ChatFragment : Fragment() {
                     }
                 } else {
                     Log.e(TAG, "反馈发送失败: ${response.code()} - ${response.message()}")
-                    Toast.makeText(requireContext(), "反馈发送失败，请重试", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Failed to send feedback. Please try again.", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "发送反馈时出错: ${e.message}", e)
-                Toast.makeText(requireContext(), "发送反馈时出错: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Error sending feedback: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -7489,7 +7489,7 @@ class ChatFragment : Fragment() {
      */
     fun addMessageToFavorites(message: String, query: String) {
         // 收藏功能：可将消息保存为技能或添加到收藏夹，此处为占位实现
-        Toast.makeText(requireContext(), "已收藏", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Added to favorites", Toast.LENGTH_SHORT).show()
     }
     
     /**
@@ -7506,7 +7506,7 @@ class ChatFragment : Fragment() {
             startActivity(android.content.Intent.createChooser(intent, "分享"))
         } catch (e: Exception) {
             Log.e(TAG, "分享失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "分享失败", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Share failed", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -7550,7 +7550,7 @@ class ChatFragment : Fragment() {
         
         if (uuid.isBlank()) {
             Log.w(TAG, "uuid为空，无法发送反馈给客服")
-            Toast.makeText(requireContext(), "无法发送反馈：任务ID为空", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Cannot send feedback: task ID is empty", Toast.LENGTH_SHORT).show()
             return
         }
         
@@ -7624,7 +7624,7 @@ class ChatFragment : Fragment() {
             } catch (e: Exception) {
                 Log.e(TAG, "发送反馈给客服时出错: ${e.message}", e)
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(requireContext(), "发送反馈给客服时出错: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Error sending feedback to support: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -7726,7 +7726,7 @@ class ChatFragment : Fragment() {
             startActivityForResult(intent, ChatConstants.REQUEST_CODE_PICK_IMAGE)
         } catch (e: Exception) {
             Log.e(TAG, "选择图片失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "选择图片失败: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to select image: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -7800,7 +7800,7 @@ class ChatFragment : Fragment() {
                     Log.d(TAG, "已请求录屏权限")
                 } catch (e: Exception) {
                     Log.e(TAG, "请求录屏权限失败: ${e.message}", e)
-                    Toast.makeText(requireContext(), "请求录屏权限失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Failed to request screen recording permission: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -7818,7 +7818,7 @@ class ChatFragment : Fragment() {
             Log.d(TAG, "已发送停止录屏请求")
         } catch (e: Exception) {
             Log.e(TAG, "停止录屏失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "停止录屏失败: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to stop screen recording: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -7895,12 +7895,12 @@ class ChatFragment : Fragment() {
                                 }
                             } catch (e2: Exception) {
                                 Log.e(TAG, "启动录屏服务失败: ${e2.message}", e2)
-                                Toast.makeText(requireContext(), "启动录屏服务失败: ${e2.message}", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(requireContext(), "Failed to start screen recording service: ${e2.message}", Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
                 } else {
-                    Toast.makeText(requireContext(), "录屏权限被拒绝", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Screen recording permission denied", Toast.LENGTH_SHORT).show()
                 }
             }
             ChatConstants.REQUEST_MEDIA_PROJECTION_CHAT -> {
@@ -8045,7 +8045,7 @@ class ChatFragment : Fragment() {
                     startVoiceRecognition()
                 } else {
                     // 权限被拒绝
-                    Toast.makeText(requireContext(), "需要录音权限才能使用语音输入", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Microphone permission is required for voice input", Toast.LENGTH_SHORT).show()
                 }
             }
             ChatConstants.REQUEST_CODE_SAVE_CHAT_IMAGE_GALLERY -> {
@@ -8139,18 +8139,18 @@ class ChatFragment : Fragment() {
                         Log.d(TAG, "图片处理完成，Base64长度: ${selectedImageBase64?.length ?: 0}")
                     } else {
                         withContext(Dispatchers.Main) {
-                            Toast.makeText(requireContext(), "图片加载失败", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "Failed to load image", Toast.LENGTH_SHORT).show()
                         }
                     }
                 } catch (e: Exception) {
                     Log.e(TAG, "处理图片失败: ${e.message}", e)
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(requireContext(), "图片处理失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Failed to process image: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         } else {
-            Toast.makeText(requireContext(), "已选择${if (type == "image") "图片" else "视频"}: $uri", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Selected ${if (type == "image") "image" else "video"}: $uri", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -8300,8 +8300,8 @@ class ChatFragment : Fragment() {
                 .setItems(
                     arrayOf(
                         getString(R.string.chat_save_image),
-                        "分享给应用内好友/群组",
-                        "分享到其他应用"
+                        "Share with in-app friends/groups",
+                        "Share to other apps"
                     )
                 ) { _, which ->
                     when (which) {
@@ -8349,7 +8349,7 @@ class ChatFragment : Fragment() {
             }
 
             if (friendOptions.isEmpty() && groupOptions.isEmpty()) {
-                Toast.makeText(requireContext(), "暂无好友或群组可分享", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "No friends or groups to share with", Toast.LENGTH_SHORT).show()
                 return
             }
 
@@ -8453,7 +8453,7 @@ class ChatFragment : Fragment() {
             dialog.window?.setBackgroundDrawableResource(R.drawable.dialog_rounded_background)
         } catch (e: Exception) {
             Log.e(TAG, "打开应用内分享目标选择失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "分享失败：${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Share failed: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -8463,13 +8463,13 @@ class ChatFragment : Fragment() {
                 val mainActivity = activity as? MainActivity
                 val webSocket = mainActivity?.getCustomerServiceWebSocket()
                 if (webSocket == null || !webSocket.isConnected()) {
-                    Toast.makeText(requireContext(), "无法连接到服务器，请稍后重试", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Cannot connect to the server. Please try again later.", Toast.LENGTH_SHORT).show()
                     return@launch
                 }
 
                 val imageBase64 = encodeImageUriToBase64(imageUri)
                 if (imageBase64.isNullOrBlank()) {
-                    Toast.makeText(requireContext(), "图片读取失败，无法分享", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Failed to read image, cannot share", Toast.LENGTH_SHORT).show()
                     return@launch
                 }
 
@@ -8477,7 +8477,7 @@ class ChatFragment : Fragment() {
                     ChatImageUtils.saveImageFromBase64(requireContext(), imageBase64)
                 }
                 if (imagePathForLocalEcho == null) {
-                    Toast.makeText(requireContext(), "图片处理失败，无法分享", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Failed to process image, cannot share", Toast.LENGTH_SHORT).show()
                     return@launch
                 }
 
@@ -8495,7 +8495,7 @@ class ChatFragment : Fragment() {
                         val chatFragment = mainActivity.getOrCreateChatFragment(friendConversation)
                         chatFragment.addImageMessage(imagePathForLocalEcho, saveToHistory = true, sender = "我")
                         mainActivity.switchToChatFragment(friendConversation)
-                        Toast.makeText(requireContext(), "图片已分享给好友", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Image shared with friend", Toast.LENGTH_SHORT).show()
                     }
 
                     "group" -> {
@@ -8518,12 +8518,12 @@ class ChatFragment : Fragment() {
                         val chatFragment = mainActivity.getOrCreateChatFragment(groupConversation)
                         chatFragment.addImageMessage(imagePathForLocalEcho, saveToHistory = true, sender = "我")
                         mainActivity.switchToChatFragment(groupConversation)
-                        Toast.makeText(requireContext(), "图片已分享到群组", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Image shared to group", Toast.LENGTH_SHORT).show()
                     }
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "应用内分享图片失败: ${e.message}", e)
-                Toast.makeText(requireContext(), "分享失败：${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Share failed: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -8558,7 +8558,7 @@ class ChatFragment : Fragment() {
             startActivity(Intent.createChooser(shareIntent, "分享图片"))
         } catch (e: Exception) {
             Log.e(TAG, "系统分享图片失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "分享失败：${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Share failed: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -8776,7 +8776,7 @@ class ChatFragment : Fragment() {
         allQueries.addAll(userQueryHistory.reversed())
         
         if (allQueries.isEmpty()) {
-            Toast.makeText(requireContext(), "暂无查询记录", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "No search history", Toast.LENGTH_SHORT).show()
             return
         }
         
@@ -9511,7 +9511,7 @@ class ChatFragment : Fragment() {
                 arrayOf(Manifest.permission.RECORD_AUDIO),
                 1001
             )
-            Toast.makeText(requireContext(), "需要录音权限才能使用语音输入", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Microphone permission is required for voice input", Toast.LENGTH_SHORT).show()
             return
         }
         
@@ -9554,11 +9554,11 @@ class ChatFragment : Fragment() {
                 Log.d(TAG, "语音识别已启动")
             } else {
                 Log.e(TAG, "语音识别启动失败，错误码: $ret")
-                Toast.makeText(requireContext(), "语音识别启动失败，错误码: $ret", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Failed to start speech recognition, error code: $ret", Toast.LENGTH_SHORT).show()
             }
         } catch (e: Exception) {
             Log.e(TAG, "启动语音识别异常: ${e.message}", e)
-            Toast.makeText(requireContext(), "启动语音识别失败: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to start speech recognition: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -9705,7 +9705,7 @@ class ChatFragment : Fragment() {
             
             // 在主线程显示错误提示
             activity?.runOnUiThread {
-                Toast.makeText(requireContext(), "语音识别错误: $msg (错误码: $code)", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Speech recognition error: $msg (error code: $code)", Toast.LENGTH_SHORT).show()
                 stopVoiceRecognition()
             }
         }
@@ -10037,11 +10037,11 @@ class ChatFragment : Fragment() {
                 executeQueryInternal(query)
             } else {
                 Log.w(TAG, "sendSkillAsQuery: 当前对话不是TopoClaw，conversationId=$conversationId")
-                Toast.makeText(requireContext(), "只能在${ChatConstants.ASSISTANT_DISPLAY_NAME}聊天页面发送技能", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Skills can only be sent from the ${ChatConstants.ASSISTANT_DISPLAY_NAME} chat page", Toast.LENGTH_SHORT).show()
             }
         } catch (e: Exception) {
             Log.e(TAG, "sendSkillAsQuery异常: ${e.message}", e)
-            Toast.makeText(requireContext(), "发送技能失败: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to send skill: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -17419,9 +17419,9 @@ class ChatFragment : Fragment() {
             val context = requireContext()
             Log.d(TAG, "showIMESwitchDialog: requireContext()返回成功，context=$context")
             val dialog = android.app.AlertDialog.Builder(context)
-                .setTitle("需要切换输入法")
-                .setMessage("任务开始前需要将输入法换成自定义输入法，请在更改输入法弹窗出现时点击 TopoClaw。")
-                .setPositiveButton("确定", null)  // 点击确定只是关闭弹窗，不做任何操作
+                .setTitle("Input method needs to be switched")
+                .setMessage("Before the task starts, switch to the custom input method. When the input method dialog appears, tap TopoClaw.")
+                .setPositiveButton("OK", null)  // 点击确定只是关闭弹窗，不做任何操作
                 .setCancelable(true)
                 .create()
             Log.d(TAG, "showIMESwitchDialog: 弹窗已创建，准备显示")
@@ -17437,9 +17437,9 @@ class ChatFragment : Fragment() {
         try {
             val ctx = requireContext()
             val dialog = android.app.AlertDialog.Builder(ctx)
-                .setTitle("需要切换输入法")
-                .setMessage("任务开始前需要将输入法换成自定义输入法，请在弹窗中选择 TopoClaw。")
-                .setPositiveButton("切换输入法") { _, _ ->
+                .setTitle("Input method needs to be switched")
+                .setMessage("Before the task starts, switch to the custom input method. Select TopoClaw in the dialog.")
+                .setPositiveButton("Switch input method") { _, _ ->
                     try {
                         _binding?.etChatInput?.requestFocus()
                         val imm = ctx.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
@@ -17449,7 +17449,7 @@ class ChatFragment : Fragment() {
                         Log.e(TAG, "showIMESwitchDialogWithPicker: showInputMethodPicker 失败: ${e.message}", e)
                     }
                 }
-                .setNegativeButton("取消") { _, _ ->
+                .setNegativeButton("Cancel") { _, _ ->
                     val gui = pendingCustomAssistantAfterIME?.guiExecuteContext
                     if (gui != null) {
                         pendingCustomAssistantAfterIME = null
@@ -17582,19 +17582,19 @@ class ChatFragment : Fragment() {
             Log.d(TAG, "showIMEEnableGuideDialog: 开始显示弹窗，customIMEId=$customIMEId")
             Log.d(TAG, "showIMEEnableGuideDialog: Fragment状态 - isAdded=$isAdded, context=${context}")
             val step4 = if (forCustomAssistantExecution) {
-                "4. 返回应用后将自动继续执行操作"
+                "4. After returning to the app, the action will continue automatically"
             } else {
-                "4. 返回应用后将自动发送您的消息"
+                "4. After returning to the app, your message will be sent automatically"
             }
             val dialog = android.app.AlertDialog.Builder(requireContext())
-                .setTitle("需要启用输入法")
-                .setMessage("检测到 TopoClaw 输入法未在系统中启用。\n\n" +
-                        "请按照以下步骤操作：\n" +
-                        "1. 点击\"去设置\"按钮\n" +
-                        "2. 在输入法列表中找到 \"TopoClaw\"\n" +
-                        "3. 打开开关启用该输入法\n" +
+                .setTitle("Input method needs to be enabled")
+                .setMessage("TopoClaw input method is not enabled on your device.\n\n" +
+                        "Please follow these steps:\n" +
+                        "1. Tap the \"Go to Settings\" button\n" +
+                        "2. Find \"TopoClaw\" in the input method list\n" +
+                        "3. Turn on the switch to enable this input method\n" +
                         step4)
-                .setPositiveButton("去设置") { _, _ ->
+                .setPositiveButton("Go to Settings") { _, _ ->
                     try {
                         val intent = Intent(Settings.ACTION_INPUT_METHOD_SETTINGS).apply {
                             flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -17603,10 +17603,10 @@ class ChatFragment : Fragment() {
                         Log.d(TAG, "已跳转到输入法设置页面")
                     } catch (e: Exception) {
                         Log.e(TAG, "跳转到输入法设置页面失败: ${e.message}", e)
-                        Toast.makeText(requireContext(), "打开设置失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Failed to open Settings: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
                 }
-                .setNegativeButton("取消") { _, _ -> onNegative?.invoke() }
+                .setNegativeButton("Cancel") { _, _ -> onNegative?.invoke() }
                 .setCancelable(true)
                 .create()
             Log.d(TAG, "showIMEEnableGuideDialog: 弹窗已创建，准备显示")
@@ -18206,12 +18206,12 @@ class ChatFragment : Fragment() {
     /** onConfirm 置后，便于调用处使用尾随 lambda；onCancel 可选且在前 */
     private fun showScreenshotPermissionDialog(onCancel: (() -> Unit)? = null, onConfirm: () -> Unit) {
         android.app.AlertDialog.Builder(requireContext())
-            .setTitle("需要截图权限")
-            .setMessage("发送消息需要截图权限，是否立即授权？")
-            .setPositiveButton("立即授权") { _, _ ->
+            .setTitle("Screenshot permission required")
+            .setMessage("Sending messages requires screenshot permission. Authorize now?")
+            .setPositiveButton("Authorize now") { _, _ ->
                 onConfirm()
             }
-            .setNegativeButton("取消") { _, _ ->
+            .setNegativeButton("Cancel") { _, _ ->
                 onCancel?.invoke()
             }
             .show()
@@ -18228,12 +18228,12 @@ class ChatFragment : Fragment() {
             return
         }
         android.app.AlertDialog.Builder(requireContext())
-            .setTitle("需要无障碍服务")
-            .setMessage("执行操作需要无障碍服务，是否前往设置开启？")
-            .setPositiveButton("去设置") { _, _ ->
+            .setTitle("Accessibility service required")
+            .setMessage("This action requires the accessibility service. Go to Settings to enable it?")
+            .setPositiveButton("Go to Settings") { _, _ ->
                 onConfirm()
             }
-            .setNegativeButton("取消") { _, _ ->
+            .setNegativeButton("Cancel") { _, _ ->
                 onCancel?.invoke()
             }
             .show()
@@ -18481,7 +18481,7 @@ class ChatFragment : Fragment() {
                 if (!videoFile.exists()) {
                     Log.e(TAG, "视频文件不存在: $videoPath")
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(requireContext(), "视频文件不存在", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Video file does not exist", Toast.LENGTH_SHORT).show()
                     }
                     return@launch
                 }
@@ -18494,7 +18494,7 @@ class ChatFragment : Fragment() {
                 if (apiService == null) {
                     Log.e(TAG, "VideoUploadApiService未初始化")
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(requireContext(), "网络服务未初始化", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Network service not initialized", Toast.LENGTH_SHORT).show()
                     }
                     return@launch
                 }
@@ -18543,7 +18543,7 @@ class ChatFragment : Fragment() {
                 if (response.isSuccessful) {
                     val chatResponse = response.body()
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(requireContext(), "视频和操作目的已上传成功", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Video and action purpose uploaded successfully", Toast.LENGTH_SHORT).show()
                         Log.d(TAG, "视频和操作目的上传成功，query: $query")
                         
                         // 检查是否是学习模式响应
@@ -18567,7 +18567,7 @@ class ChatFragment : Fragment() {
             } catch (e: Exception) {
                 Log.e(TAG, "上传视频失败: ${e.message}", e)
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(requireContext(), "上传失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Upload failed: ${e.message}", Toast.LENGTH_SHORT).show()
                     addChatMessage("系统", "✗ 上传失败: ${e.message}")
                 }
             } finally {
@@ -19383,7 +19383,7 @@ class ChatFragment : Fragment() {
             val mainActivity = activity as? MainActivity ?: return
             val webSocket = mainActivity.getCustomerServiceWebSocket()
             if (webSocket == null || !webSocket.isConnected()) {
-                Toast.makeText(requireContext(), "无法连接到服务器，请稍后重试", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Cannot connect to the server. Please try again later.", Toast.LENGTH_SHORT).show()
                 return
             }
             val message = formatSkillAsMessage(skill)
@@ -19399,10 +19399,10 @@ class ChatFragment : Fragment() {
             val chatFragment = mainActivity.getOrCreateChatFragment(friendConversation)
             chatFragment.addSkillMessage(skill, "我", isUserMessage = true)
             mainActivity.switchToChatFragment(friendConversation)
-            Toast.makeText(requireContext(), "技能已分享给好友", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Skill shared with friend", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             Log.e(TAG, "分享技能到好友失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "分享失败：${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Share failed: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -19419,17 +19419,17 @@ class ChatFragment : Fragment() {
                 optionTypes.add(group.groupId)
             }
             if (options.isEmpty()) {
-                Toast.makeText(requireContext(), "暂无群组可分享", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "No groups to share with", Toast.LENGTH_SHORT).show()
                 return
             }
             android.app.AlertDialog.Builder(requireContext())
-                .setTitle("选择群组")
+                .setTitle("Select group")
                 .setItems(options.toTypedArray()) { _, which ->
                     val groupId = optionTypes[which]
                     val mainActivity = activity as? MainActivity ?: return@setItems
                     val webSocket = mainActivity.getCustomerServiceWebSocket()
                     if (webSocket == null || !webSocket.isConnected()) {
-                        Toast.makeText(requireContext(), "无法连接到服务器，请稍后重试", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Cannot connect to the server. Please try again later.", Toast.LENGTH_SHORT).show()
                         return@setItems
                     }
                     val message = formatSkillAsMessage(skill)
@@ -19451,13 +19451,13 @@ class ChatFragment : Fragment() {
                     val chatFragment = mainActivity.getOrCreateChatFragment(groupConversation)
                     chatFragment.addSkillMessage(skill, "我", isUserMessage = true)
                     mainActivity.switchToChatFragment(groupConversation)
-                    Toast.makeText(requireContext(), "技能已分享到群组", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Skill shared to group", Toast.LENGTH_SHORT).show()
                 }
-                .setNegativeButton("取消", null)
+                .setNegativeButton("Cancel", null)
                 .show()
         } catch (e: Exception) {
             Log.e(TAG, "分享技能到群组失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "分享失败：${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Share failed: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -19468,14 +19468,14 @@ class ChatFragment : Fragment() {
         try {
             val success = SkillManager.saveSkill(requireContext(), skill)
             if (success) {
-                Toast.makeText(requireContext(), "已保存到【我的技能】", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Saved to [My Skills]", Toast.LENGTH_SHORT).show()
                 notifySkillFragmentRefresh()
             } else {
-                Toast.makeText(requireContext(), "保存失败，该技能可能已存在", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Save failed: this skill may already exist", Toast.LENGTH_SHORT).show()
             }
         } catch (e: Exception) {
             Log.e(TAG, "保存技能失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "保存失败：${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Save failed: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -19750,7 +19750,7 @@ class ChatFragment : Fragment() {
                 } else {
                     android.widget.Toast.makeText(
                         requireContext(),
-                        "技能不存在",
+                        "Skill not found",
                         android.widget.Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -19773,7 +19773,7 @@ class ChatFragment : Fragment() {
             // 检查skillId有效性
             if (skillId.isNullOrEmpty()) {
                 Log.e(TAG, "技能ID无效，无法跳转到技能详情页")
-                Toast.makeText(requireContext(), "技能ID无效", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Invalid skill ID", Toast.LENGTH_SHORT).show()
                 return
             }
             
@@ -19972,7 +19972,7 @@ class ChatFragment : Fragment() {
                 Log.d(TAG, "【handleAppLink】✓ 成功打开使用说明对话框")
             } catch (e: Exception) {
                 Log.e(TAG, "【handleAppLink】✗ 打开使用说明对话框失败: ${e.message}", e)
-                Toast.makeText(requireContext(), "打开使用说明失败", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Failed to open instructions", Toast.LENGTH_SHORT).show()
             }
             return
         }
@@ -19989,7 +19989,7 @@ class ChatFragment : Fragment() {
                 Log.d(TAG, "【handleAppLink】launchAppFromLink返回: $success")
                 if (!success) {
                     Log.w(TAG, "【handleAppLink】✗ 无法打开应用: $appName")
-                    Toast.makeText(requireContext(), "无法打开应用: $appName", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Cannot open app: $appName", Toast.LENGTH_SHORT).show()
                 } else {
                     Log.d(TAG, "【handleAppLink】✓ 成功打开应用: $appName")
                 }
@@ -19998,7 +19998,7 @@ class ChatFragment : Fragment() {
             }
         } else {
             Log.w(TAG, "【handleAppLink】✗ 未找到应用: $appName")
-            Toast.makeText(requireContext(), "未找到应用: $appName", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "App not found: $appName", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -20645,7 +20645,7 @@ class ChatFragment : Fragment() {
     private fun copyBubbleMessage(message: String) {
         val clipboard = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
         clipboard?.setPrimaryClip(ClipData.newPlainText("消息", message))
-        Toast.makeText(requireContext(), "已复制", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Copied", Toast.LENGTH_SHORT).show()
     }
 
     private fun shareBubbleMessage(message: String) {
@@ -20655,7 +20655,7 @@ class ChatFragment : Fragment() {
 
     private fun openBubbleTextSelection(primaryTextView: android.widget.TextView?) {
         if (primaryTextView == null) {
-            Toast.makeText(requireContext(), "当前内容不可选择", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "This content cannot be selected", Toast.LENGTH_SHORT).show()
             return
         }
         suppressUnifiedBubbleLongPress = true
@@ -20768,7 +20768,7 @@ class ChatFragment : Fragment() {
             bitmapGenerator()
         } catch (e: Exception) {
             Log.e(TAG, "生成分享图失败: ${e.message}", e)
-            Toast.makeText(context, "生成分享图失败", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Failed to generate share image", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -20888,7 +20888,7 @@ class ChatFragment : Fragment() {
                 displayName = "TopoClaw_Share_${System.currentTimeMillis()}.jpg",
                 saveToScreenshotsFolder = true
             )
-            Toast.makeText(context, if (savedUri != null) "已保存到相册" else "保存失败", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, if (savedUri != null) "Saved to album" else "Save failed", Toast.LENGTH_SHORT).show()
         }
 
         dialog.show()
@@ -21228,7 +21228,7 @@ class ChatFragment : Fragment() {
             startActivity(Intent.createChooser(shareIntent, "分享图片"))
         } catch (e: Exception) {
             Log.e(TAG, "分享生成图片失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "分享失败", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Share failed", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -22171,7 +22171,7 @@ class ChatFragment : Fragment() {
                             selectedUserImei = finalImei
                             android.widget.Toast.makeText(
                                 requireContext(),
-                                "已选中用户: ${finalImei.take(8)}...",
+                                "Selected user: ${finalImei.take(8)}...",
                                 android.widget.Toast.LENGTH_SHORT
                             ).show()
                             // 更新输入框提示
@@ -22269,7 +22269,7 @@ class ChatFragment : Fragment() {
                                     binding.etChatInput.requestFocus()
                                     android.widget.Toast.makeText(
                                         requireContext(),
-                                        "已选中用户: ${finalImei.take(8)}...",
+                                        "Selected user: ${finalImei.take(8)}...",
                                         android.widget.Toast.LENGTH_SHORT
                                     ).show()
                                 } else {
@@ -22277,7 +22277,7 @@ class ChatFragment : Fragment() {
                                     Log.d(TAG, "messageImeiMap大小: ${messageImeiMap.size}, messageDirectImeiMap大小: ${messageDirectImeiMap.size}")
                                     android.widget.Toast.makeText(
                                         requireContext(),
-                                        "无法找到用户信息，请尝试点击消息选中用户",
+                                        "User info not found. Try tapping a message to select the user",
                                         android.widget.Toast.LENGTH_SHORT
                                     ).show()
                                 }
@@ -22889,13 +22889,13 @@ class ChatFragment : Fragment() {
                             }
                         }
                         
-                        Toast.makeText(requireContext(), "已删除该条消息", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Message deleted", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         } catch (e: Exception) {
             Log.e(TAG, "删除消息失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "删除失败", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Delete failed", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -23225,7 +23225,7 @@ class ChatFragment : Fragment() {
         
         // 更新选中数量
         val countText = toolbar.findViewWithTag<TextView>("countText")
-        countText?.text = "已选中 ${selectedMessageTimestamps.size} 条"
+        countText?.text = "Selected ${selectedMessageTimestamps.size}"
         
         // 更新全选按钮文本
         val selectAllButton = toolbar.findViewWithTag<TextView>("selectAllButton")
@@ -23233,7 +23233,7 @@ class ChatFragment : Fragment() {
         val items = adapter.getItems()
         val messageCount = items.count { it is ChatItem.Message || it is ChatItem.ImageMessage }
         val isAllSelected = messageCount > 0 && selectedMessageTimestamps.size >= messageCount
-        selectAllButton?.text = if (isAllSelected) "取消全选" else "全选"
+        selectAllButton?.text = if (isAllSelected) "Deselect all" else "Select all"
         
         // 根据选中数量更新分享/删除按钮状态
         val hasSelection = selectedMessageTimestamps.isNotEmpty()
@@ -23251,12 +23251,12 @@ class ChatFragment : Fragment() {
      */
     private fun shareSelectedMessagesAsImage() {
         if (selectedMessageTimestamps.isEmpty()) {
-            Toast.makeText(requireContext(), "请先选择要分享的消息", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Select messages to share first", Toast.LENGTH_SHORT).show()
             return
         }
         val selectedItems = buildSelectedShareableConversationItems()
         if (selectedItems.isEmpty()) {
-            Toast.makeText(requireContext(), "暂无可分享内容", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Nothing to share", Toast.LENGTH_SHORT).show()
             return
         }
         showGeneratedShareImagePreviewFromConversation(selectedItems)
@@ -23325,15 +23325,15 @@ class ChatFragment : Fragment() {
      */
     private fun deleteSelectedMessages() {
         if (selectedMessageTimestamps.isEmpty()) {
-            Toast.makeText(requireContext(), "请先选择要删除的消息", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Select messages to delete first", Toast.LENGTH_SHORT).show()
             return
         }
         
         // 确认对话框
         android.app.AlertDialog.Builder(requireContext())
-            .setTitle("确认删除")
-            .setMessage("确定要删除选中的 ${selectedMessageTimestamps.size} 条消息吗？")
-            .setPositiveButton("删除") { _, _ ->
+            .setTitle("Confirm delete")
+            .setMessage("Delete the selected ${selectedMessageTimestamps.size} messages?")
+            .setPositiveButton("Delete") { _, _ ->
                 try {
                     val timestampsToDelete = selectedMessageTimestamps.toList()
                     
@@ -23373,17 +23373,17 @@ class ChatFragment : Fragment() {
                             }
                         }
                         
-                        Toast.makeText(requireContext(), "已删除 ${timestampsToDelete.size} 条消息", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Deleted ${timestampsToDelete.size} messages", Toast.LENGTH_SHORT).show()
                         
                         // 退出多选模式
                         exitMultiSelectMode()
                     }
                 } catch (e: Exception) {
                     Log.e(TAG, "批量删除消息失败: ${e.message}", e)
-                    Toast.makeText(requireContext(), "删除失败", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Delete failed", Toast.LENGTH_SHORT).show()
                 }
             }
-            .setNegativeButton("取消", null)
+            .setNegativeButton("Cancel", null)
             .show()
     }
     
@@ -24517,13 +24517,13 @@ class ChatFragment : Fragment() {
                         // 更新筛选按钮文本
                         when {
                             filteredImeis.isEmpty() -> {
-                                binding.btnFilterUsers.text = "筛选用户"
+                                binding.btnFilterUsers.text = "Filter users"
                             }
                             filteredImeis.size == 1 -> {
-                                binding.btnFilterUsers.text = "筛选用户 (${filteredImeis.first()})"
+                                binding.btnFilterUsers.text = "Filter users (${filteredImeis.first()})"
                             }
                             else -> {
-                                binding.btnFilterUsers.text = "筛选用户 (${filteredImeis.size}个)"
+                                binding.btnFilterUsers.text = "Filter users (${filteredImeis.size})"
                             }
                         }
                         
@@ -25842,7 +25842,7 @@ class ChatFragment : Fragment() {
             val videoFile = java.io.File(videoPath)
             if (!videoFile.exists()) {
                 Log.e(TAG, "视频文件不存在: $videoPath")
-                Toast.makeText(requireContext(), "视频文件不存在", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Video file does not exist", Toast.LENGTH_SHORT).show()
                 return
             }
             
@@ -25875,11 +25875,11 @@ class ChatFragment : Fragment() {
                 Log.d(TAG, "已启动全屏视频播放: $videoPath")
             } catch (e: android.content.ActivityNotFoundException) {
                 Log.e(TAG, "未找到视频播放器: ${e.message}", e)
-                Toast.makeText(requireContext(), "未找到视频播放器", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "No video player found", Toast.LENGTH_SHORT).show()
             }
         } catch (e: Exception) {
             Log.e(TAG, "全屏播放视频失败: ${e.message}", e)
-            Toast.makeText(requireContext(), "播放视频失败: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Failed to play video: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -26534,14 +26534,14 @@ class ChatFragment : Fragment() {
             // 显示成功提示
             android.widget.Toast.makeText(
                 requireContext(),
-                "历史记录和对话总结已清空",
+                "History and conversation summary cleared",
                 android.widget.Toast.LENGTH_SHORT
             ).show()
         } catch (e: Exception) {
             Log.e(TAG, "清除聊天历史记录和对话总结失败: ${e.message}", e)
             android.widget.Toast.makeText(
                 requireContext(),
-                "清空失败: ${e.message}",
+                "Failed to clear: ${e.message}",
                 android.widget.Toast.LENGTH_SHORT
             ).show()
         }

@@ -10,7 +10,7 @@
         android:id="@+id/tvWelcomeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="欢迎体验Beta版测试功能&quot;知识库/网页搜索&quot;。该功能暂只能在 TopoClaw 体验~"
+        android:text="Welcome to the beta feature &quot;Knowledge base / Web search&quot;. This feature is only available in TopoClaw for now."
         android:textSize="13sp"
         android:textColor="#333333"
         android:gravity="center"

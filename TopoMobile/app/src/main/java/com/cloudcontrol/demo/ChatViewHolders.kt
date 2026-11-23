@@ -120,7 +120,7 @@ class NewTopicHintViewHolder(
 ) : RecyclerView.ViewHolder(container) {
 
     fun bind(item: ChatItem.NewTopicHint) {
-        textView.text = "点击此处开启新话题"
+        textView.text = "Tap here to start a new topic"
         textView.setOnClickListener {
             fragment.onNewTopicHintClicked()
         }
@@ -488,19 +488,19 @@ class ActionButtonsViewHolder(
     init {
         btnCopy.setOnClickListener {
             val message = (itemView.tag as? ChatItem.ActionButtons)?.message ?: ""
-            copyToClipboard(message, "消息")
-            Toast.makeText(fragment.requireContext(), "已复制", Toast.LENGTH_SHORT).show()
+            copyToClipboard(message, "Message")
+            Toast.makeText(fragment.requireContext(), "Copied", Toast.LENGTH_SHORT).show()
         }
         btnSpeak.setOnClickListener {
-            Toast.makeText(fragment.requireContext(), "播报功能暂不支持", Toast.LENGTH_SHORT).show()
+            Toast.makeText(fragment.requireContext(), "Read-aloud is not supported yet", Toast.LENGTH_SHORT).show()
         }
         btnFavorite.setOnClickListener {
-            Toast.makeText(fragment.requireContext(), "收藏功能暂不支持", Toast.LENGTH_SHORT).show()
+            Toast.makeText(fragment.requireContext(), "Favorites is not supported yet", Toast.LENGTH_SHORT).show()
         }
         btnShare.setOnClickListener {
             val message = (itemView.tag as? ChatItem.ActionButtons)?.message ?: ""
             if (message.isEmpty()) {
-                Toast.makeText(fragment.requireContext(), "消息内容为空", Toast.LENGTH_SHORT).show()
+                Toast.makeText(fragment.requireContext(), "Message is empty", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             val skill = parseSOPFromMessage(message)
@@ -515,7 +515,7 @@ class ActionButtonsViewHolder(
             if (query.isNotEmpty()) {
                 fragment.executeQueryFromExternal(query)
             } else {
-                Toast.makeText(fragment.requireContext(), "无法重新执行：查询为空", Toast.LENGTH_SHORT).show()
+                Toast.makeText(fragment.requireContext(), "Can't run again: query is empty", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -554,31 +554,31 @@ class ActionButtonsViewHolder(
 
     private fun showShareSkillDialog(skill: Skill) {
         android.app.AlertDialog.Builder(fragment.requireContext())
-            .setTitle("选择分享方式")
-            .setItems(arrayOf("分享给好友", "分享给群组", "我的技能")) { _, which ->
+            .setTitle("Choose how to share")
+            .setItems(arrayOf("Share with a friend", "Share to a group", "My skills")) { _, which ->
                 when (which) {
                     0 -> shareSkillToFriend(skill)
                     1 -> shareSkillToGroup(skill)
                     2 -> saveSkillToMySkills(skill)
                 }
             }
-            .setNegativeButton("取消", null)
+            .setNegativeButton("Cancel", null)
             .show()
     }
 
     private fun shareSkillToFriend(skill: Skill) {
         val friends = FriendManager.getFriends(fragment.requireContext()).filter { it.status == "accepted" }
         if (friends.isEmpty()) {
-            Toast.makeText(fragment.requireContext(), "暂无好友可分享", Toast.LENGTH_SHORT).show()
+            Toast.makeText(fragment.requireContext(), "No friends to share with", Toast.LENGTH_SHORT).show()
             return
         }
         val options = friends.map { it.nickname ?: it.imei.take(8) + "..." }.toTypedArray()
         android.app.AlertDialog.Builder(fragment.requireContext())
-            .setTitle("选择好友")
+            .setTitle("Choose a friend")
             .setItems(options) { _, which ->
                 shareSkillToFriend(friends[which].imei, skill)
             }
-            .setNegativeButton("取消", null)
+            .setNegativeButton("Cancel", null)
             .show()
     }
 
@@ -597,7 +597,7 @@ class ActionButtonsViewHolder(
     private fun copyToClipboard(text: String, label: String) {
         val clipboard = ContextCompat.getSystemService(itemView.context, ClipboardManager::class.java)
         clipboard?.setPrimaryClip(ClipData.newPlainText(label, text))
-        Toast.makeText(itemView.context, "已复制", Toast.LENGTH_SHORT).show()
+        Toast.makeText(itemView.context, "Copied", Toast.LENGTH_SHORT).show()
     }
 }
 
@@ -621,7 +621,7 @@ class AssistantThinkingViewHolder(
     fun bind(item: ChatItem.AssistantThinking) {
         val details = item.details.filter { it.isNotBlank() }
         val canExpand = details.isNotEmpty()
-        titleView.text = if (item.isCompleted) "思考完成" else item.text
+        titleView.text = if (item.isCompleted) "Thinking complete" else item.text
         arrowView.visibility = if (canExpand) View.VISIBLE else View.GONE
         arrowView.text = if (item.isExpanded) "⌄" else "›"
         detailsView.visibility = if (canExpand && item.isExpanded) View.VISIBLE else View.GONE

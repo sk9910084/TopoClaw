@@ -31,7 +31,7 @@ class VoiceInputHelper(
     private val ivRecordingRing: RecordingRingView
 ) {
     private val TAG = "VoiceInputHelper"
-    private val VOICE_DISABLED_MESSAGE = "语音识别功能已临时下线。你仍可使用文本输入继续聊天。"
+    private val VOICE_DISABLED_MESSAGE = "Speech recognition is temporarily unavailable. You can still chat using text input."
     
     private var mAsr: ASR? = null
     private var audioRecorderManager: AudioRecorderManager? = null
@@ -69,7 +69,7 @@ class VoiceInputHelper(
         override fun onError(asrError: ASR.ASRError, o: Any?) {
             Log.e(TAG, "语音识别错误: code=${asrError.code}, msg=${asrError.errMsg}")
             handler.post {
-                android.widget.Toast.makeText(context, "语音识别错误: ${asrError.errMsg}", android.widget.Toast.LENGTH_SHORT).show()
+                android.widget.Toast.makeText(context, "Speech recognition error: ${asrError.errMsg}", android.widget.Toast.LENGTH_SHORT).show()
                 stopVoiceRecognition()
             }
         }
@@ -551,7 +551,7 @@ class VoiceInputHelper(
         // 检查权限
         if (android.content.pm.PackageManager.PERMISSION_GRANTED != 
             ContextCompat.checkSelfPermission(context, android.Manifest.permission.RECORD_AUDIO)) {
-            android.widget.Toast.makeText(context, "需要录音权限才能使用语音输入", android.widget.Toast.LENGTH_SHORT).show()
+            android.widget.Toast.makeText(context, "Recording permission is required for voice input", android.widget.Toast.LENGTH_SHORT).show()
             return
         }
         
@@ -608,11 +608,11 @@ class VoiceInputHelper(
                 Log.d(TAG, "语音识别已启动")
             } else {
                 Log.e(TAG, "语音识别启动失败，错误码: $ret")
-                android.widget.Toast.makeText(context, "语音识别启动失败", android.widget.Toast.LENGTH_SHORT).show()
+                android.widget.Toast.makeText(context, "Failed to start speech recognition", android.widget.Toast.LENGTH_SHORT).show()
             }
         } catch (e: Exception) {
             Log.e(TAG, "启动语音识别异常: ${e.message}", e)
-            android.widget.Toast.makeText(context, "启动语音识别失败: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
+            android.widget.Toast.makeText(context, "Failed to start speech recognition: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
         }
     }
     
